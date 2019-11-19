@@ -2,6 +2,10 @@ import sys
 from PyQt5 import QtGui, QtCore, QtWidgets
 import example
 import page2
+import pyqtgraph as pyg
+import qtgrapher
+import numpy as np 
+
 
 
 class TestWindow(QtWidgets.QMainWindow):
@@ -12,15 +16,25 @@ class TestWindow(QtWidgets.QMainWindow):
         self.pg2 = page2.Ui_widget()
         self.pg2.setupUi(self.page2)
 
+        self.page3 = QtWidgets.QWidget()
+        self.pg3 = qtgrapher.Ui_Form()
+        self.pg3.setupUi(self.page3)
+
         self.ui.setupUi(self)
         
         self.ui.stackedWidget.addWidget(self.page2)
+        self.ui.stackedWidget.addWidget(self.page3)
         #so, when you say self.ui.myButton ,that is pushButton in testUI that has name myButton
         self.ui.pushButton.clicked.connect(self.DoSomething)# connect button clicked with action
         self.pg2.Home.clicked.connect(self.goHome);
+        self.pg3.pushButton.clicked.connect(self.goHome)
+
+        self.pg3.graphicsView.plot(np.random.normal(size = 100),np.random.normal(size = 100),pen = None, symbol = 'o')
+
     def DoSomething(self):
-        self.ui.stackedWidget.setCurrentIndex(1)
+        self.ui.stackedWidget.setCurrentIndex(2)
         print(self.ui.stackedWidget.count())
+
     def goHome(self):
         self.ui.stackedWidget.setCurrentIndex(0)
         
@@ -31,4 +45,5 @@ if __name__ == '__main__':
     window = TestWindow()
     window.setStyleSheet(open('test.qss').read())
     window.show()
+
     sys.exit(app.exec_())
