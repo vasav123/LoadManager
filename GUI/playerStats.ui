@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>PlayerStats</class>
- <widget class="QWidget" name="PlayerStats">
+ <class>playerStats</class>
+ <widget class="QWidget" name="playerStats">
   <property name="geometry">
    <rect>
     <x>0</x>
