@@ -24,7 +24,7 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="back">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -59,14 +59,14 @@
        </spacer>
       </item>
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="player">
         <property name="font">
          <font>
           <pointsize>24</pointsize>
          </font>
         </property>
         <property name="text">
-         <string>TextLabel</string>
+         <string>Kawhi Leanord</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
