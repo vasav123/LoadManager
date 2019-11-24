@@ -62,7 +62,7 @@
        <widget class="QLabel" name="player">
         <property name="font">
          <font>
-          <pointsize>34</pointsize>
+          <pointsize>30</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
