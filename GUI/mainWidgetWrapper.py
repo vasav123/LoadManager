@@ -11,19 +11,19 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
 		self.pStats_widget = playerStats.Ui_playerStats()
 		self.pStats_widget.setupUi(self.pStats)
 		
-		self.hbox = QtGui.QHBoxLayout()
-		self.hbox.addWidget(self.pStats)
+		# self.hbox = QtGui.QHBoxLayout()
+		self.psbox.addWidget(self.pStats)
 
-		self.playerStats.setLayout(self.hbox)
+		# self.playerStats.setLayout(self.hbox)
 
 		self.gStats = QtWidgets.QWidget()
 		self.graph_widget = graphs.Ui_graphs()
 		self.graph_widget.setupUi(self.gStats)
 
-		self.hbox2 = QtGui.QHBoxLayout()
-		self.hbox2.addWidget(self.gStats)
+		# self.hbox2 = QtGui.QHBoxLayout()
+		self.gbox.addWidget(self.gStats)
 
-		self.graphs.setLayout(self.hbox2)
+		# self.graphs.setLayout(self.hbox2)
 
 if __name__ == "__main__":
     import sys
@@ -32,5 +32,5 @@ if __name__ == "__main__":
     ui = mainWidgetWrapper()
     ui.setupUi(Form)
     Form.show()
-    # Form.setStyleSheet(open('test.qss').read())
+    Form.setStyleSheet(open('test.qss').read())
     sys.exit(app.exec_())

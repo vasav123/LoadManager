@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_playerStats(object):
     def setupUi(self, playerStats):
         playerStats.setObjectName("playerStats")
-        playerStats.resize(640, 581)
+        playerStats.resize(640, 627)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(5)
         sizePolicy.setVerticalStretch(0)
@@ -22,10 +22,11 @@ class Ui_playerStats(object):
         self.horizontalLayout_8 = QtWidgets.QHBoxLayout(playerStats)
         self.horizontalLayout_8.setObjectName("horizontalLayout_8")
         self.frame = QtWidgets.QFrame(playerStats)
-        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.frame)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
         self.groupBox_7 = QtWidgets.QGroupBox(self.frame)
         self.groupBox_7.setObjectName("groupBox_7")
