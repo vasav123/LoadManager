@@ -28,7 +28,12 @@ class Ui_Form(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.back.sizePolicy().hasHeightForWidth())
         self.back.setSizePolicy(sizePolicy)
-        self.back.setMaximumSize(QtCore.QSize(100, 16777215))
+        self.back.setMaximumSize(QtCore.QSize(100, 200))
+        font = QtGui.QFont()
+        font.setPointSize(30)
+        font.setBold(True)
+        font.setWeight(75)
+        self.back.setFont(font)
         self.back.setObjectName("back")
         self.horizontalLayout.addWidget(self.back)
         self.player = QtWidgets.QLabel(self.widget)
@@ -81,7 +86,7 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.back.setText(_translate("Form", "Back"))
+        self.back.setText(_translate("Form", "←"))
         self.player.setText(_translate("Form", "Kawhi Leonard"))
 
 
