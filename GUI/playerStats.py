@@ -10,18 +10,18 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_PlayerStats(object):
-    def setupUi(self, PlayerStats):
-        PlayerStats.setObjectName("PlayerStats")
-        PlayerStats.resize(857, 634)
+class Ui_playerStats(object):
+    def setupUi(self, playerStats):
+        playerStats.setObjectName("playerStats")
+        playerStats.resize(857, 634)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(5)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(PlayerStats.sizePolicy().hasHeightForWidth())
-        PlayerStats.setSizePolicy(sizePolicy)
-        self.horizontalLayout_8 = QtWidgets.QHBoxLayout(PlayerStats)
+        sizePolicy.setHeightForWidth(playerStats.sizePolicy().hasHeightForWidth())
+        playerStats.setSizePolicy(sizePolicy)
+        self.horizontalLayout_8 = QtWidgets.QHBoxLayout(playerStats)
         self.horizontalLayout_8.setObjectName("horizontalLayout_8")
-        self.splitter = QtWidgets.QSplitter(PlayerStats)
+        self.splitter = QtWidgets.QSplitter(playerStats)
         self.splitter.setOrientation(QtCore.Qt.Vertical)
         self.splitter.setObjectName("splitter")
         self.layoutWidget = QtWidgets.QWidget(self.splitter)
@@ -151,28 +151,28 @@ class Ui_PlayerStats(object):
         self.LoadPercent.setObjectName("LoadPercent")
         self.horizontalLayout_8.addWidget(self.splitter)
 
-        self.retranslateUi(PlayerStats)
-        QtCore.QMetaObject.connectSlotsByName(PlayerStats)
+        self.retranslateUi(playerStats)
+        QtCore.QMetaObject.connectSlotsByName(playerStats)
 
-    def retranslateUi(self, PlayerStats):
+    def retranslateUi(self, playerStats):
         _translate = QtCore.QCoreApplication.translate
-        PlayerStats.setWindowTitle(_translate("PlayerStats", "Form"))
-        self.label_2.setText(_translate("PlayerStats", "Jumps           "))
-        self.label.setText(_translate("PlayerStats", "Steps            "))
-        self.label_5.setText(_translate("PlayerStats", "Minutes Played"))
-        self.label_3.setText(_translate("PlayerStats", "High Impact Events       "))
-        self.TimeSpentLabel.setText(_translate("PlayerStats", "Time Spent:"))
-        self.label_7.setText(_translate("PlayerStats", "Running"))
-        self.label_8.setText(_translate("PlayerStats", "Sprinting"))
-        self.label_9.setText(_translate("PlayerStats", "Walking"))
-        self.ProgressbarLabel.setText(_translate("PlayerStats", "Percentage of limit Played"))
+        playerStats.setWindowTitle(_translate("playerStats", "Form"))
+        self.label_2.setText(_translate("playerStats", "Jumps           "))
+        self.label.setText(_translate("playerStats", "Steps            "))
+        self.label_5.setText(_translate("playerStats", "Minutes Played"))
+        self.label_3.setText(_translate("playerStats", "Impact Events       "))
+        self.TimeSpentLabel.setText(_translate("playerStats", "Time Spent:"))
+        self.label_7.setText(_translate("playerStats", "Running"))
+        self.label_8.setText(_translate("playerStats", "Sprinting"))
+        self.label_9.setText(_translate("playerStats", "Walking"))
+        self.ProgressbarLabel.setText(_translate("playerStats", "Percentage of limit Played"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    PlayerStats = QtWidgets.QWidget()
-    ui = Ui_PlayerStats()
-    ui.setupUi(PlayerStats)
-    PlayerStats.show()
+    playerStats = QtWidgets.QWidget()
+    ui = Ui_playerStats()
+    ui.setupUi(playerStats)
+    playerStats.show()
     sys.exit(app.exec_())
