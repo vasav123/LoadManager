@@ -34,7 +34,7 @@ class Ui_Form(object):
         self.horizontalLayout.addItem(spacerItem)
         self.player = QtWidgets.QLabel(self.widget)
         font = QtGui.QFont()
-        font.setPointSize(36)
+        font.setPointSize(34)
         font.setBold(True)
         font.setWeight(75)
         self.player.setFont(font)
