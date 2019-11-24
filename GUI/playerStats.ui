@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>263</width>
-    <height>611</height>
+    <width>850</width>
+    <height>664</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,10 +22,16 @@
   <layout class="QHBoxLayout" name="horizontalLayout_8">
    <item>
     <widget class="QSplitter" name="splitter">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
-     <widget class="QWidget" name="layoutWidget">
+     <widget class="QGroupBox" name="groupBox">
       <layout class="QHBoxLayout" name="horizontalLayout_7">
        <item>
         <widget class="QLCDNumber" name="NumJumps">
@@ -51,7 +57,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="layoutWidget">
+     <widget class="QGroupBox" name="groupBox">
       <layout class="QHBoxLayout" name="horizontalLayout_6">
        <item>
         <widget class="QLCDNumber" name="NumSteps">
@@ -77,7 +83,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="layoutWidget">
+     <widget class="QGroupBox" name="groupBox">
       <layout class="QHBoxLayout" name="horizontalLayout_5">
        <item>
         <widget class="QLCDNumber" name="NumMinutes">
@@ -106,7 +112,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="layoutWidget">
+     <widget class="QGroupBox" name="groupBox">
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
         <widget class="QLCDNumber" name="NumImpacts">
@@ -162,7 +168,7 @@
        <string>Time Spent:</string>
       </property>
      </widget>
-     <widget class="QWidget" name="layoutWidget">
+     <widget class="QGroupBox" name="groupBox">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QLCDNumber" name="NumRun">
@@ -191,7 +197,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="layoutWidget">
+     <widget class="QGroupBox" name="groupBox">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QLCDNumber" name="NumSprint">
@@ -220,7 +226,13 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="layoutWidget">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
         <widget class="QLCDNumber" name="NumWalk">
@@ -234,6 +246,12 @@
        </item>
        <item>
         <widget class="QLabel" name="label_9">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="font">
           <font>
            <pointsize>12</pointsize>
