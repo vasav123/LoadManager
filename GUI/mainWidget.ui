@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1280</width>
-    <height>705</height>
+    <height>707</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,6 +21,12 @@
        <width>99999</width>
        <height>50</height>
       </size>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
@@ -38,7 +44,7 @@
          </size>
         </property>
         <property name="text">
-         <string>PushButton</string>
+         <string>Back</string>
         </property>
        </widget>
       </item>
@@ -60,13 +66,19 @@
       </item>
       <item>
        <widget class="QLabel" name="player">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="font">
          <font>
-          <pointsize>24</pointsize>
+          <pointsize>36</pointsize>
          </font>
         </property>
         <property name="text">
-         <string>Kawhi Leanord</string>
+         <string>Kawhi Leonard</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -112,7 +124,14 @@
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="graphs" native="true"/>
+       <widget class="QWidget" name="graphs" native="true">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
