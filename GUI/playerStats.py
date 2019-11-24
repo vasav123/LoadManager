@@ -160,7 +160,7 @@ class Ui_playerStats(object):
         self.label_2.setText(_translate("playerStats", "Jumps           "))
         self.label.setText(_translate("playerStats", "Steps            "))
         self.label_5.setText(_translate("playerStats", "Minutes Played"))
-        self.label_3.setText(_translate("playerStats", "High Impact Events       "))
+        self.label_3.setText(_translate("playerStats", "Impact Events       "))
         self.TimeSpentLabel.setText(_translate("playerStats", "Time Spent:"))
         self.label_7.setText(_translate("playerStats", "Running"))
         self.label_8.setText(_translate("playerStats", "Sprinting"))

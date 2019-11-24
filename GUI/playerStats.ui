@@ -112,7 +112,7 @@
           </font>
          </property>
          <property name="text">
-          <string>High Impact Events       </string>
+          <string>Impact Events       </string>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
