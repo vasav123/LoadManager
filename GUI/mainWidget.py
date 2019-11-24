@@ -13,15 +13,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(1280, 707)
+        Form.resize(1280, 705)
         self.verticalLayout = QtWidgets.QVBoxLayout(Form)
         self.verticalLayout.setObjectName("verticalLayout")
         self.widget = QtWidgets.QWidget(Form)
         self.widget.setMaximumSize(QtCore.QSize(99999, 50))
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.widget.setFont(font)
         self.widget.setObjectName("widget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.widget)
         self.horizontalLayout.setObjectName("horizontalLayout")
@@ -37,9 +33,8 @@ class Ui_Form(object):
         spacerItem = QtWidgets.QSpacerItem(10, 20, QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.player = QtWidgets.QLabel(self.widget)
-        self.player.setMinimumSize(QtCore.QSize(0, 0))
         font = QtGui.QFont()
-        font.setPointSize(36)
+        font.setPointSize(24)
         self.player.setFont(font)
         self.player.setAlignment(QtCore.Qt.AlignCenter)
         self.player.setObjectName("player")
@@ -51,7 +46,7 @@ class Ui_Form(object):
         self.widget_2.setObjectName("widget_2")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.widget_2)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.playerStats = QtWidgets.QWidget(self.widget_2)
+        self.playerStats = QtWidgets.QFrame(self.widget_2)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -60,11 +55,7 @@ class Ui_Form(object):
         self.playerStats.setMaximumSize(QtCore.QSize(350, 16777215))
         self.playerStats.setObjectName("playerStats")
         self.horizontalLayout_2.addWidget(self.playerStats)
-        self.graphs = QtWidgets.QWidget(self.widget_2)
-        font = QtGui.QFont()
-        font.setBold(True)
-        font.setWeight(75)
-        self.graphs.setFont(font)
+        self.graphs = QtWidgets.QFrame(self.widget_2)
         self.graphs.setObjectName("graphs")
         self.horizontalLayout_2.addWidget(self.graphs)
         self.verticalLayout.addWidget(self.widget_2)
@@ -75,8 +66,8 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.back.setText(_translate("Form", "Back"))
-        self.player.setText(_translate("Form", "Kawhi Leonard"))
+        self.back.setText(_translate("Form", "PushButton"))
+        self.player.setText(_translate("Form", "Kawhi Leanord"))
 
 
 if __name__ == "__main__":
