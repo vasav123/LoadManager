@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>857</width>
-    <height>634</height>
+    <width>263</width>
+    <height>611</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -28,7 +28,14 @@
      <widget class="QWidget" name="layoutWidget">
       <layout class="QHBoxLayout" name="horizontalLayout_7">
        <item>
-        <widget class="QLCDNumber" name="NumJumps"/>
+        <widget class="QLCDNumber" name="NumJumps">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_2">
@@ -47,7 +54,14 @@
      <widget class="QWidget" name="layoutWidget">
       <layout class="QHBoxLayout" name="horizontalLayout_6">
        <item>
-        <widget class="QLCDNumber" name="NumSteps"/>
+        <widget class="QLCDNumber" name="NumSteps">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label">
@@ -66,7 +80,14 @@
      <widget class="QWidget" name="layoutWidget">
       <layout class="QHBoxLayout" name="horizontalLayout_5">
        <item>
-        <widget class="QLCDNumber" name="NumMinutes"/>
+        <widget class="QLCDNumber" name="NumMinutes">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_5">
@@ -76,7 +97,7 @@
           </font>
          </property>
          <property name="text">
-          <string>Minutes Played</string>
+          <string>Minutes</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -88,7 +109,14 @@
      <widget class="QWidget" name="layoutWidget">
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
-        <widget class="QLCDNumber" name="NumImpacts"/>
+        <widget class="QLCDNumber" name="NumImpacts">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_3">
@@ -112,7 +140,7 @@
           </font>
          </property>
          <property name="text">
-          <string>Impact Events       </string>
+          <string>Impacts</string>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -137,7 +165,14 @@
      <widget class="QWidget" name="layoutWidget">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QLCDNumber" name="NumRun"/>
+        <widget class="QLCDNumber" name="NumRun">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_7">
@@ -159,7 +194,14 @@
      <widget class="QWidget" name="layoutWidget">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QLCDNumber" name="NumSprint"/>
+        <widget class="QLCDNumber" name="NumSprint">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_8">
@@ -181,7 +223,14 @@
      <widget class="QWidget" name="layoutWidget">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
-        <widget class="QLCDNumber" name="NumWalk"/>
+        <widget class="QLCDNumber" name="NumWalk">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_9">
