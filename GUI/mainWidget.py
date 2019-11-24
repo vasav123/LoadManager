@@ -34,7 +34,9 @@ class Ui_Form(object):
         self.horizontalLayout.addItem(spacerItem)
         self.player = QtWidgets.QLabel(self.widget)
         font = QtGui.QFont()
-        font.setPointSize(24)
+        font.setPointSize(36)
+        font.setBold(True)
+        font.setWeight(75)
         self.player.setFont(font)
         self.player.setAlignment(QtCore.Qt.AlignCenter)
         self.player.setObjectName("player")
@@ -66,7 +68,7 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.back.setText(_translate("Form", "PushButton"))
+        self.back.setText(_translate("Form", "Back"))
         self.player.setText(_translate("Form", "Kawhi Leanord"))
 
 
