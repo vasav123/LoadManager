@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_playerStats(object):
     def setupUi(self, playerStats):
         playerStats.setObjectName("playerStats")
-        playerStats.resize(640, 627)
+        playerStats.resize(640, 630)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(5)
         sizePolicy.setVerticalStretch(0)
@@ -117,8 +117,11 @@ class Ui_playerStats(object):
         self.verticalLayout.addWidget(self.groupBox_6)
         self.TimeSpentLabel = QtWidgets.QLabel(self.frame)
         font = QtGui.QFont()
-        font.setPointSize(14)
+        font.setPointSize(20)
+        font.setBold(True)
+        font.setWeight(75)
         self.TimeSpentLabel.setFont(font)
+        self.TimeSpentLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.TimeSpentLabel.setObjectName("TimeSpentLabel")
         self.verticalLayout.addWidget(self.TimeSpentLabel)
         self.groupBox_2 = QtWidgets.QGroupBox(self.frame)
@@ -193,12 +196,16 @@ class Ui_playerStats(object):
         self.verticalLayout.addWidget(self.groupBox)
         self.ProgressbarLabel = QtWidgets.QLabel(self.frame)
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPointSize(20)
+        font.setBold(True)
+        font.setWeight(75)
         self.ProgressbarLabel.setFont(font)
+        self.ProgressbarLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.ProgressbarLabel.setObjectName("ProgressbarLabel")
         self.verticalLayout.addWidget(self.ProgressbarLabel)
         self.LoadPercent = QtWidgets.QProgressBar(self.frame)
         self.LoadPercent.setProperty("value", 24)
+        self.LoadPercent.setFormat("")
         self.LoadPercent.setObjectName("LoadPercent")
         self.verticalLayout.addWidget(self.LoadPercent)
         self.horizontalLayout_8.addWidget(self.frame)
@@ -217,7 +224,7 @@ class Ui_playerStats(object):
         self.label_7.setText(_translate("playerStats", "Running"))
         self.label_8.setText(_translate("playerStats", "Sprinting"))
         self.label_9.setText(_translate("playerStats", "Walking"))
-        self.ProgressbarLabel.setText(_translate("playerStats", "Percentage of limit Played"))
+        self.ProgressbarLabel.setText(_translate("playerStats", "Percentage Of Limit Played"))
 
 
 if __name__ == "__main__":

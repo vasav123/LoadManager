@@ -57,7 +57,7 @@ class Ui_Form(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.playerStats.sizePolicy().hasHeightForWidth())
         self.playerStats.setSizePolicy(sizePolicy)
-        self.playerStats.setMaximumSize(QtCore.QSize(350, 16777215))
+        self.playerStats.setMaximumSize(QtCore.QSize(375, 16777215))
         self.playerStats.setObjectName("playerStats")
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout(self.playerStats)
         self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
