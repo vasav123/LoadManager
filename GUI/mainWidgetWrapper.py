@@ -6,6 +6,7 @@ import graphs
 
 class mainWidgetWrapper(mainWidget.Ui_Form):
 	def setupUi(self,Form):
+		super(mainWidget.Ui_Form, self).__init__()
 		mainWidget.Ui_Form.setupUi(self,Form)
 		self.pStats = QtWidgets.QWidget()
 		self.pStats_widget = playerStats.Ui_playerStats()
