@@ -8,7 +8,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import numpy as np
+import sys
 
 class Ui_graphs(object):
     def setupUi(self, graphs):
@@ -62,6 +63,7 @@ class Ui_graphs(object):
 
         self.retranslateUi(graphs)
         QtCore.QMetaObject.connectSlotsByName(graphs)
+        
 
     def retranslateUi(self, graphs):
         _translate = QtCore.QCoreApplication.translate
