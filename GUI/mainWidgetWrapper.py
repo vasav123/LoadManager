@@ -35,13 +35,16 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.graph_widget.gyro.clicked.connect(self.Display_gyro)
                 self.graph_widget.mag.clicked.connect(self.Display_mag)
                 self.graph_widget.pressure.clicked.connect(self.Display_pressure)
+                self.rand_array_1 = np.random.normal(size=1000)
+                self.rand_array_2 = np.random.normal(size=1000)
 
                 
                 
         def Display_accel(self):
                 print("ACCELERATION")
-                self.graph_widget.graphicsView.plot(self.count,np.random.normal(size=1000),clear=True)
-                self.count=self.count+1
+                for x in range(1000):
+                        self.graph_widget.graphicsView.plot(self.count,np.random.normal(size=1000),clear=True)
+                        self.count=self.count+1
         def Display_gyro(self):
                 self.graph_widget.graphicsView.plot(self.count,np.random.normal(size=1000),clear=True)
                 self.count=self.count+1
