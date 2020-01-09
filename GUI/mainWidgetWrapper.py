@@ -8,8 +8,8 @@ import pyqtgraph as pyg
 import numpy as np
 
 class mainWidgetWrapper(mainWidget.Ui_Form):
+        lastbutton = ""
         def setupUi(self,Form):
-                self.count = np.arange(1000)
                 super(mainWidget.Ui_Form, self).__init__()
                 mainWidget.Ui_Form.setupUi(self,Form)
                 self.pStats = QtWidgets.QWidget()
@@ -35,28 +35,44 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.graph_widget.gyro.clicked.connect(self.Display_gyro)
                 self.graph_widget.mag.clicked.connect(self.Display_mag)
                 self.graph_widget.pressure.clicked.connect(self.Display_pressure)
-                self.rand_array_1 = np.random.normal(size=1000)
-                self.rand_array_2 = np.random.normal(size=1000)
+                self.count = np.arange(5000)
+                self.timer = QtCore.QTimer(self.gStats)
+                self.array = np.random.normal(size=5000)
+                
 
                 
                 
         def Display_accel(self):
-                print("ACCELERATION")
-                for x in range(1000):
-                        self.graph_widget.graphicsView.plot(self.count,np.random.normal(size=1000),clear=True)
-                        self.count=self.count+1
+                self.lastbutton = "accel"
+                self.timer.setInterval(40)
+                self.timer.start()
+                self.timer.timeout.connect(self.Plotting)
+                
+                
         def Display_gyro(self):
-                self.graph_widget.graphicsView.plot(self.count,np.random.normal(size=1000),clear=True)
-                self.count=self.count+1
+                self.lastbutton = "gyro"
+                self.timer.setInterval(40)
+                self.timer.start()
+                self.timer.timeout.connect(self.Plotting)
                 print("GYRO")
         def Display_mag(self):
-                self.graph_widget.graphicsView.plot(self.count,np.random.normal(size=1000),clear=True)
-                self.count=self.count+1
-                print("MAGNET")
+                self.lastbutton = "mag"
+                self.timer.setInterval(40)
+                self.timer.start()
+                self.timer.timeout.connect(self.Plotting)
         def Display_pressure(self):
-                self.graph_widget.graphicsView.plot(self.count,np.random.normal(size=1000),clear=True)
-                self.count=self.count+1
-                print("PRESSURE")
+                self.lastbutton = "pressure"
+                self.timer.setInterval(40)
+                self.timer.start()
+                self.timer.timeout.connect(self.Plotting)
+
+        def Plotting(self):
+                self.graph_widget.graphicsView.plot(self.count,self.array,clear=True)
+                for x in range(50):
+                        self.array[:-1] = self.array[1:]
+                        self.array[-1]=np.random.normal()
+                print(self.lastbutton)
+
 
 if __name__ == "__main__":
         import sys
