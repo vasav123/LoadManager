@@ -27,17 +27,19 @@ class collectData(mqtt.Client):
     def on_message(self, mqttc, obj, msg):
         print(str(msg.payload))
         dataObj = Packet(msg.payload)
-        self.at_q.put(dataObj.accel_top)
-        self.ab_q.put(dataObj.accel_bot)
-        self.fq_q.put(dataObj.fsr_quad)
-        self.fh_q.put(dataObj.fsr_ham)
-        self.yt_q.put(dataObj.yaw_top)
-        self.pt_q.put(dataObj.pitch_top)
-        self.rt_q.put(dataObj.roll_top)
-        self.yb_q.put(dataObj.yaw_bot)
-        self.pb_q.put(dataObj.pitch_bot)
-        self.rb_q.put(dataObj.roll_bot)
-
+        try:
+            self.at_q.put_nowait(dataObj.accel_top)
+            self.ab_q.put_nowait(dataObj.accel_bot)
+            self.fq_q.put_nowait(dataObj.fsr_quad)
+            self.fh_q.put_nowait(dataObj.fsr_ham)
+            self.yt_q.put_nowait(dataObj.yaw_top)
+            self.pt_q.put_nowait(dataObj.pitch_top)
+            self.rt_q.put_nowait(dataObj.roll_top)
+            self.yb_q.put_nowait(dataObj.yaw_bot)
+            self.pb_q.put_nowait(dataObj.pitch_bot)
+            self.rb_q.put_nowait(dataObj.roll_bot)
+        except Exception as e:
+            print("queue full")
 if __name__ == "__main__":
     test = collectData()
     rc = 0
