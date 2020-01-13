@@ -35,10 +35,10 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.graph_widget.gyro.clicked.connect(self.Display_gyro)
                 self.graph_widget.mag.clicked.connect(self.Display_mag)
                 self.graph_widget.pressure.clicked.connect(self.Display_pressure)
-                self.count = np.arange(5000)
+                # self.count = np.arange(5000)
                 self.timer = QtCore.QTimer(self.gStats)
-                self.array = np.random.normal(size=5000)
-                
+                self.array = []
+                # np.random.normal(size=5000)
 
                 
                 
@@ -54,12 +54,13 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.timer.setInterval(40)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
-                print("GYRO")
+                # print("GYRO")
         def Display_mag(self):
                 self.lastbutton = "mag"
                 self.timer.setInterval(40)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
+
         def Display_pressure(self):
                 self.lastbutton = "pressure"
                 self.timer.setInterval(40)
@@ -67,11 +68,11 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.timer.timeout.connect(self.Plotting)
 
         def Plotting(self):
-                self.graph_widget.graphicsView.plot(self.count,self.array,clear=True)
-                for x in range(50):
-                        self.array[:-1] = self.array[1:]
-                        self.array[-1]=np.random.normal()
-                print(self.lastbutton)
+                self.graph_widget.graphicsView.plot(range(len(self.array)),self.array,clear=True)
+                # print(self.lastbutton)
+                # for x in range(50):
+                #         self.array[:-1] = self.array[1:]
+                #         self.array[-1]=np.random.normal()
 
 
 if __name__ == "__main__":
