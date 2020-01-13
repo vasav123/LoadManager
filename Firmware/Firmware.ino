@@ -1,3 +1,5 @@
+#include <dummy.h>
+
 #include <Wire.h>
 #include <SPI.h>
 #include <WiFi.h>
@@ -6,8 +8,8 @@
 
 #include <SparkFunLSM9DS1.h>
 
-const char* ssid     = "Vasav-Computer";
-const char* password = "6fQBxWeq";
+const char* ssid     = "Michael-Computer";//"Michael-Computer" -- "Vasav-Computer"
+const char* password = "6fQBxWeq";//Same password for both
 const char* mqtt_server = "10.42.0.1";
 const char* nodeId = "123123123";
 int port = 1883;
