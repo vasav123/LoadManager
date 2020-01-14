@@ -10,7 +10,7 @@
 
 const char* ssid     = "Michael-Computer";//"Michael-Computer" -- "Vasav-Computer"
 const char* password = "6fQBxWeq";//Same password for both
-const char* mqtt_server = "10.42.0.1";
+const char* mqtt_server = "192.168.137.1";//Vasav- "10.42.0.1", Michael, 192.168.137.1
 const char* nodeId = "123123123";
 int port = 1883;
 int packet_num = 0;
