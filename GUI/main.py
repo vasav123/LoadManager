@@ -29,13 +29,18 @@ class TestWindow():
         # self.dataSyncTimer.setInterval(1000)
         # self.dataSyncTimer.start()
         # self.dataSyncTimer.timeout.connect(self.syncData)
-    def syncData(self, dataQueue):#at_q,ab_q,fq_q,fh_q,yt_q,pt_q,rt_q,yb_q,pb_q,rb_q):
+    def syncData(self, at_q,ab_q,fq_q,fh_q,yt_q,pt_q,rt_q,yb_q,pb_q,rb_q):
         while True:
-            # for dataQueue in [at_q,ab_q,fq_q,fh_q,yt_q,pt_q,rt_q,yb_q,pb_q,rb_q] 
-            print(dataQueue.qsize())
-            while (dataQueue.qsize() > 0):
-                array = dataQueue.get_nowait()
-                self.statsWidget_obj.array+=array
+            if (at_q.qsize() > 0):self.statsWidget_obj.at_a += at_q.get_nowait() 
+            if (ab_q.qsize() > 0):self.statsWidget_obj.ab_a += ab_q.get_nowait() 
+            if (fq_q.qsize() > 0):self.statsWidget_obj.fq_a += fq_q.get_nowait() 
+            if (fh_q.qsize() > 0):self.statsWidget_obj.fh_a += fh_q.get_nowait() 
+            if (yt_q.qsize() > 0):self.statsWidget_obj.yt_a += yt_q.get_nowait() 
+            if (pt_q.qsize() > 0):self.statsWidget_obj.pt_a += pt_q.get_nowait() 
+            if (rt_q.qsize() > 0):self.statsWidget_obj.rt_a += rt_q.get_nowait() 
+            if (yb_q.qsize() > 0):self.statsWidget_obj.yb_a += yb_q.get_nowait() 
+            if (pb_q.qsize() > 0):self.statsWidget_obj.pb_a += pb_q.get_nowait() 
+            if (rb_q.qsize() > 0):self.statsWidget_obj.rb_a += rb_q.get_nowait() 
             sleep(0.5)
 
     def exitStats(self):
@@ -56,7 +61,7 @@ if __name__ == '__main__':
     pushThread=threading.Thread(target=pushOnQ)
     pushThread.start()
 
-    pullThread=threading.Thread(target=window.syncData,args=(mqtt_client.at_q,))#mqtt_client.ab_q,mqtt_client.fq_q,mqtt_client.fh_q,mqtt_client.yt_q,mqtt_client.pt_q,mqtt_client.rt_q,mqtt_client.yb_q,mqtt_client.pb_q,mqtt_client.rb_q))
+    pullThread=threading.Thread(target=window.syncData,args=(mqtt_client.at_q, mqtt_client.ab_q,mqtt_client.fq_q,mqtt_client.fh_q,mqtt_client.yt_q,mqtt_client.pt_q,mqtt_client.rt_q,mqtt_client.yb_q,mqtt_client.pb_q,mqtt_client.rb_q))
     pullThread.start()
 
     sys.exit(app.exec_())

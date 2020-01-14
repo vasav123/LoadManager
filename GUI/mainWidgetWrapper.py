@@ -9,6 +9,17 @@ import numpy as np
 
 class mainWidgetWrapper(mainWidget.Ui_Form):
         lastbutton = ""
+        at_a = []
+        ab_a = []
+        fq_a = []
+        fh_a = []
+        yt_a = []
+        pt_a = []
+        rt_a = []
+        yb_a = []
+        pb_a = []
+        rb_a = []
+        plotting_array = None
         def setupUi(self,Form):
                 super(mainWidget.Ui_Form, self).__init__()
                 mainWidget.Ui_Form.setupUi(self,Form)
@@ -37,13 +48,14 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.graph_widget.pressure.clicked.connect(self.Display_pressure)
                 # self.count = np.arange(5000)
                 self.timer = QtCore.QTimer(self.gStats)
-                self.array = []
+                self.plotting_array = self.at_a
                 # np.random.normal(size=5000)
 
                 
                 
         def Display_accel(self):
                 self.lastbutton = "accel"
+                self.plotting_array = self.at_a
                 self.timer.setInterval(40)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
@@ -51,24 +63,27 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 
         def Display_gyro(self):
                 self.lastbutton = "gyro"
+                self.plotting_array = self.yt_a
                 self.timer.setInterval(40)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
                 # print("GYRO")
         def Display_mag(self):
                 self.lastbutton = "mag"
+                self.plotting_array = self.pt_a
                 self.timer.setInterval(40)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
 
         def Display_pressure(self):
                 self.lastbutton = "pressure"
+                self.plotting_array = self.fq_a
                 self.timer.setInterval(40)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
 
         def Plotting(self):
-                self.graph_widget.graphicsView.plot(range(len(self.array)),self.array,clear=True)
+                self.graph_widget.graphicsView.plot(range(len(self.plotting_array)),self.plotting_array,clear=True)
                 # print(self.lastbutton)
                 # for x in range(50):
                 #         self.array[:-1] = self.array[1:]
