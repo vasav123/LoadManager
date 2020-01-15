@@ -1,7 +1,6 @@
 from queue import Queue
 from JSON_Class import *
 import paho.mqtt.client as mqtt
-import os.path
 import csv
 import numpy as np
 
