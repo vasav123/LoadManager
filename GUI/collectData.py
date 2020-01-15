@@ -29,6 +29,7 @@ class collectData(mqtt.Client):
     def on_message(self, mqttc, obj, msg):
         print(str(msg.payload))
         dataObj = Packet(msg.payload)
+        max_size_of_array = dataObj.size
         try:
             self.at_q.put_nowait(dataObj.accel_top)
             self.ab_q.put_nowait(dataObj.accel_bot)
@@ -43,49 +44,50 @@ class collectData(mqtt.Client):
         except Exception as e:
             print("queue full")
 
-        if len(dataObj.accel_top)<10:
-            N= 10 - len(dataObj.accel_top)
-            np.pad(dataObj.accel_top, (0, N), 'constant')
+        if len(dataObj.accel_top)<max_size_of_array:
+            N= max_size_of_array - len(dataObj.accel_top)
+            dataObj.accel_top += [0]*N
 
-        if len(dataObj.accel_bot)<10:
-            N= 10 - len(dataObj.accel_bot)
-            np.pad(dataObj.accel_bot, (0, N), 'constant')
+        if len(dataObj.accel_bot)<max_size_of_array:
+            N= max_size_of_array - len(dataObj.accel_bot)
+            dataObj.accel_bot += [0]*N
 
-        if len(dataObj.fsr_quad)<10:
-            N= 10 - len(dataObj.fsr_quad)
-            np.pad(dataObj.fsr_quad, (0, N), 'constant')
+        if len(dataObj.fsr_quad)<max_size_of_array:
+            N= max_size_of_array - len(dataObj.fsr_quad)
+            dataObj.fsr_quad += [0]*N
 
-        if len(dataObj.fsr_ham)<10:
-            N= 10 - len(dataObj.fsr_ham)
-            np.pad(dataObj.fsr_ham, (0, N), 'constant')
+        if len(dataObj.fsr_ham)<max_size_of_array:
+            N= max_size_of_array - len(dataObj.fsr_ham)
+            dataObj.fsr_ham += [0]*N
 
-        if len(dataObj.yaw_top)<10:
-            N= 10 - len(dataObj.yaw_top)
-            np.pad(dataObj.yaw_top, (0, N), 'constant')
+        if len(dataObj.yaw_top)<max_size_of_array:
+            N= max_size_of_array - len(dataObj.yaw_top)
+            dataObj.yaw_top += [0]*N
 
-        if len(dataObj.pitch_top)<10:
-            N= 10 - len(dataObj.pitch_top)
-            np.pad(dataObj.pitch_top, (0, N), 'constant')
+        if len(dataObj.pitch_top)<max_size_of_array:
+            N= max_size_of_array - len(dataObj.pitch_top)
+            dataObj.pitch_top += [0]*N
 
-        if len(dataObj.roll_top)<10:
-            N= 10 - len(dataObj.roll_top)
-            np.pad(dataObj.roll_top, (0, N), 'constant')
+        if len(dataObj.roll_top)<max_size_of_array:
+            N= max_size_of_array - len(dataObj.roll_top)
+            dataObj.roll_top += [0]*N
 
-        if len(dataObj.yaw_bot)<10:
-            N= 10 - len(dataObj.yaw_bot)
-            np.pad(dataObj.yaw_bot, (0, N), 'constant')
+        if len(dataObj.yaw_bot)<max_size_of_array:
+            N= max_size_of_array - len(dataObj.yaw_bot)
+            dataObj.yaw_bot += [0]*N
 
-        if len(dataObj.pitch_bot)<10:
-            N= 10 - len(dataObj.pitch_bot)
-            np.pad(dataObj.pitch_bot, (0, N), 'constant')
+        if len(dataObj.pitch_bot)<max_size_of_array:
+            N= max_size_of_array - len(dataObj.pitch_bot)
+            dataObj.pitch_bot += [0]*N
 
-        if len(dataObj.roll_bot)<10:
-            N= 10 - len(dataObj.roll_bot)
-            np.pad(dataObj.roll_bot, (0, N), 'constant')
+        if len(dataObj.roll_bot)<max_size_of_array:
+            N= max_size_of_array - len(dataObj.roll_bot)
+            dataObj.roll_bot += [0]*N
 
+        print(len(dataObj.roll_bot))
         i=0
-        while i < 10:        
-            with open('/Users/Jag/Desktop/LoadManager/GUI/sensor_output.csv', 'a') as sensorData:
+        while i < max_size_of_array:        
+            with open('logs/sensor_output.csv', 'a') as sensorData:
                 data = [dataObj.accel_top[i],dataObj.accel_bot[i],dataObj.fsr_quad[i],dataObj.fsr_ham[i],dataObj.yaw_top[i],dataObj.pitch_top[i],dataObj.roll_top[i],dataObj.yaw_bot[i],dataObj.pitch_bot[i],dataObj.roll_bot[i]]
                 writer = csv.writer(sensorData)
                 writer.writerow(data)
