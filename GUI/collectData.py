@@ -42,7 +42,7 @@ class collectData(mqtt.Client):
             self.pb_q.put_nowait(dataObj.pitch_bot)
             self.rb_q.put_nowait(dataObj.roll_bot)
         except Exception as e:
-            print("queue full")
+            print("queue full not going to add to queue")
 
         if len(dataObj.accel_top)<max_size_of_array:
             N= max_size_of_array - len(dataObj.accel_top)
@@ -84,54 +84,11 @@ class collectData(mqtt.Client):
             N= max_size_of_array - len(dataObj.roll_bot)
             dataObj.roll_bot += [0]*N
 
-        print(len(dataObj.roll_bot))
-        i=0
-        while i < max_size_of_array:        
-            with open('logs/sensor_output.csv', 'a') as sensorData:
+        with open('logs/sensor_output.csv', 'a') as sensorData:
+            for i in range(max_size_of_array):    
                 data = [dataObj.accel_top[i],dataObj.accel_bot[i],dataObj.fsr_quad[i],dataObj.fsr_ham[i],dataObj.yaw_top[i],dataObj.pitch_top[i],dataObj.roll_top[i],dataObj.yaw_bot[i],dataObj.pitch_bot[i],dataObj.roll_bot[i]]
                 writer = csv.writer(sensorData)
-                writer.writerow(data)
-                i = i+1
-            
-            
-            
-        #storeData = [self.at_q[i],self.ab_q[i],self.fq_q[i],self.fh_q[i],self.yt_q[i],self.pt_q[i],self.rt_q[i],self.yb_q[i],self.pb_q[i],self.rb_q[i]]
- 
-            
-
-    ##def store_data(at_q,ab_q,fq_q,fh_q,yt_q,pt_q,rt_q,yb_q,pb_q,rb_q):
-        #data = [at_q,ab_q,fq_q,fh_q,yt_q,pt_q,rt_q,yb_q,pb_q,rb_q]
-        #i = 0
-        #while on_connect==0:#while the sensor is on
-          #  at_q[25]=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-           # ab_q[25]=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-           # fq_q[25]=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-           # fh_q[25]=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-           # yt_q[25]=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-            #pt_q[25]=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-            #rt_q[25]=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-            #yb_q[25]=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-            #pb_q[25]=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-            #rb_q[25]=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-            #if i < 25:
-             #   storeData = [at_q[i],ab_q[i],fq_q[i],fh_q[i],yt_q[i],pt_q[i],rt_q[i],yb_q[i],pb_q[i],rb_q[i]]
-             #   with open('sensor_output.csv', 'a') as sensorData:
-             #       writer = csv.writer(sensorData)
-             #       writer.writerow(storeData)
-             #       i=i+1
-
-                    
-
-
-        #sensorData.close
-
-
-
-            
-
-            
-                
-
+                writer.writerow(data)          
     
 if __name__ == "__main__":
     test = collectData()
