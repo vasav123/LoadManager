@@ -1,6 +1,7 @@
 from queue import Queue
 from JSON_Class import *
 import paho.mqtt.client as mqtt
+import os.path
 import csv
 import numpy as np
 
@@ -82,9 +83,9 @@ class collectData(mqtt.Client):
 
         if len(dataObj.roll_bot)<max_size_of_array:
             N= max_size_of_array - len(dataObj.roll_bot)
-            dataObj.roll_bot += [0]*N
+            dataObj.roll_bot += [0]*N         
 
-        with open('logs/sensor_output.csv', 'a') as sensorData:
+        with open('logs/sensor_output.csv', 'a+') as sensorData:
             for i in range(max_size_of_array):    
                 data = [dataObj.accel_top[i],dataObj.accel_bot[i],dataObj.fsr_quad[i],dataObj.fsr_ham[i],dataObj.yaw_top[i],dataObj.pitch_top[i],dataObj.roll_top[i],dataObj.yaw_bot[i],dataObj.pitch_bot[i],dataObj.roll_bot[i]]
                 writer = csv.writer(sensorData)
