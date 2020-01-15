@@ -20,6 +20,8 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         pb_a = []
         rb_a = []
         plotting_array = None
+        size = 0
+        plot = 0
         def setupUi(self,Form):
                 super(mainWidget.Ui_Form, self).__init__()
                 mainWidget.Ui_Form.setupUi(self,Form)
@@ -83,7 +85,12 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.timer.timeout.connect(self.Plotting)
 
         def Plotting(self):
-                self.graph_widget.graphicsView.plot(range(len(self.plotting_array)),self.plotting_array,clear=True)
+                self.size = len(self.plotting_array)-1
+                self.plot = self.size - 40
+                if self.size>40:
+                        self.graph_widget.graphicsView.plot(range(len(self.plotting_array[self.plot:self.size])),self.plotting_array[self.plot:self.size],clear=True)
+                else:
+                        self.graph_widget.graphicsView.plot(range(len(self.plotting_array)),self.plotting_array,clear=True)
                 # print(self.lastbutton)
                 # for x in range(50):
                 #         self.array[:-1] = self.array[1:]
