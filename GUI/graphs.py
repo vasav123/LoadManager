@@ -8,22 +8,24 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-import numpy as np
-import sys
+
 
 class Ui_graphs(object):
     def setupUi(self, graphs):
         graphs.setObjectName("graphs")
         graphs.resize(801, 659)
-        self.verticalLayout = QtWidgets.QVBoxLayout(graphs)
+        self.widget = QtWidgets.QWidget(graphs)
+        self.widget.setGeometry(QtCore.QRect(11, 11, 781, 641))
+        self.widget.setObjectName("widget")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.widget)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.graphicsView = PlotWidget(graphs)
+        self.graphicsView = PlotWidget(self.widget)
         self.graphicsView.setObjectName("graphicsView")
         self.verticalLayout.addWidget(self.graphicsView)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
-        self.horizontalLayout.setContentsMargins(-1, -1, -1, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.accel = QtWidgets.QPushButton(graphs)
+        self.accel = QtWidgets.QPushButton(self.widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -32,7 +34,7 @@ class Ui_graphs(object):
         self.accel.setMaximumSize(QtCore.QSize(16777215, 50))
         self.accel.setObjectName("accel")
         self.horizontalLayout.addWidget(self.accel)
-        self.gyro = QtWidgets.QPushButton(graphs)
+        self.gyro = QtWidgets.QPushButton(self.widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -41,7 +43,7 @@ class Ui_graphs(object):
         self.gyro.setMaximumSize(QtCore.QSize(16777215, 50))
         self.gyro.setObjectName("gyro")
         self.horizontalLayout.addWidget(self.gyro)
-        self.mag = QtWidgets.QPushButton(graphs)
+        self.mag = QtWidgets.QPushButton(self.widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -50,7 +52,7 @@ class Ui_graphs(object):
         self.mag.setMaximumSize(QtCore.QSize(16777215, 50))
         self.mag.setObjectName("mag")
         self.horizontalLayout.addWidget(self.mag)
-        self.pressure = QtWidgets.QPushButton(graphs)
+        self.pressure = QtWidgets.QPushButton(self.widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -59,11 +61,19 @@ class Ui_graphs(object):
         self.pressure.setMaximumSize(QtCore.QSize(16777215, 50))
         self.pressure.setObjectName("pressure")
         self.horizontalLayout.addWidget(self.pressure)
+        self.knee_angle = QtWidgets.QPushButton(self.widget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.MinimumExpanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.knee_angle.sizePolicy().hasHeightForWidth())
+        self.knee_angle.setSizePolicy(sizePolicy)
+        self.knee_angle.setMaximumSize(QtCore.QSize(16777215, 50))
+        self.knee_angle.setObjectName("knee_angle")
+        self.horizontalLayout.addWidget(self.knee_angle)
         self.verticalLayout.addLayout(self.horizontalLayout)
 
         self.retranslateUi(graphs)
         QtCore.QMetaObject.connectSlotsByName(graphs)
-        
 
     def retranslateUi(self, graphs):
         _translate = QtCore.QCoreApplication.translate
@@ -72,6 +82,7 @@ class Ui_graphs(object):
         self.gyro.setText(_translate("graphs", "Gyroscope"))
         self.mag.setText(_translate("graphs", "Magnetometer"))
         self.pressure.setText(_translate("graphs", "Pressure"))
+        self.knee_angle.setText(_translate("graphs", "Knee Angle"))
 from pyqtgraph import PlotWidget
 
 
