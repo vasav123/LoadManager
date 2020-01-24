@@ -45,7 +45,7 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
 
                 #Declare what the buttons do
                 self.graph_widget.accel.clicked.connect(self.Display_accel)
-                self.graph_widget.gyro.clicked.connect(self.Display_gyro)
+                #self.graph_widget.gyro.clicked.connect(self.Display_gyro)
                 self.graph_widget.mag.clicked.connect(self.Display_mag)
                 self.graph_widget.pressure.clicked.connect(self.Display_pressure)
                 self.graph_widget.yaw.clicked.connect(self.Display_yaw)
