@@ -48,6 +48,9 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.graph_widget.gyro.clicked.connect(self.Display_gyro)
                 self.graph_widget.mag.clicked.connect(self.Display_mag)
                 self.graph_widget.pressure.clicked.connect(self.Display_pressure)
+                self.graph_widget.yaw.clicked.connect(self.Display_yaw)
+                self.graph_widget.pitch.clicked.connect(self.Display_pitch)
+                self.graph_widget.roll.clicked.connect(self.Display_roll)
                 # self.count = np.arange(5000)
                 self.timer = QtCore.QTimer(self.gStats)
                 self.plotting_array = self.at_a
@@ -80,6 +83,27 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_pressure(self):
                 self.lastbutton = "pressure"
                 self.plotting_array = self.fq_a
+                self.timer.setInterval(40)
+                self.timer.start()
+                self.timer.timeout.connect(self.Plotting)
+
+        def Display_yaw(self):
+                self.lastbutton = "yaw"
+                self.plotting_array = self.yt_a
+                self.timer.setInterval(40)
+                self.timer.start()
+                self.timer.timeout.connect(self.Plotting)
+
+        def Display_pitch(self):
+                self.lastbutton = "pitch"
+                self.plotting_array = self.pt_a
+                self.timer.setInterval(40)
+                self.timer.start()
+                self.timer.timeout.connect(self.Plotting)
+
+        def Display_roll(self):
+                self.lastbutton = "roll"
+                self.plotting_array = self.rt_a
                 self.timer.setInterval(40)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
