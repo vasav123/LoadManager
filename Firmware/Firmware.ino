@@ -19,6 +19,8 @@ WiFiClient espClient;
 PubSubClient client(espClient);
 
 LSM9DS1 imu;
+LSM9DS1 imu2;
+
 
 #define PRINT_CALCULATED
 #define PRINT_SPEED 250 // 250 ms between prints
@@ -105,8 +107,8 @@ void setup()
 
   setup_wifi();
   client.setServer(mqtt_server, port);
-
   Wire.begin();
+  Wire1.begin(23,18,100000); //23 clk 18 data
   if (imu.begin() == false) // with no arguments, this uses default addresses (AG:0x6B, M:0x1E) and i2c port (Wire).
   {
     Serial.println("Failed to communicate with LSM9DS1.");
@@ -116,6 +118,20 @@ void setup()
                    "Breakout, but may need to be modified " \
                    "if the board jumpers are.");
     while (1);
+  }else{
+    Serial.println("IMU1 connected!");
+  }
+  if (imu2.begin( LSM9DS1_AG_ADDR(1), LSM9DS1_M_ADDR(1), Wire1) == false) // with no arguments, this uses default addresses (AG:0x6B, M:0x1E) and i2c port (Wire).
+  {
+    Serial.println("Failed to communicate with LSM9DS1.");
+    Serial.println("Double-check wiring.");
+    Serial.println("Default settings in this sketch will " \
+                   "work for an out of the box LSM9DS1 " \
+                   "Breakout, but may need to be modified " \
+                   "if the board jumpers are.");
+    while (1);
+  }else{
+    Serial.println("IMU2 connected!");
   }
 }
 
@@ -133,22 +149,36 @@ void loop()
   {
     imu.readMag();
   }
-
+  if ( imu2.gyroAvailable() )
+  {
+    imu2.readGyro();
+  }
+  if ( imu2.accelAvailable() )
+  {
+    imu2.readAccel();
+  }
+  if ( imu2.magAvailable() )
+  {
+    imu2.readMag();
+  }
   if ((lastPrint + PRINT_SPEED) < millis())
   {
-    float heading =0 , pitch = 0 , roll = 0;
+    float heading =0 , pitch = 0 , roll = 0, heading2 = 0, pitch2 = 0, roll2 = 0;
     calcAttitude(imu.ax, imu.ay, imu.az,
                   -imu.my, -imu.mx, imu.mz,
                    &heading, &pitch, &roll);
+    calcAttitude(imu2.ax, imu2.ay, imu2.az,
+                  -imu2.my, -imu2.mx, imu2.mz,
+                   &heading2, &pitch2, &roll2);
    
     packet["pitch_top"][count] = pitch;
-    packet["pitch_bot"][count] = 0;
+    packet["pitch_bot"][count] = pitch2;
     packet["yaw_top"][count] = heading;
-    packet["yaw_bot"][count] = 0;
+    packet["yaw_bot"][count] = heading2;
     packet["roll_top"][count] = roll;
-    packet["roll_bot"][count] = 0;
+    packet["roll_bot"][count] = roll2;
     packet["accel_top"][count] = getMagnitude(imu.calcAccel(imu.ax), imu.calcAccel(imu.ay), imu.calcAccel(imu.az));
-    packet["accel_bot"][count] = 0;
+    packet["accel_bot"][count] = getMagnitude(imu.calcAccel(imu2.ax), imu.calcAccel(imu2.ay), imu.calcAccel(imu2.az));
     packet["fsr_quad"][count] = analogRead(33);
     packet["fsr_ham"][count] = 0;
     count++;
