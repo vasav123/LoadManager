@@ -44,13 +44,18 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 # self.graphs.setLayout(self.hbox2)
 
                 #Declare what the buttons do
-                self.graph_widget.accel.clicked.connect(self.Display_accel)
-                #self.graph_widget.gyro.clicked.connect(self.Display_gyro)
-                self.graph_widget.mag.clicked.connect(self.Display_mag)
-                self.graph_widget.pressure.clicked.connect(self.Display_pressure)
-                self.graph_widget.yaw.clicked.connect(self.Display_yaw)
-                self.graph_widget.pitch.clicked.connect(self.Display_pitch)
-                self.graph_widget.roll.clicked.connect(self.Display_roll)
+                self.graph_widget.accel_t.clicked.connect(self.Display_accel_t)
+                self.graph_widget.accel_b.clicked.connect(self.Display_accel_b)
+                self.graph_widget.yaw_t.clicked.connect(self.Display_yaw_t)
+                self.graph_widget.yaw_b.clicked.connect(self.Display_yaw_b)
+                self.graph_widget.pitch_t.clicked.connect(self.Display_pitch_t)
+                self.graph_widget.pitch_b.clicked.connect(self.Display_pitch_b)
+                self.graph_widget.roll_t.clicked.connect(self.Display_roll_t)
+                self.graph_widget.roll_b.clicked.connect(self.Display_roll_b)
+                self.graph_widget.pressure_t.clicked.connect(self.Display_pressure_t)
+                self.graph_widget.pressure_b.clicked.connect(self.Display_pressure_b)
+                self.graph_widget.knee_angle.clicked.connect(self.Display_knee_angle)
+                
                 # self.count = np.arange(5000)
                 self.timer = QtCore.QTimer(self.gStats)
                 self.plotting_array = self.at_a
@@ -58,52 +63,75 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
 
                 
                 
-        def Display_accel(self):
-                self.lastbutton = "accel"
+        def Display_accel_t(self):
+                self.lastbutton = "accel_t"
                 self.plotting_array = self.at_a
                 self.timer.setInterval(40)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
                 
-                
-        def Display_gyro(self):
-                self.lastbutton = "gyro"
+        def Display_accel_b(self):
+                self.lastbutton = "accel_b"
+                self.plotting_array = self.ab_a
+                self.timer.setInterval(40)
+                self.timer.start()
+                self.timer.timeout.connect(self.Plotting)        
+
+        def Display_yaw_t(self):
+                self.lastbutton = "yaw_t"
                 self.plotting_array = self.yt_a
                 self.timer.setInterval(40)
                 self.timer.start()
-                self.timer.timeout.connect(self.Plotting)
-                # print("GYRO")
-        def Display_mag(self):
-                self.lastbutton = "mag"
-                self.plotting_array = self.pt_a
+                self.timer.timeout.connect(self.Plotting)  
+        def Display_yaw_b(self):
+                self.lastbutton = "yaw_b"
+                self.plotting_array = self.yb_a
                 self.timer.setInterval(40)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
 
-        def Display_pressure(self):
-                self.lastbutton = "pressure"
+        def Display_pitch_t(self):
+                self.lastbutton = "pitch_t"
+                self.plotting_array = self.pt_a
+                self.timer.setInterval(40)
+                self.timer.start()
+                self.timer.timeout.connect(self.Plotting)
+        def Display_pitch_b(self):
+                self.lastbutton = "pitch_b"
+                self.plotting_array = self.pb_a
+                self.timer.setInterval(40)
+                self.timer.start()
+                self.timer.timeout.connect(self.Plotting)
+
+        def Display_roll_t(self):
+                self.lastbutton = "roll_t"
+                self.plotting_array = self.rt_a
+                self.timer.setInterval(40)
+                self.timer.start()
+                self.timer.timeout.connect(self.Plotting)
+        def Display_roll_b(self):
+                self.lastbutton = "roll_b"
+                self.plotting_array = self.rb_a
+                self.timer.setInterval(40)
+                self.timer.start()
+                self.timer.timeout.connect(self.Plotting)
+
+        def Display_pressure_t(self):
+                self.lastbutton = "pressure_t"
                 self.plotting_array = self.fq_a
                 self.timer.setInterval(40)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
-
-        def Display_yaw(self):
-                self.lastbutton = "yaw"
-                self.plotting_array = self.yt_a
+        def Display_pressure_b(self):
+                self.lastbutton = "pressure_b"
+                self.plotting_array = self.fh_a
                 self.timer.setInterval(40)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
 
-        def Display_pitch(self):
-                self.lastbutton = "pitch"
-                self.plotting_array = self.pt_a
-                self.timer.setInterval(40)
-                self.timer.start()
-                self.timer.timeout.connect(self.Plotting)
-
-        def Display_roll(self):
-                self.lastbutton = "roll"
-                self.plotting_array = self.rt_a
+        def Display_knee_angle(self):
+                self.lastbutton = "knee_angle"
+                self.plotting_array = self.fq_a
                 self.timer.setInterval(40)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
