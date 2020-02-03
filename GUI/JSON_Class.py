@@ -3,7 +3,7 @@ class Packet:
     def __init__(self, string):
         if (type(string) == bytes):
             string = string.decode("utf-8")
-        packet = json.loads(string)
+        packet = json.loads(string.strip('\n'))
         self.packet_num = packet['packet_num']
         self.size = packet['size']
         self.accel_top = packet['accel_top']

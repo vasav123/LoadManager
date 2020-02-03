@@ -67,7 +67,7 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_accel_t(self):
                 self.lastbutton = "accel_t"
                 self.plotting_array = self.at_a
-                self.timer.setInterval(40)
+                self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
                 #Set Axis Range
@@ -76,7 +76,7 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_accel_b(self):
                 self.lastbutton = "accel_b"
                 self.plotting_array = self.ab_a
-                self.timer.setInterval(40)
+                self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
                 #Set Axis Range
@@ -85,7 +85,7 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_yaw_t(self):
                 self.lastbutton = "yaw_t"
                 self.plotting_array = self.yt_a
-                self.timer.setInterval(40)
+                self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
                 #Set Axis Range
@@ -94,7 +94,7 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_yaw_b(self):
                 self.lastbutton = "yaw_b"
                 self.plotting_array = self.yb_a
-                self.timer.setInterval(40)
+                self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
                 #Set Axis Range
@@ -103,7 +103,7 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_pitch_t(self):
                 self.lastbutton = "pitch_t"
                 self.plotting_array = self.pt_a
-                self.timer.setInterval(40)
+                self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
                 #Set Axis Range
@@ -111,7 +111,7 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_pitch_b(self):
                 self.lastbutton = "pitch_b"
                 self.plotting_array = self.pb_a
-                self.timer.setInterval(40)
+                self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
                 #Set Axis Range
@@ -120,7 +120,7 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_roll_t(self):
                 self.lastbutton = "roll_t"
                 self.plotting_array = self.rt_a
-                self.timer.setInterval(40)
+                self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
                 #Set Axis Range
@@ -128,7 +128,7 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_roll_b(self):
                 self.lastbutton = "roll_b"
                 self.plotting_array = self.rb_a
-                self.timer.setInterval(40)
+                self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
                 #Set Axis Range
@@ -137,7 +137,7 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_pressure_t(self):
                 self.lastbutton = "pressure_t"
                 self.plotting_array = self.fq_a
-                self.timer.setInterval(40)
+                self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
                 #Set Axis Range
@@ -145,7 +145,7 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_pressure_b(self):
                 self.lastbutton = "pressure_b"
                 self.plotting_array = self.fh_a
-                self.timer.setInterval(40)
+                self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
                 #Set Axis Range
@@ -154,7 +154,7 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_knee_angle(self):
                 self.lastbutton = "knee_angle"
                 self.plotting_array = self.fq_a
-                self.timer.setInterval(40)
+                self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
                 #Set Axis Range
@@ -162,8 +162,8 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
 
         def Plotting(self):
                 self.size = len(self.plotting_array)-1
-                self.plot = self.size - 40
-                if self.size>40:
+                self.plot = self.size - 100
+                if self.size>100:
                         self.graph_widget.graphicsView.plot(range(len(self.plotting_array[self.plot:self.size])),self.plotting_array[self.plot:self.size],clear=True)
                 else:
                         self.graph_widget.graphicsView.plot(range(len(self.plotting_array)),self.plotting_array,clear=True)

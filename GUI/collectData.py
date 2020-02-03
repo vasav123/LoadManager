@@ -5,16 +5,16 @@ import csv
 import numpy as np
 
 class collectData(mqtt.Client):
-    at_q = Queue(25)
-    ab_q = Queue(25)
-    fq_q = Queue(25)
-    fh_q = Queue(25)
-    yt_q = Queue(25)
-    pt_q = Queue(25)
-    rt_q = Queue(25)
-    yb_q = Queue(25)
-    pb_q = Queue(25)
-    rb_q = Queue(25)
+    at_q = Queue(500)
+    ab_q = Queue(500)
+    fq_q = Queue(500)
+    fh_q = Queue(500)
+    yt_q = Queue(500)
+    pt_q = Queue(500)
+    rt_q = Queue(500)
+    yb_q = Queue(500)
+    pb_q = Queue(500)
+    rb_q = Queue(500)
     
     def __init__(self):
         mqtt.Client.__init__(self)
@@ -84,7 +84,7 @@ class collectData(mqtt.Client):
             N= max_size_of_array - len(dataObj.roll_bot)
             dataObj.roll_bot += [0]*N         
 
-        with open('logs/sensor_output.csv', 'a+') as sensorData:
+        with open('logs/sensor_output.csv', 'a+', newline='') as sensorData:
             for i in range(max_size_of_array):    
                 data = [dataObj.accel_top[i],dataObj.accel_bot[i],dataObj.fsr_quad[i],dataObj.fsr_ham[i],dataObj.yaw_top[i],dataObj.pitch_top[i],dataObj.roll_top[i],dataObj.yaw_bot[i],dataObj.pitch_bot[i],dataObj.roll_bot[i]]
                 writer = csv.writer(sensorData)
