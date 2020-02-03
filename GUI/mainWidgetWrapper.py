@@ -55,6 +55,7 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.graph_widget.pressure_t.clicked.connect(self.Display_pressure_t)
                 self.graph_widget.pressure_b.clicked.connect(self.Display_pressure_b)
                 self.graph_widget.knee_angle.clicked.connect(self.Display_knee_angle)
+
                 
                 # self.count = np.arange(5000)
                 self.timer = QtCore.QTimer(self.gStats)
@@ -69,26 +70,35 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.timer.setInterval(40)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
+                #Set Axis Range
+                self.graph_widget.graphicsView.setYRange(0,5)
                 
         def Display_accel_b(self):
                 self.lastbutton = "accel_b"
                 self.plotting_array = self.ab_a
                 self.timer.setInterval(40)
                 self.timer.start()
-                self.timer.timeout.connect(self.Plotting)        
+                self.timer.timeout.connect(self.Plotting)
+                #Set Axis Range
+                self.graph_widget.graphicsView.setYRange(0,5)
 
         def Display_yaw_t(self):
                 self.lastbutton = "yaw_t"
                 self.plotting_array = self.yt_a
                 self.timer.setInterval(40)
                 self.timer.start()
-                self.timer.timeout.connect(self.Plotting)  
+                self.timer.timeout.connect(self.Plotting)
+                #Set Axis Range
+                self.graph_widget.graphicsView.setYRange(-180,180)
+                
         def Display_yaw_b(self):
                 self.lastbutton = "yaw_b"
                 self.plotting_array = self.yb_a
                 self.timer.setInterval(40)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
+                #Set Axis Range
+                self.graph_widget.graphicsView.setYRange(-180,180)
 
         def Display_pitch_t(self):
                 self.lastbutton = "pitch_t"
@@ -96,12 +106,16 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.timer.setInterval(40)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
+                #Set Axis Range
+                self.graph_widget.graphicsView.setYRange(-180,180)
         def Display_pitch_b(self):
                 self.lastbutton = "pitch_b"
                 self.plotting_array = self.pb_a
                 self.timer.setInterval(40)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
+                #Set Axis Range
+                self.graph_widget.graphicsView.setYRange(-180,180)
 
         def Display_roll_t(self):
                 self.lastbutton = "roll_t"
@@ -109,12 +123,16 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.timer.setInterval(40)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
+                #Set Axis Range
+                self.graph_widget.graphicsView.setYRange(-180,180)
         def Display_roll_b(self):
                 self.lastbutton = "roll_b"
                 self.plotting_array = self.rb_a
                 self.timer.setInterval(40)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
+                #Set Axis Range
+                self.graph_widget.graphicsView.setYRange(-180,180)
 
         def Display_pressure_t(self):
                 self.lastbutton = "pressure_t"
@@ -122,12 +140,16 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.timer.setInterval(40)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
+                #Set Axis Range
+                self.graph_widget.graphicsView.setYRange(0,4096)
         def Display_pressure_b(self):
                 self.lastbutton = "pressure_b"
                 self.plotting_array = self.fh_a
                 self.timer.setInterval(40)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
+                #Set Axis Range
+                self.graph_widget.graphicsView.setYRange(0,4096)
 
         def Display_knee_angle(self):
                 self.lastbutton = "knee_angle"
@@ -135,6 +157,8 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.timer.setInterval(40)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
+                #Set Axis Range
+                self.graph_widget.graphicsView.setYRange(0,120)
 
         def Plotting(self):
                 self.size = len(self.plotting_array)-1
