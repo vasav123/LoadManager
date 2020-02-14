@@ -27,7 +27,7 @@ class collectData(mqtt.Client):
         return 0
 
     def on_message(self, mqttc, obj, msg):
-        print(str(msg.payload))
+        #print(str(msg.payload))
         dataObj = Packet(msg.payload)
         max_size_of_array = dataObj.size
         try:

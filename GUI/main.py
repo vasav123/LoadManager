@@ -41,7 +41,7 @@ class TestWindow():
             if (yb_q.qsize() > 0):self.statsWidget_obj.yb_a += yb_q.get_nowait() 
             if (pb_q.qsize() > 0):self.statsWidget_obj.pb_a += pb_q.get_nowait() 
             if (rb_q.qsize() > 0):self.statsWidget_obj.rb_a += rb_q.get_nowait() 
-            sleep(0.5)
+            sleep(0.01)
 
     def exitStats(self):
         self.ui.appWidgets.setCurrentIndex(0)
