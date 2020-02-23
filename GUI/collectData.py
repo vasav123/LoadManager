@@ -87,6 +87,7 @@ class collectData(mqtt.Client):
         with open('logs/sensor_output.csv', 'a+', newline='') as sensorData:
             for i in range(max_size_of_array):    
                 data = [dataObj.accel_top[i],dataObj.accel_bot[i],dataObj.fsr_quad[i],dataObj.fsr_ham[i],dataObj.yaw_top[i],dataObj.pitch_top[i],dataObj.roll_top[i],dataObj.yaw_bot[i],dataObj.pitch_bot[i],dataObj.roll_bot[i]]
+                print(data)
                 writer = csv.writer(sensorData)
                 writer.writerow(data)          
     
