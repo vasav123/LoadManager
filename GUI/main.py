@@ -2,6 +2,7 @@ import sys
 from PyQt5 import   QtGui, QtCore, QtWidgets
 import mainWindow
 from  mainWidgetWrapper import *
+from  RecordWidgetWrapper import *
 import numpy as np
 import threading
 from collectData import *
@@ -22,10 +23,16 @@ class TestWindow():
         self.statsWidget_obj = mainWidgetWrapper()
         self.statsWidget_obj.setupUi(self.statsWidget)
         self.ui.appWidgets.addWidget(self.statsWidget)
+        #
+        self.recordWidget = QtWidgets.QWidget()
+        self.recordWidget_obj = RecordWidgetWrapper()
+        self.statsWidget_obj.setupUi(self.recordWidget)
+        self.ui.appWidgets.addWidget(self.recordWidget)
+        #
         self.ui.appWidgets.setCurrentIndex(0)
-        self.statsWidget_obj.back.clicked.connect(lambda:self.ui.appWidgets.setCurrentIndex(0))
-        self.ui.kawhiButton.clicked.connect(lambda:self.ui.appWidgets.setCurrentIndex(1))
-        self.statsWidget_obj.Record.clicked.connect(lambda:self.ui.appWidgets.setCurrentIndex(2))
+        #self.statsWidget_obj.back.clicked.connect(lambda:self.ui.appWidgets.setCurrentIndex(0))
+        #self.ui.kawhiButton.clicked.connect(lambda:self.ui.appWidgets.setCurrentIndex(1))
+        #self.statsWidget_obj.Record.clicked.connect(lambda:self.ui.appWidgets.setCurrentIndex(2))
         # self.dataSyncTimer = QtCore.QTimer(self.MainWindow)
         # self.dataSyncTimer.setInterval(1000)
         # self.dataSyncTimer.start()
@@ -64,5 +71,8 @@ if __name__ == '__main__':
 
     pullThread=threading.Thread(target=window.syncData,args=(mqtt_client.at_q, mqtt_client.ab_q,mqtt_client.fq_q,mqtt_client.fh_q,mqtt_client.yt_q,mqtt_client.pt_q,mqtt_client.rt_q,mqtt_client.yb_q,mqtt_client.pb_q,mqtt_client.rb_q))
     pullThread.start()
+    window.statsWidget_obj.back.clicked.connect(window.exitStats)
+    window.ui.kawhiButton.clicked.connect(lambda:window.ui.appWidgets.setCurrentIndex(1))
+    window.statsWidget_obj.Record.clicked.connect(lambda:window.ui.appWidgets.setCurrentIndex(2))
 
     sys.exit(app.exec_())
