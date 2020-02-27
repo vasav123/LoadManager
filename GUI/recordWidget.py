@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'mainWidget.ui'
+# Form implementation generated from reading ui file 'recordWidget.ui'
 #
 # Created by: PyQt5 UI code generator 5.13.2
 #
@@ -27,31 +27,20 @@ class Ui_Form(object):
         self.widget.setObjectName("widget")
         self.gridLayout = QtWidgets.QGridLayout(self.widget)
         self.gridLayout.setObjectName("gridLayout")
-        self.Record = QtWidgets.QPushButton(self.widget)
+        self.back_2 = QtWidgets.QPushButton(self.widget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Record.sizePolicy().hasHeightForWidth())
-        self.Record.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setPointSize(14)
-        self.Record.setFont(font)
-        self.Record.setObjectName("Record")
-        self.gridLayout.addWidget(self.Record, 0, 2, 2, 1)
-        self.back = QtWidgets.QPushButton(self.widget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.back.sizePolicy().hasHeightForWidth())
-        self.back.setSizePolicy(sizePolicy)
-        self.back.setMaximumSize(QtCore.QSize(100, 200))
+        sizePolicy.setHeightForWidth(self.back_2.sizePolicy().hasHeightForWidth())
+        self.back_2.setSizePolicy(sizePolicy)
+        self.back_2.setMaximumSize(QtCore.QSize(100, 200))
         font = QtGui.QFont()
         font.setPointSize(18)
         font.setBold(False)
         font.setWeight(50)
-        self.back.setFont(font)
-        self.back.setObjectName("back")
-        self.gridLayout.addWidget(self.back, 0, 0, 2, 1)
+        self.back_2.setFont(font)
+        self.back_2.setObjectName("back_2")
+        self.gridLayout.addWidget(self.back_2, 0, 0, 2, 1)
         self.player = QtWidgets.QLabel(self.widget)
         self.player.setEnabled(True)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
@@ -110,8 +99,7 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.Record.setText(_translate("Form", "Record"))
-        self.back.setText(_translate("Form", "←"))
+        self.back_2.setText(_translate("Form", "←"))
         self.player.setText(_translate("Form", "Kawhi Leonard"))
 
 

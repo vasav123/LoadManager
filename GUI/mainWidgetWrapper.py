@@ -65,7 +65,8 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 
                 
         def Display_accel_t(self):
-                self.lastbutton = "accel_t"
+                self.lastbutton = "Acceleration Top"
+                self.graph_widget.ButtonPressed.setText(self.lastbutton)
                 self.plotting_array = self.at_a
                 self.timer.setInterval(5)
                 self.timer.start()
@@ -74,7 +75,8 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.graph_widget.graphicsView.setYRange(0,5)
                 
         def Display_accel_b(self):
-                self.lastbutton = "accel_b"
+                self.lastbutton = "Acceleration Bottom"
+                self.graph_widget.ButtonPressed.setText(self.lastbutton)
                 self.plotting_array = self.ab_a
                 self.timer.setInterval(5)
                 self.timer.start()
@@ -83,7 +85,8 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.graph_widget.graphicsView.setYRange(0,5)
 
         def Display_yaw_t(self):
-                self.lastbutton = "yaw_t"
+                self.lastbutton = "Yaw Top"
+                self.graph_widget.ButtonPressed.setText(self.lastbutton)
                 self.plotting_array = self.yt_a
                 self.timer.setInterval(5)
                 self.timer.start()
@@ -92,7 +95,8 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.graph_widget.graphicsView.setYRange(-180,180)
                 
         def Display_yaw_b(self):
-                self.lastbutton = "yaw_b"
+                self.lastbutton = "Yaw Bottom"
+                self.graph_widget.ButtonPressed.setText(self.lastbutton)
                 self.plotting_array = self.yb_a
                 self.timer.setInterval(5)
                 self.timer.start()
@@ -101,7 +105,8 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.graph_widget.graphicsView.setYRange(-180,180)
 
         def Display_pitch_t(self):
-                self.lastbutton = "pitch_t"
+                self.lastbutton = "Pitch Top"
+                self.graph_widget.ButtonPressed.setText(self.lastbutton)
                 self.plotting_array = self.pt_a
                 self.timer.setInterval(5)
                 self.timer.start()
@@ -109,7 +114,8 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 #Set Axis Range
                 self.graph_widget.graphicsView.setYRange(-180,180)
         def Display_pitch_b(self):
-                self.lastbutton = "pitch_b"
+                self.lastbutton = "Pitch Bottom"
+                self.graph_widget.ButtonPressed.setText(self.lastbutton)
                 self.plotting_array = self.pb_a
                 self.timer.setInterval(5)
                 self.timer.start()
@@ -118,7 +124,8 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.graph_widget.graphicsView.setYRange(-180,180)
 
         def Display_roll_t(self):
-                self.lastbutton = "roll_t"
+                self.lastbutton = "Roll Top"
+                self.graph_widget.ButtonPressed.setText(self.lastbutton)
                 self.plotting_array = self.rt_a
                 self.timer.setInterval(5)
                 self.timer.start()
@@ -126,7 +133,8 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 #Set Axis Range
                 self.graph_widget.graphicsView.setYRange(-180,180)
         def Display_roll_b(self):
-                self.lastbutton = "roll_b"
+                self.lastbutton = "Roll Bottom"
+                self.graph_widget.ButtonPressed.setText(self.lastbutton)
                 self.plotting_array = self.rb_a
                 self.timer.setInterval(5)
                 self.timer.start()
@@ -135,7 +143,8 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.graph_widget.graphicsView.setYRange(-180,180)
 
         def Display_pressure_t(self):
-                self.lastbutton = "pressure_t"
+                self.lastbutton = "Pressure Top"
+                self.graph_widget.ButtonPressed.setText(self.lastbutton)
                 self.plotting_array = self.fq_a
                 self.timer.setInterval(5)
                 self.timer.start()
@@ -143,7 +152,8 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 #Set Axis Range
                 self.graph_widget.graphicsView.setYRange(0,4096)
         def Display_pressure_b(self):
-                self.lastbutton = "pressure_b"
+                self.lastbutton = "Pressure Bottom"
+                self.graph_widget.ButtonPressed.setText(self.lastbutton)
                 self.plotting_array = self.fh_a
                 self.timer.setInterval(5)
                 self.timer.start()
@@ -152,7 +162,8 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.graph_widget.graphicsView.setYRange(0,4096)
 
         def Display_knee_angle(self):
-                self.lastbutton = "knee_angle"
+                self.lastbutton = "Knee Angle"
+                self.graph_widget.ButtonPressed.setText(self.lastbutton)
                 self.plotting_array = self.fq_a
                 self.timer.setInterval(5)
                 self.timer.start()

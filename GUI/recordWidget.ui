@@ -32,26 +32,8 @@
       </size>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="2" rowspan="2">
-       <widget class="QPushButton" name="Record">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>14</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Record</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="0" rowspan="2">
-       <widget class="QPushButton" name="back">
+       <widget class="QPushButton" name="back_2">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -121,7 +103,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QFrame" name="playerStats">
+       <widget class="QFrame" name="recordControl">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -151,14 +133,16 @@
           <number>0</number>
          </property>
          <item>
-          <layout class="QHBoxLayout" name="psbox">
-           <property name="spacing">
-            <number>9</number>
-           </property>
-           <property name="sizeConstraint">
-            <enum>QLayout::SetDefaultConstraint</enum>
-           </property>
-          </layout>
+          <widget class="QWidget" name="widget" native="true">
+           <layout class="QHBoxLayout" name="psbox">
+            <property name="spacing">
+             <number>9</number>
+            </property>
+            <property name="sizeConstraint">
+             <enum>QLayout::SetDefaultConstraint</enum>
+            </property>
+           </layout>
+          </widget>
          </item>
         </layout>
        </widget>
