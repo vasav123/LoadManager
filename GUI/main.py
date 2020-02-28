@@ -2,7 +2,7 @@ import sys
 from PyQt5 import   QtGui, QtCore, QtWidgets
 import mainWindow
 from  mainWidgetWrapper import *
-from  recordWidgetWrapper import *
+from  RecordWidgetWrapper import *
 import numpy as np
 import threading
 from collectData import *
