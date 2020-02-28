@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RecordControl</class>
- <widget class="QWidget" name="RecordControl">
+ <class>recordControl</class>
+ <widget class="QWidget" name="recordControl">
   <property name="geometry">
    <rect>
     <x>0</x>

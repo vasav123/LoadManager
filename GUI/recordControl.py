@@ -10,18 +10,18 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_RecordControl(object):
-    def setupUi(self, RecordControl):
-        RecordControl.setObjectName("RecordControl")
-        RecordControl.resize(640, 630)
+class Ui_recordControl(object):
+    def setupUi(self, recordControl):
+        recordControl.setObjectName("recordControl")
+        recordControl.resize(640, 630)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(5)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(RecordControl.sizePolicy().hasHeightForWidth())
-        RecordControl.setSizePolicy(sizePolicy)
-        self.horizontalLayout_8 = QtWidgets.QHBoxLayout(RecordControl)
+        sizePolicy.setHeightForWidth(recordControl.sizePolicy().hasHeightForWidth())
+        recordControl.setSizePolicy(sizePolicy)
+        self.horizontalLayout_8 = QtWidgets.QHBoxLayout(recordControl)
         self.horizontalLayout_8.setObjectName("horizontalLayout_8")
-        self.frame = QtWidgets.QFrame(RecordControl)
+        self.frame = QtWidgets.QFrame(recordControl)
         self.frame.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
@@ -94,24 +94,24 @@ class Ui_RecordControl(object):
         self.verticalLayout.addWidget(self.stopRecord)
         self.horizontalLayout_8.addWidget(self.frame)
 
-        self.retranslateUi(RecordControl)
-        QtCore.QMetaObject.connectSlotsByName(RecordControl)
+        self.retranslateUi(recordControl)
+        QtCore.QMetaObject.connectSlotsByName(recordControl)
 
-    def retranslateUi(self, RecordControl):
+    def retranslateUi(self, recordControl):
         _translate = QtCore.QCoreApplication.translate
-        RecordControl.setWindowTitle(_translate("RecordControl", "Form"))
-        self.Record_Label.setText(_translate("RecordControl", "Record To CSV"))
-        self.CSVname.setText(_translate("RecordControl", "CSV Name:"))
-        self.startRecord.setText(_translate("RecordControl", "Start Recording"))
-        self.label_9.setText(_translate("RecordControl", "Seconds Elapsed"))
-        self.stopRecord.setText(_translate("RecordControl", "Stop Recording"))
+        recordControl.setWindowTitle(_translate("recordControl", "Form"))
+        self.Record_Label.setText(_translate("recordControl", "Record To CSV"))
+        self.CSVname.setText(_translate("recordControl", "CSV Name:"))
+        self.startRecord.setText(_translate("recordControl", "Start Recording"))
+        self.label_9.setText(_translate("recordControl", "Seconds Elapsed"))
+        self.stopRecord.setText(_translate("recordControl", "Stop Recording"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    RecordControl = QtWidgets.QWidget()
-    ui = Ui_RecordControl()
-    ui.setupUi(RecordControl)
-    RecordControl.show()
+    recordControl = QtWidgets.QWidget()
+    ui = Ui_recordControl()
+    ui.setupUi(recordControl)
+    recordControl.show()
     sys.exit(app.exec_())

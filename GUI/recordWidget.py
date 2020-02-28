@@ -10,18 +10,18 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_recordWidget_2(object):
-    def setupUi(self, recordWidget_2):
-        recordWidget_2.setObjectName("recordWidget_2")
-        recordWidget_2.resize(1211, 798)
+class Ui_Form(object):
+    def setupUi(self, Form):
+        Form.setObjectName("Form")
+        Form.resize(1211, 798)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(recordWidget_2.sizePolicy().hasHeightForWidth())
-        recordWidget_2.setSizePolicy(sizePolicy)
-        self.verticalLayout = QtWidgets.QVBoxLayout(recordWidget_2)
+        sizePolicy.setHeightForWidth(Form.sizePolicy().hasHeightForWidth())
+        Form.setSizePolicy(sizePolicy)
+        self.verticalLayout = QtWidgets.QVBoxLayout(Form)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.recordWidget = QtWidgets.QWidget(recordWidget_2)
+        self.recordWidget = QtWidgets.QWidget(Form)
         self.recordWidget.setEnabled(True)
         self.recordWidget.setMaximumSize(QtCore.QSize(99999, 50))
         self.recordWidget.setObjectName("recordWidget")
@@ -57,7 +57,7 @@ class Ui_recordWidget_2(object):
         self.player.setObjectName("player")
         self.gridLayout.addWidget(self.player, 0, 1, 2, 1)
         self.verticalLayout.addWidget(self.recordWidget)
-        self.widget_2 = QtWidgets.QWidget(recordWidget_2)
+        self.widget_2 = QtWidgets.QWidget(Form)
         self.widget_2.setObjectName("widget_2")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.widget_2)
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -95,21 +95,11 @@ class Ui_recordWidget_2(object):
         self.horizontalLayout_2.addWidget(self.graphs)
         self.verticalLayout.addWidget(self.widget_2)
 
-        self.retranslateUi(recordWidget_2)
-        QtCore.QMetaObject.connectSlotsByName(recordWidget_2)
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
 
-    def retranslateUi(self, recordWidget_2):
+    def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        recordWidget_2.setWindowTitle(_translate("recordWidget_2", "Form"))
-        self.back_2.setText(_translate("recordWidget_2", "←"))
-        self.player.setText(_translate("recordWidget_2", "Kawhi Leonard"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    recordWidget_2 = QtWidgets.QWidget()
-    ui = Ui_recordWidget_2()
-    ui.setupUi(recordWidget_2)
-    recordWidget_2.show()
-    sys.exit(app.exec_())
+        Form.setWindowTitle(_translate("Form", "Form"))
+        self.back_2.setText(_translate("Form", "←"))
+        self.player.setText(_translate("Form", "Kawhi Leonard"))

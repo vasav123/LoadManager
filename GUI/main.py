@@ -2,7 +2,7 @@ import sys
 from PyQt5 import   QtGui, QtCore, QtWidgets
 import mainWindow
 from  mainWidgetWrapper import *
-from  RecordWidgetWrapper import *
+from  recordWidgetWrapper import *
 import numpy as np
 import threading
 from collectData import *
@@ -34,6 +34,7 @@ class TestWindow():
         self.statsWidget_obj.back.clicked.connect(self.exitStats)#lambda:self.ui.appWidgets.setCurrentIndex(0))
         self.ui.kawhiButton.clicked.connect(lambda:self.ui.appWidgets.setCurrentIndex(1))
         self.statsWidget_obj.Record.clicked.connect(lambda:self.ui.appWidgets.setCurrentIndex(2))
+        self.recordWidget_obj.back_2.clicked.connect(lambda:self.ui.appWidgets.setCurrentIndex(1))
         # self.dataSyncTimer = QtCore.QTimer(self.MainWindow)
         # self.dataSyncTimer.setInterval(1000)
         # self.dataSyncTimer.start()
