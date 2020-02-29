@@ -1,8 +1,8 @@
 import sys
 from PyQt5 import   QtGui, QtCore, QtWidgets
 import mainWindow
-from  mainWidgetWrapper import *
-from  recordWidgetWrapper import *
+from recordControl import *
+from mainWidgetWrapper import *
 import numpy as np
 import threading
 from collectData import *
@@ -22,23 +22,29 @@ class TestWindow():
         self.statsWidget = QtWidgets.QWidget()
         self.statsWidget_obj = mainWidgetWrapper()
         self.statsWidget_obj.setupUi(self.statsWidget)
+        
         self.ui.appWidgets.addWidget(self.statsWidget)
-        #
-        self.recordWidget = QtWidgets.QWidget()
-        self.recordWidget_obj = RecordWidgetWrapper()
-        self.recordWidget_obj.setupUi(self.recordWidget)
-        self.ui.appWidgets.addWidget(self.recordWidget)
         #
         self.ui.appWidgets.setCurrentIndex(0)
 
         self.statsWidget_obj.back.clicked.connect(self.exitStats)#lambda:self.ui.appWidgets.setCurrentIndex(0))
         self.ui.kawhiButton.clicked.connect(lambda:self.ui.appWidgets.setCurrentIndex(1))
-        self.statsWidget_obj.Record.clicked.connect(lambda:self.ui.appWidgets.setCurrentIndex(2))
-        self.recordWidget_obj.back_2.clicked.connect(lambda:self.ui.appWidgets.setCurrentIndex(1))
+        self.statsWidget_obj.Record.clicked.connect(self.Switch_control)
+        
         # self.dataSyncTimer = QtCore.QTimer(self.MainWindow)
         # self.dataSyncTimer.setInterval(1000)
         # self.dataSyncTimer.start()
         # self.dataSyncTimer.timeout.connect(self.syncData)
+
+        #define Recording functions
+        
+    def Switch_control(self):
+        if  self.statsWidget_obj.Record.text() == 'Record':
+            self.statsWidget_obj.playerStats.setCurrentIndex(1)
+            self.statsWidget_obj.Record.setText('Player Stats')
+        else:
+            self.statsWidget_obj.playerStats.setCurrentIndex(0)
+            self.statsWidget_obj.Record.setText('Record')
 
     def syncData(self, at_q,ab_q,fq_q,fh_q,yt_q,pt_q,rt_q,yb_q,pb_q,rb_q):
         while True:
@@ -59,7 +65,6 @@ class TestWindow():
         self.statsWidget_obj.timer.stop()        
 
 def pushOnQ():
-
     rc = 0
     while rc == 0:
         rc=mqtt_client.loop()
@@ -68,7 +73,6 @@ def pushOnQ():
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     window = TestWindow()
-
     pushThread=threading.Thread(target=pushOnQ)
     pushThread.start()
 

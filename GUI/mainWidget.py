@@ -73,7 +73,7 @@ class Ui_Form(object):
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.widget_2)
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.playerStats = QtWidgets.QFrame(self.widget_2)
+        self.playerStats = QtWidgets.QStackedWidget(self.widget_2)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -81,15 +81,6 @@ class Ui_Form(object):
         self.playerStats.setSizePolicy(sizePolicy)
         self.playerStats.setMaximumSize(QtCore.QSize(375, 16777215))
         self.playerStats.setObjectName("playerStats")
-        self.horizontalLayout_7 = QtWidgets.QHBoxLayout(self.playerStats)
-        self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_7.setSpacing(0)
-        self.horizontalLayout_7.setObjectName("horizontalLayout_7")
-        self.psbox = QtWidgets.QHBoxLayout()
-        self.psbox.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
-        self.psbox.setSpacing(9)
-        self.psbox.setObjectName("psbox")
-        self.horizontalLayout_7.addLayout(self.psbox)
         self.horizontalLayout_2.addWidget(self.playerStats)
         self.graphs = QtWidgets.QFrame(self.widget_2)
         self.graphs.setObjectName("graphs")
@@ -105,6 +96,7 @@ class Ui_Form(object):
         self.verticalLayout.addWidget(self.widget_2)
 
         self.retranslateUi(Form)
+        self.playerStats.setCurrentIndex(-1)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):

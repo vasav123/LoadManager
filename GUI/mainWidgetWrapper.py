@@ -2,6 +2,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import mainWidget
 import playerStats
+import recordControl
+from collectData import *
 import sys
 import graphs
 import pyqtgraph as pyg
@@ -30,8 +32,14 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.pStats_widget.setupUi(self.pStats)
                 
                 # self.hbox = QtGui.QHBoxLayout()
-                self.psbox.addWidget(self.pStats)
+                self.playerStats.addWidget(self.pStats)
 
+                self.record = QtWidgets.QWidget()
+                self.record_widget = recordControl.Ui_recordControl()
+                self.record_widget.setupUi(self.record)
+                self.playerStats.addWidget(self.record)
+                
+                self.playerStats.setCurrentIndex(0)
                 # self.playerStats.setLayout(self.hbox)
 
                 self.gStats = QtWidgets.QWidget()
@@ -41,8 +49,10 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 # self.hbox2 = QtGui.QHBoxLayout()
                 self.gbox.addWidget(self.gStats)
 
-                # self.graphs.setLayout(self.hbox2)
-
+                #Declare Start and Stop Recording Functions
+                self.record_widget.startRecord.clicked.connect(self.Start_Record)
+                self.record_widget.stopRecord.clicked.connect(self.Stop_Record)
+                
                 #Declare what the buttons do
                 self.graph_widget.accel_t.clicked.connect(self.Display_accel_t)
                 self.graph_widget.accel_b.clicked.connect(self.Display_accel_b)
@@ -55,14 +65,18 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.graph_widget.pressure_t.clicked.connect(self.Display_pressure_t)
                 self.graph_widget.pressure_b.clicked.connect(self.Display_pressure_b)
                 self.graph_widget.knee_angle.clicked.connect(self.Display_knee_angle)
-
                 
                 # self.count = np.arange(5000)
                 self.timer = QtCore.QTimer(self.gStats)
                 self.plotting_array = self.at_a
                 # np.random.normal(size=5000)
-
                 
+        def Start_Record(self):
+                print('Outputing Recording to: ' + self.record_widget.CSV_output.toPlainText() +'.csv')
+                
+
+        def Stop_Record(self):
+                print('Recording Stopped')
                 
         def Display_accel_t(self):
                 self.lastbutton = "Acceleration Top"

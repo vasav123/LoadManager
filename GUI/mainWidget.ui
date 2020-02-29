@@ -121,7 +121,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QFrame" name="playerStats">
+       <widget class="QStackedWidget" name="playerStats">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -134,33 +134,9 @@
           <height>16777215</height>
          </size>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_7">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <layout class="QHBoxLayout" name="psbox">
-           <property name="spacing">
-            <number>9</number>
-           </property>
-           <property name="sizeConstraint">
-            <enum>QLayout::SetDefaultConstraint</enum>
-           </property>
-          </layout>
-         </item>
-        </layout>
+        <property name="currentIndex">
+         <number>-1</number>
+        </property>
        </widget>
       </item>
       <item>
