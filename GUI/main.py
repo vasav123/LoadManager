@@ -31,13 +31,25 @@ class TestWindow():
         self.statsWidget_obj.back.clicked.connect(self.exitStats)#lambda:self.ui.appWidgets.setCurrentIndex(0))
         self.ui.kawhiButton.clicked.connect(lambda:self.ui.appWidgets.setCurrentIndex(1))
         self.statsWidget_obj.Record.clicked.connect(self.Switch_control)
-        
+
+        #Recording Buttons
+        self.statsWidget_obj.record_widget.startRecord.clicked.connect(self.start_Record)
+        self.statsWidget_obj.record_widget.stopRecord.clicked.connect(self.stop_Record)
         # self.dataSyncTimer = QtCore.QTimer(self.MainWindow)
         # self.dataSyncTimer.setInterval(1000)
         # self.dataSyncTimer.start()
         # self.dataSyncTimer.timeout.connect(self.syncData)
 
         #define Recording functions
+    def start_Record(self):
+            mqtt_client.fileName = self.statsWidget_obj.record_widget.CSV_output.toPlainText() +'.csv'
+            mqtt_client.writeToFile = True
+            print('Outputing Recording to: ' + mqtt_client.fileName)
+            
+
+    def stop_Record(self):
+            mqtt_client.writeToFile = False
+            print('Recording Stopped')
         
     def Switch_control(self):
         if  self.statsWidget_obj.Record.text() == 'Record':

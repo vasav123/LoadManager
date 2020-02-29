@@ -17,7 +17,7 @@ class collectData(mqtt.Client):
     rb_q = Queue(500)
     
     writeToFile = False
-    fileName = "csv_output.csv"
+    fileName = ""
 
 
     def __init__(self):
@@ -25,6 +25,7 @@ class collectData(mqtt.Client):
         self.connect("localhost",1883, 60)
         self.subscribe([("loadmanager",2)])
         self.message_callback_add("loadmanager", self.on_message)
+
 
     def on_connect(self, mqttc, obj, flags, rc):
         print("rc:"+str(rc))
@@ -88,12 +89,13 @@ class collectData(mqtt.Client):
             N= max_size_of_array - len(dataObj.roll_bot)
             dataObj.roll_bot += [0]*N         
 
-        #if self.writeToFile and self.fileName != "":
-        with open('logs/sensor_output.csv', 'a+', newline='') as sensorData:
-            for i in range(max_size_of_array):    
-                data = [dataObj.accel_top[i],dataObj.accel_bot[i],dataObj.fsr_quad[i],dataObj.fsr_ham[i],dataObj.yaw_top[i],dataObj.pitch_top[i],dataObj.roll_top[i],dataObj.yaw_bot[i],dataObj.pitch_bot[i],dataObj.roll_bot[i]]
-                writer = csv.writer(sensorData)
-                writer.writerow(data)          
+        if self.writeToFile and self.fileName != "":
+            with open('logs/sensor_output.csv', 'a+', newline='') as sensorData:
+                for i in range(max_size_of_array):    
+                    data = [dataObj.accel_top[i],dataObj.accel_bot[i],dataObj.fsr_quad[i],dataObj.fsr_ham[i],dataObj.yaw_top[i],dataObj.pitch_top[i],dataObj.roll_top[i],dataObj.yaw_bot[i],dataObj.pitch_bot[i],dataObj.roll_bot[i]]
+                    writer = csv.writer(sensorData)
+                    writer.writerow(data)
+            
 
     def setWriteToFile(self, writeToFile, fileName):
         '''

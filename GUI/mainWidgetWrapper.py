@@ -50,8 +50,6 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.gbox.addWidget(self.gStats)
 
                 #Declare Start and Stop Recording Functions
-                self.record_widget.startRecord.clicked.connect(self.Start_Record)
-                self.record_widget.stopRecord.clicked.connect(self.Stop_Record)
                 
                 #Declare what the buttons do
                 self.graph_widget.accel_t.clicked.connect(self.Display_accel_t)
@@ -71,12 +69,6 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.plotting_array = self.at_a
                 # np.random.normal(size=5000)
                 
-        def Start_Record(self):
-                print('Outputing Recording to: ' + self.record_widget.CSV_output.toPlainText() +'.csv')
-                
-
-        def Stop_Record(self):
-                print('Recording Stopped')
                 
         def Display_accel_t(self):
                 self.lastbutton = "Acceleration Top"
