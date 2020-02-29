@@ -4,7 +4,6 @@ import mainWindow
 from recordControl import *
 from mainWidgetWrapper import *
 from  mainWidgetWrapper import *
-from  RecordWidgetWrapper import *
 import numpy as np
 import threading
 from collectData import *
