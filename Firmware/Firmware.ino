@@ -106,8 +106,8 @@ void setup()
 
   setup_wifi();
   client.setServer(mqtt_server, port);
-  Wire.begin();
-  Wire1.begin(13,14,100000); //23 clk 25 data
+  Wire.begin();               //21 clk 22 data
+  Wire1.begin(13,14,100000); //13 clk 14 data
   SPI.begin();
   pinMode(cs_1, OUTPUT);
   pinMode(cs_2, OUTPUT);
