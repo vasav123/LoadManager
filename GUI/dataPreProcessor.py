@@ -49,6 +49,7 @@ class dataPreProcessor():
 		for i in range(5,self.N-5):
 			if sum(segment_array[i-5:i+5])>5:
 				segment_array[i] = 1
+
 		plt.plot(segment_array);
 		return segment_array
 
@@ -67,6 +68,7 @@ class dataPreProcessor():
 				start = False
 				self.segmetedData.append(sub_array)
 				sub_array = []
+		self.segmetedData = [s for s in self.segmetedData if len(s) > 50]
 		return self.segmetedData
 
 	def waveletTransform(self):
@@ -112,47 +114,47 @@ if __name__ == '__main__':
 		accelDataBot = dataPreProcessor(ab, 200)
 		accelDataBot.removeDCOffset()
 		accelDataBot.applyFilter("bandpass",[2,10],5)
-		accelDataBot.plot()
+		# accelDataBot.plot()
 
 		yawTop = dataPreProcessor(yt, 200)
 		yawTop.removeDCOffset()
 		yawTop.applyFilter("bandpass",[2,10],5)
-		yawTop.plot()
+		# yawTop.plot()
 
 		pitchTop = dataPreProcessor(pt, 200)
 		pitchTop.removeDCOffset()
 		pitchTop.applyFilter("bandpass",[2,10],5)
-		pitchTop.plot()
+		# pitchTop.plot()
 
 		rollTop = dataPreProcessor(rt, 200)
 		rollTop.removeDCOffset()
 		rollTop.applyFilter("bandpass",[2,10],5)
-		rollTop.plot()
+		# rollTop.plot()
 
 		yawBot = dataPreProcessor(yb, 200)
 		yawBot.removeDCOffset()
 		yawBot.applyFilter("bandpass",[2,10],5)
-		yawBot.plot()
+		# yawBot.plot()
 
 		pitchBot = dataPreProcessor(pb, 200)
 		pitchBot.removeDCOffset()
 		pitchBot.applyFilter("bandpass",[2,10],5)
-		pitchBot.plot()
+		# pitchBot.plot()
 
 		rollBot = dataPreProcessor(rb, 200)
 		rollBot.removeDCOffset()
 		rollBot.applyFilter("bandpass",[2,10],5)
-		rollBot.plot()
+		# rollBot.plot()
 
 		fsrQuad = dataPreProcessor(fq, 200)
 		fsrQuad.removeDCOffset()
 		fsrQuad.applyFilter("bandpass",[2,10],5)
-		fsrQuad.plot()	
+		# fsrQuad.plot()	
 
 		fsrHam = dataPreProcessor(fh, 200)
 		fsrHam.removeDCOffset()
 		fsrHam.applyFilter("bandpass",[2,10],5)
-		fsrHam.plot()	
+		# fsrHam.plot()	
 
 		segment_at = accelDataTop.segmentArray(segmentTrain)
 		segment_ab = accelDataBot.segmentArray(segmentTrain)
