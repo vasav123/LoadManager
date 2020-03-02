@@ -17,3 +17,6 @@ GUI/logs/*.csv
 *.GBS
 *.GKO
 *.Txt
+*.pyc
+GUI/segmented/*.csv
+

@@ -13,6 +13,7 @@ class dataPreProcessor():
 		self.N = len(time_series)
 		self.ax =None;
 		self.fig = None;
+		self.segmetedData = []
 
 	def plot(self):
 		self.fig, self.ax = plt.subplots()
@@ -34,22 +35,39 @@ class dataPreProcessor():
 		sos = signal.butter(order, cutoff,btype = filtype,analog = False, output="sos", fs=self.fs)
 		self.time_series = signal.sosfilt(sos,self.time_series)
 
-	def segmentData(self):
+	def segmentDataTrain(self):
 		# self.time_series = abs(np.gradient(self.time_series))
 		# self.time_series = abs(self.time_series)
-		self.time_series = signal.hilbert(self.time_series)
-		self.time_series = np.abs(self.time_series)
+		integrated = np.cumsum(self.time_series)
+		hsignal = signal.hilbert(integrated)
+		envelope = np.abs(hsignal)
 		segment_array = np.array(([0]*self.N))
 		for i in range(self.N):
-			if self.time_series[i] > 2:
+			if envelope[i] > 2.1:
 				segment_array[i] = 1
 
 		for i in range(5,self.N-5):
 			if sum(segment_array[i-5:i+5])>5:
 				segment_array[i] = 1
+		plt.plot(segment_array);
+		return segment_array
 
-		self.ax.plot(segment_array)
-		# self.applyFilter('lowpass', 5, 10)
+	def segmentArray(self, segmentDataTrain):
+		multiplied_signal = np.multiply(segmentDataTrain,self.time_series)
+		plt.plot(multiplied_signal)
+		self.segmetedData = []
+		start = False
+		sub_array = []
+		for i in range(len(segmentDataTrain)):
+			if (segmentDataTrain[i]) == 1:
+				start = True
+				sub_array.append(multiplied_signal[i])
+
+			elif (segmentDataTrain[i] == 0 and start):
+				start = False
+				self.segmetedData.append(sub_array)
+				sub_array = []
+		return self.segmetedData
 
 	def waveletTransform(self):
 		widths = np.arange(1, 31)
@@ -58,53 +76,99 @@ class dataPreProcessor():
 			vmax=abs(cwtmatr).max(), vmin=-abs(cwtmatr).max())
 		plt.show()
 
-	def integrate(self):
-		self.time_series = np.cumsum(self.time_series)
-		# print(min(self.time_series[1:self.N]))
 
 if __name__ == '__main__':
-	with open("/home/vasav/Documents/Capstone/LoadManager/TestingData/Fast_Sampling/Walking_2.csv","r") as dataFile:
-		dataset = csv.reader(dataFile)
-		at = []
-		ab = []
-		fq = []
-		fh = []
-		yt = []
-		pt = []
-		rt = []
-		yb = []
-		pb = []
-		rb = []
-		for row in dataset:
-			at.append(float(row[0]))
-			ab.append(float(row[1]))
-			fq.append(float(row[2]))
-			fh.append(float(row[3]))
-			yt.append(float(row[4]))
-			pt.append(float(row[5]))
-			rt.append(float(row[6]))
-			yb.append(float(row[7]))
-			pb.append(float(row[8]))
-			rb.append(float(row[9]))
+	for x in range(1,11):
+		with open("/home/vasav/Documents/Capstone/LoadManager/TestingData/Fast_Sampling/Walking_"+str(x)+".csv","r") as dataFile:
+			dataset = csv.reader(dataFile)
+			at = []
+			ab = []
+			fq = []
+			fh = []
+			yt = []
+			pt = []
+			rt = []
+			yb = []
+			pb = []
+			rb = []
+			for row in dataset:
+				at.append(float(row[0]))
+				ab.append(float(row[1]))
+				fq.append(float(row[2]))
+				fh.append(float(row[3]))
+				yt.append(float(row[4]))
+				pt.append(float(row[5]))
+				rt.append(float(row[6]))
+				yb.append(float(row[7]))
+				pb.append(float(row[8]))
+				rb.append(float(row[9]))
 
-	accelDataParser = dataPreProcessor(at,200)
-	# pitchBotDataParser = dataPreProcessor(pb,200)
-	# pitchBotDataParser.removeDCOffset()
-	# pitchBotDataParser.applyFilter('lowpass',10,5)
-	accelDataParser.plot()
-	accelDataParser.removeDCOffset()
-	# accelDataParser.fftPlot()
-	accelDataParser.applyFilter("bandpass",[2,10],5)
-	accelDataParser.plot()
-	accelDataParser.integrate()
-	# accelDataParser.removeDCOffset()
-	accelDataParser.plot()
-	accelDataParser.segmentData()
-	# accelDataParser.waveletTransform()
+		accelDataTop = dataPreProcessor(at,200)
+		accelDataTop.removeDCOffset()
+		accelDataTop.applyFilter("bandpass",[2,10],5)
+		accelDataTop.plot()
+		segmentTrain = accelDataTop.segmentDataTrain()
+		
+		accelDataBot = dataPreProcessor(ab, 200)
+		accelDataBot.removeDCOffset()
+		accelDataBot.applyFilter("bandpass",[2,10],5)
+		accelDataBot.plot()
 
-	# subtractedValues = accelDataParser.subtract(pitchBotDataParser)
-	# subtractedValues.plot()
-	# accelDataParser.fftPlot()
-	# accelDataParser.plot()
+		yawTop = dataPreProcessor(yt, 200)
+		yawTop.removeDCOffset()
+		yawTop.applyFilter("bandpass",[2,10],5)
+		yawTop.plot()
 
-	plt.show()
+		pitchTop = dataPreProcessor(pt, 200)
+		pitchTop.removeDCOffset()
+		pitchTop.applyFilter("bandpass",[2,10],5)
+		pitchTop.plot()
+
+		rollTop = dataPreProcessor(rt, 200)
+		rollTop.removeDCOffset()
+		rollTop.applyFilter("bandpass",[2,10],5)
+		rollTop.plot()
+
+		yawBot = dataPreProcessor(yb, 200)
+		yawBot.removeDCOffset()
+		yawBot.applyFilter("bandpass",[2,10],5)
+		yawBot.plot()
+
+		pitchBot = dataPreProcessor(pb, 200)
+		pitchBot.removeDCOffset()
+		pitchBot.applyFilter("bandpass",[2,10],5)
+		pitchBot.plot()
+
+		rollBot = dataPreProcessor(rb, 200)
+		rollBot.removeDCOffset()
+		rollBot.applyFilter("bandpass",[2,10],5)
+		rollBot.plot()
+
+		fsrQuad = dataPreProcessor(fq, 200)
+		fsrQuad.removeDCOffset()
+		fsrQuad.applyFilter("bandpass",[2,10],5)
+		fsrQuad.plot()	
+
+		fsrHam = dataPreProcessor(fh, 200)
+		fsrHam.removeDCOffset()
+		fsrHam.applyFilter("bandpass",[2,10],5)
+		fsrHam.plot()	
+
+		segment_at = accelDataTop.segmentArray(segmentTrain)
+		segment_ab = accelDataBot.segmentArray(segmentTrain)
+		segment_yt = yawTop.segmentArray(segmentTrain)
+		segment_pt = pitchTop.segmentArray(segmentTrain)
+		segment_rt = rollTop.segmentArray(segmentTrain)
+		segment_yb = yawBot.segmentArray(segmentTrain)
+		segment_pb = pitchBot.segmentArray(segmentTrain)
+		segment_rb = rollBot.segmentArray(segmentTrain)
+		segment_fq = fsrQuad.segmentArray(segmentTrain)
+		segment_fh = fsrHam.segmentArray(segmentTrain)
+		
+		# plt.show()
+		for i in range(len(segment_at)):
+			with open('segmented/Walk_'+str(x)+'_'+str(i)+'.csv', 'w', newline='') as sensorData:
+				for j in range(len(segment_at[i])):
+					data = [segment_at[i][j], segment_ab[i][j], segment_yt[i][j], segment_pt[i][j], segment_rt[i][j], segment_yb[i][j], segment_pb[i][j], segment_rb[i][j], segment_fq[i][j], segment_fh[i][j]]
+					writer = csv.writer(sensorData)
+					writer.writerow(data)
