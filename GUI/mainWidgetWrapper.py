@@ -11,8 +11,12 @@ import numpy as np
 
 class mainWidgetWrapper(mainWidget.Ui_Form):
         lastbutton = ""
-        at_a = []
-        ab_a = []
+        ax_t = []
+        ay_t = []
+        az_t = []
+        ax_b = []
+        ay_b = []
+        az_b = []
         fq_a = []
         fh_a = []
         yt_a = []
@@ -52,8 +56,14 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 #Declare Start and Stop Recording Functions
                 
                 #Declare what the buttons do
-                self.graph_widget.accel_t.clicked.connect(self.Display_accel_t)
-                self.graph_widget.accel_b.clicked.connect(self.Display_accel_b)
+                self.graph_widget.AT_X.clicked.connect(self.Display_AT_X)
+                self.graph_widget.AT_Y.clicked.connect(self.Display_AT_Y)
+                self.graph_widget.AT_Z.clicked.connect(self.Display_AT_Z)
+                self.graph_widget.AB_X.clicked.connect(self.Display_AB_X)
+                self.graph_widget.AB_Y.clicked.connect(self.Display_AB_Y)
+                self.graph_widget.AB_Z.clicked.connect(self.Display_AB_Z)
+                self.graph_widget.T_XY.clicked.connect(self.Display_T_XY)
+                self.graph_widget.B_XY.clicked.connect(self.Display_B_XY)
                 self.graph_widget.yaw_t.clicked.connect(self.Display_yaw_t)
                 self.graph_widget.yaw_b.clicked.connect(self.Display_yaw_b)
                 self.graph_widget.pitch_t.clicked.connect(self.Display_pitch_t)
@@ -66,30 +76,90 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 
                 # self.count = np.arange(5000)
                 self.timer = QtCore.QTimer(self.gStats)
-                self.plotting_array = self.at_a
+                #self.plotting_array = self.at_a
                 # np.random.normal(size=5000)
-                
-                
-        def Display_accel_t(self):
-                self.lastbutton = "Acceleration Top"
-                self.graph_widget.ButtonPressed.setText(self.lastbutton)
-                self.plotting_array = self.at_a
-                self.timer.setInterval(5)
-                self.timer.start()
-                self.timer.timeout.connect(self.Plotting)
-                #Set Axis Range
-                self.graph_widget.graphicsView.setYRange(0,5)
-                
-        def Display_accel_b(self):
-                self.lastbutton = "Acceleration Bottom"
-                self.graph_widget.ButtonPressed.setText(self.lastbutton)
-                self.plotting_array = self.ab_a
-                self.timer.setInterval(5)
-                self.timer.start()
-                self.timer.timeout.connect(self.Plotting)
-                #Set Axis Range
-                self.graph_widget.graphicsView.setYRange(0,5)
 
+        def Display_AT_X(self):
+                self.lastbutton = "Acceleration Top X"
+                self.graph_widget.ButtonPressed.setText(self.lastbutton)
+                self.plotting_array = self.ax_t
+                self.timer.setInterval(5)
+                self.timer.start()
+                self.timer.timeout.connect(self.Plotting)
+                #Set Axis Range
+                self.graph_widget.graphicsView.setYRange(-3,3)
+
+        def Display_AT_Y(self):
+                self.lastbutton = "Acceleration Top Y"
+                self.graph_widget.ButtonPressed.setText(self.lastbutton)
+                self.plotting_array = self.ay_t
+                self.timer.setInterval(5)
+                self.timer.start()
+                self.timer.timeout.connect(self.Plotting)
+                #Set Axis Range
+                self.graph_widget.graphicsView.setYRange(-3,3)
+
+        def Display_AT_Z(self):
+                self.lastbutton = "Acceleration Top Z"
+                self.graph_widget.ButtonPressed.setText(self.lastbutton)
+                self.plotting_array = self.az_t
+                self.timer.setInterval(5)
+                self.timer.start()
+                self.timer.timeout.connect(self.Plotting)
+                #Set Axis Range
+                self.graph_widget.graphicsView.setYRange(-3,3)
+
+        def Display_T_XY(self):
+                self.lastbutton = "NOT COMPUTED"
+                self.graph_widget.ButtonPressed.setText(self.lastbutton)
+                self.plotting_array = self.az_t
+                self.timer.setInterval(5)
+                self.timer.start()
+                self.timer.timeout.connect(self.Plotting)
+                #Set Axis Range
+                self.graph_widget.graphicsView.setYRange(-3,3)
+
+        def Display_AB_X(self):
+                self.lastbutton = "Acceleration Bottom X"
+                self.graph_widget.ButtonPressed.setText(self.lastbutton)
+                self.plotting_array = self.ax_b
+                self.timer.setInterval(5)
+                self.timer.start()
+                self.timer.timeout.connect(self.Plotting)
+                #Set Axis Range
+                self.graph_widget.graphicsView.setYRange(-3,3)
+
+        def Display_AB_Y(self):
+                self.lastbutton = "Acceleration Bottom Y"
+                self.graph_widget.ButtonPressed.setText(self.lastbutton)
+                self.plotting_array = self.ay_b
+                self.timer.setInterval(5)
+                self.timer.start()
+                self.timer.timeout.connect(self.Plotting)
+                #Set Axis Range
+                self.graph_widget.graphicsView.setYRange(-3,3)
+
+        def Display_AB_Z(self):
+                self.lastbutton = "Acceleration Bottom Z"
+                self.graph_widget.ButtonPressed.setText(self.lastbutton)
+                self.plotting_array = self.az_b
+                self.timer.setInterval(5)
+                self.timer.start()
+                self.timer.timeout.connect(self.Plotting)
+                #Set Axis Range
+                self.graph_widget.graphicsView.setYRange(-3,3)
+
+        def Display_B_XY(self):
+                self.lastbutton = "NOT COMPUTED"
+                self.graph_widget.ButtonPressed.setText(self.lastbutton)
+                self.plotting_array = self.yt_a
+                self.timer.setInterval(5)
+                self.timer.start()
+                self.timer.timeout.connect(self.Plotting)
+                #Set Axis Range
+                self.graph_widget.graphicsView.setYRange(-3,3)
+
+        
         def Display_yaw_t(self):
                 self.lastbutton = "Yaw Top"
                 self.graph_widget.ButtonPressed.setText(self.lastbutton)
