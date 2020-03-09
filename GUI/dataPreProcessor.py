@@ -82,13 +82,13 @@ class dataPreProcessor():
 ##                new_peaks,_ = signal.find_peaks(self.time_series,distance=40,height = average_peak)
 
                 print(len(final_list))
-                plt.plot(final_list, self.time_series[final_list],"o")
+                #plt.plot(final_list, self.time_series[final_list],"o")
 
                 return final_list
         def segmented_and_peak(self,segment_train, peaks):
                 sp_peaks = []
                 print(len(peaks))
-                for s in (peaks):
+                for s in range(len(peaks)):
                         if (segment_train[s]):
                                 sp_peaks.append(s)
                 print(len(sp_peaks))
