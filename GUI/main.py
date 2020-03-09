@@ -59,18 +59,38 @@ class TestWindow():
             self.statsWidget_obj.playerStats.setCurrentIndex(0)
             self.statsWidget_obj.Record.setText('Record')
 
-    def syncData(self, at_q,ab_q,fq_q,fh_q,yt_q,pt_q,rt_q,yb_q,pb_q,rb_q):
+    def syncData(self, ax_t,ay_t,az_t,ax_b,ay_b,az_b,fq_q,fh_q,gx_t,gy_t,gz_t,gx_b,gy_b,gz_b):
         while True:
-            if (at_q.qsize() > 0):self.statsWidget_obj.at_a += at_q.get_nowait() 
-            if (ab_q.qsize() > 0):self.statsWidget_obj.ab_a += ab_q.get_nowait() 
+            if (ax_t.qsize() > 0):self.statsWidget_obj.ax_t += ax_t.get_nowait()
+            if (ay_t.qsize() > 0):self.statsWidget_obj.ay_t += ay_t.get_nowait()
+            if (az_t.qsize() > 0):self.statsWidget_obj.az_t += az_t.get_nowait()
+            if (ax_b.qsize() > 0):self.statsWidget_obj.ax_b += ax_b.get_nowait()
+            if (ay_b.qsize() > 0):self.statsWidget_obj.ay_b += ay_b.get_nowait()
+            if (az_b.qsize() > 0):self.statsWidget_obj.az_b += az_b.get_nowait()
             if (fq_q.qsize() > 0):self.statsWidget_obj.fq_a += fq_q.get_nowait() 
             if (fh_q.qsize() > 0):self.statsWidget_obj.fh_a += fh_q.get_nowait() 
-            if (yt_q.qsize() > 0):self.statsWidget_obj.yt_a += yt_q.get_nowait() 
-            if (pt_q.qsize() > 0):self.statsWidget_obj.pt_a += pt_q.get_nowait() 
-            if (rt_q.qsize() > 0):self.statsWidget_obj.rt_a += rt_q.get_nowait() 
-            if (yb_q.qsize() > 0):self.statsWidget_obj.yb_a += yb_q.get_nowait() 
-            if (pb_q.qsize() > 0):self.statsWidget_obj.pb_a += pb_q.get_nowait() 
-            if (rb_q.qsize() > 0):self.statsWidget_obj.rb_a += rb_q.get_nowait() 
+            if (gx_t.qsize() > 0):self.statsWidget_obj.gx_t += gx_t.get_nowait() 
+            if (gy_t.qsize() > 0):self.statsWidget_obj.gy_t += gy_t.get_nowait() 
+            if (gz_t.qsize() > 0):self.statsWidget_obj.gz_t += gz_t.get_nowait() 
+            if (gx_b.qsize() > 0):self.statsWidget_obj.gx_b += gx_b.get_nowait() 
+            if (gy_b.qsize() > 0):self.statsWidget_obj.gy_b += gy_b.get_nowait() 
+            if (gz_b.qsize() > 0):self.statsWidget_obj.gz_b += gz_b.get_nowait()
+            if len(self.statsWidget_obj.ax_t)>1000:
+                del self.statsWidget_obj.ax_t[:800]
+                del self.statsWidget_obj.ay_t[:800]
+                del self.statsWidget_obj.az_t[:800]
+                del self.statsWidget_obj.ax_b[:800]
+                del self.statsWidget_obj.ay_b[:800]
+                del self.statsWidget_obj.az_b[:800]
+                del self.statsWidget_obj.fq_a[:800]
+                del self.statsWidget_obj.fh_a[:800]
+                del self.statsWidget_obj.gx_t[:800]
+                del self.statsWidget_obj.gy_t[:800]
+                del self.statsWidget_obj.gz_t[:800]
+                del self.statsWidget_obj.gx_b[:800]
+                del self.statsWidget_obj.gy_b[:800]
+                del self.statsWidget_obj.gz_b[:800]
+##                
             sleep(0.01)
 
     def exitStats(self):
@@ -89,7 +109,7 @@ if __name__ == '__main__':
     pushThread=threading.Thread(target=pushOnQ)
     pushThread.start()
 
-    pullThread=threading.Thread(target=window.syncData,args=(mqtt_client.at_q, mqtt_client.ab_q,mqtt_client.fq_q,mqtt_client.fh_q,mqtt_client.yt_q,mqtt_client.pt_q,mqtt_client.rt_q,mqtt_client.yb_q,mqtt_client.pb_q,mqtt_client.rb_q))
+    pullThread=threading.Thread(target=window.syncData,args=(mqtt_client.ax_t, mqtt_client.ay_t, mqtt_client.az_t,mqtt_client.ax_b, mqtt_client.ay_b, mqtt_client.az_b,mqtt_client.fq_q,mqtt_client.fh_q,mqtt_client.gx_t,mqtt_client.gy_t,mqtt_client.gz_t,mqtt_client.gx_b,mqtt_client.gy_b,mqtt_client.gz_b))
     pullThread.start()
     # window.statsWidget_obj.back.clicked.connect(window.exitStats)
     # window.ui.kawhiButton.clicked.connect(lambda:window.ui.appWidgets.setCurrentIndex(1))
