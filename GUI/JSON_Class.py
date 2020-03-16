@@ -4,18 +4,23 @@ class Packet:
         if (type(string) == bytes):
             string = string.decode("utf-8")
         packet = json.loads(string.strip('\n'))
+        #print(packet)
         self.packet_num = packet['packet_num']
         self.size = packet['size']
-        self.accel_top = packet['accel_top']
-        self.accel_bot = packet['accel_bot']
-        self.fsr_quad = packet['fsr_quad']
-        self.fsr_ham = packet['fsr_ham']
-        self.yaw_top = packet['yaw_top']
-        self.pitch_top = packet['pitch_top']
-        self.roll_top = packet['roll_top']
-        self.yaw_bot = packet['yaw_bot']
-        self.pitch_bot = packet['pitch_bot']
-        self.roll_bot = packet['roll_bot']
+        self.ax_t = packet['ax_t']
+        self.ay_t = packet['ay_t']
+        self.az_t = packet['az_t']
+        self.ax_b = packet['ax_b']
+        self.ay_b = packet['ay_b']
+        self.az_b = packet['az_b']
+        self.fsr_quad = packet['fq']
+        self.fsr_ham = packet['fh']
+        self.gx_t = packet['gx_t']
+        self.gy_t = packet['gy_t']
+        self.gz_t = packet['gz_t']
+        self.gx_b = packet['gx_b']
+        self.gy_b = packet['gy_b']
+        self.gz_b = packet['gz_b']
     
     
 if __name__ == "__main__":    
