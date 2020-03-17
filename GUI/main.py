@@ -85,8 +85,8 @@ class TestWindow():
 
                 self.statsWidget_obj.angle_x_t.append(self.a*(self.statsWidget_obj.angle_x_t[-1] + self.statsWidget_obj.gx_t[-1]*self.dt)+(1-self.a)*rot_x_t)
                 self.statsWidget_obj.angle_x_b.append(self.a*(self.statsWidget_obj.angle_x_b[-1] + self.statsWidget_obj.gx_b[-1]*self.dt)+(1-self.a)*rot_x_b)
-
                 self.statsWidget_obj.knee_angle.append(self.statsWidget_obj.angle_x_t[-1]-self.statsWidget_obj.angle_x_b[-1])
+                
             if len(self.statsWidget_obj.ax_t)>1000:
                 del self.statsWidget_obj.ax_t[:800]
                 del self.statsWidget_obj.ay_t[:800]
