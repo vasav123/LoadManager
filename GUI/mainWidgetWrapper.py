@@ -26,6 +26,10 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         gy_b = []
         gz_b = []
         knee_angle = [0]
+
+        ang_x_t = [0]
+        ang_x_b = [0]
+
         plotting_array = None
         size = 0
         plot = 0

@@ -83,10 +83,10 @@ class TestWindow():
                 rot_x_t = math.degrees(math.atan(self.statsWidget_obj.ay_t[-1]/(self.statsWidget_obj.ax_t[-1]**2 + self.statsWidget_obj.az_t[-1]**2)**0.5))
                 rot_x_b = math.degrees(math.atan(self.statsWidget_obj.ay_b[-1]/(self.statsWidget_obj.ax_b[-1]**2 + self.statsWidget_obj.az_b[-1]**2)**0.5))
 
-                angle_x_t.append(self.a*(angle_x_t[-1] + self.statsWidget_obj.gx_t[-1]*self.dt)+(1-self.a)*rot_x_t)
-                angle_x_b.append(self.a*(angle_x_b[-1] + self.statsWidget_obj.gx_b[-1]*self.dt)+(1-self.a)*rot_x_b)
+                self.statsWidget_obj.angle_x_t.append(self.a*(self.statsWidget_obj.angle_x_t[-1] + self.statsWidget_obj.gx_t[-1]*self.dt)+(1-self.a)*rot_x_t)
+                self.statsWidget_obj.angle_x_b.append(self.a*(self.statsWidget_obj.angle_x_b[-1] + self.statsWidget_obj.gx_b[-1]*self.dt)+(1-self.a)*rot_x_b)
 
-                self.statsWidget_obj.knee_angle.append(angle_x_t-angle_x_b)
+                self.statsWidget_obj.knee_angle.append(self.statsWidget_obj.angle_x_t[-1]-self.statsWidget_obj.angle_x_b[-1])
             if len(self.statsWidget_obj.ax_t)>1000:
                 del self.statsWidget_obj.ax_t[:800]
                 del self.statsWidget_obj.ay_t[:800]
@@ -103,6 +103,8 @@ class TestWindow():
                 del self.statsWidget_obj.gy_b[:800]
                 del self.statsWidget_obj.gz_b[:800]
                 del self.statsWidget_obj.knee_angle[:800]
+                del self.statsWidget_obj.angle_x_t[:800]
+                del self.statsWidget_obj.angle_x_b[:800]
             sleep(0.01)
 
     def exitStats(self):
