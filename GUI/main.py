@@ -9,10 +9,13 @@ import threading
 from collectData import *
 from queue import Queue
 from time import *
+import math
 
 mqtt_client = collectData()
 
 class TestWindow():
+    dt = 0.005
+    a = 0.98
     def __init__(self):
         super(TestWindow, self).__init__()
         self.MainWindow = QtWidgets.QMainWindow()
@@ -75,6 +78,15 @@ class TestWindow():
             if (gx_b.qsize() > 0):self.statsWidget_obj.gx_b += gx_b.get_nowait() 
             if (gy_b.qsize() > 0):self.statsWidget_obj.gy_b += gy_b.get_nowait() 
             if (gz_b.qsize() > 0):self.statsWidget_obj.gz_b += gz_b.get_nowait()
+
+            if (len(self.statsWidget_obj.ay_t)>0):
+                rot_x_t = math.degrees(math.atan(self.statsWidget_obj.ay_t[-1]/(self.statsWidget_obj.ax_t[-1]**2 + self.statsWidget_obj.az_t[-1]**2)**0.5))
+                rot_x_b = math.degrees(math.atan(self.statsWidget_obj.ay_b[-1]/(self.statsWidget_obj.ax_b[-1]**2 + self.statsWidget_obj.az_b[-1]**2)**0.5))
+
+                angle_x_t.append(self.a*(angle_x_t[-1] + self.statsWidget_obj.gx_t[-1]*self.dt)+(1-self.a)*rot_x_t)
+                angle_x_b.append(self.a*(angle_x_b[-1] + self.statsWidget_obj.gx_b[-1]*self.dt)+(1-self.a)*rot_x_b)
+
+                self.statsWidget_obj.knee_angle.append(angle_x_t-angle_x_b)
             if len(self.statsWidget_obj.ax_t)>1000:
                 del self.statsWidget_obj.ax_t[:800]
                 del self.statsWidget_obj.ay_t[:800]
@@ -90,7 +102,7 @@ class TestWindow():
                 del self.statsWidget_obj.gx_b[:800]
                 del self.statsWidget_obj.gy_b[:800]
                 del self.statsWidget_obj.gz_b[:800]
-##                
+                del self.statsWidget_obj.knee_angle[:800]
             sleep(0.01)
 
     def exitStats(self):

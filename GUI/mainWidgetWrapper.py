@@ -25,6 +25,7 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         gx_b = []
         gy_b = []
         gz_b = []
+        knee_angle = [0]
         plotting_array = None
         size = 0
         plot = 0
@@ -241,7 +242,7 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_knee_angle(self):
                 self.lastbutton = "Knee Angle"
                 self.graph_widget.ButtonPressed.setText(self.lastbutton)
-                self.plotting_array = self.fq_a
+                self.plotting_array = self.knee_angle
                 self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)

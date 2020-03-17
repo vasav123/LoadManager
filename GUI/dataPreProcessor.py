@@ -19,6 +19,13 @@ class dataPreProcessor():
         def plot(self):
                 self.fig, self.ax = plt.subplots()
                 time = np.arange(0,self.N/self.fs, 1/self.fs)
+                while(len(time)!=len(self.time_series)):
+                	print(len(time),len(self.time_series))
+                	if (len(time)>len(self.time_series)):
+                		time = np.delete(time, -1)
+                	else:
+	                	time+= [time[-1]+1/self.fs]
+	                	print("hello2")
                 self.ax.plot(time,self.time_series)
 
         def fftPlot(self):
@@ -109,7 +116,7 @@ class dataPreProcessor():
 
 if __name__ == '__main__':
 	for x in range(1,2):
-		with open("/home/vasav/Documents/Capstone/LoadManager/GUI/logs/increasing_speed_2.csv","r") as dataFile:
+		with open("/home/vasav/Documents/Capstone/LoadManager/GUI/logs/Testdegrees.csv","r") as dataFile:
 			dataset = csv.reader(dataFile)
 			ax_t = []
 			ay_t = []
@@ -139,8 +146,11 @@ if __name__ == '__main__':
 			angle_y_b = [0]
 			angle_z_t = [0]
 			angle_z_b = [0]
-			angle= []
-			dt = 0.005
+			angle_xy= []
+			angle_xz= []
+			angle_yz= 	[]
+			dt = 1/200
+			a=0.97
 			for row in dataset:
 				ax_t.append(float(row[0]))
 				ay_t.append(float(row[1]))
@@ -159,22 +169,45 @@ if __name__ == '__main__':
 				gy_b.append(float(row[12]))
 				gz_b.append(float(row[13]))
 
-				angle_x_t.append(0.98*(angle_x_t[-1] + gx_t[-1]*dt)+(0.02)*ax_t[-1])
-				angle_x_b.append(0.98*(angle_x_b[-1] + gx_b[-1]*dt)+(0.02)*ax_b[-1])
-				
-				angle_y_t.append(0.98*(angle_y_t[-1] + gy_t[-1]*dt)+(0.02)*ay_t[-1])
-				angle_y_b.append(0.98*(angle_y_b[-1] + gy_b[-1]*dt)+(0.02)*ay_b[-1])
+				rot_x_t = math.degrees(math.atan(ay_t[-1]/(ax_t[-1]**2 + az_t[-1]**2)**0.5))
+				rot_x_b = math.degrees(math.atan(ay_b[-1]/(ax_b[-1]**2 + az_b[-1]**2)**0.5))
 
-				angle_z_t.append(0.98*(angle_z_t[-1] + gz_t[-1]*dt)+(0.02)*az_t[-1])
-				angle_z_b.append(0.98*(angle_z_b[-1] + gz_b[-1]*dt)+(0.02)*az_b[-1])
+				rot_y_t = math.degrees(math.atan(ax_t[-1]/(ay_t[-1]**2 + az_t[-1]**2)**0.5))
+				rot_y_b = math.degrees(math.atan(ax_b[-1]/(ay_b[-1]**2 + az_b[-1]**2)**0.5))
+
+				# rot_z_t = math.degrees(math.atan(az_t[-1]/(az_t[-1]**2 + az_t[-1]**2)**0.5))
+				# rot_z_b = math.degrees(math.atan(az_b[-1]/(az_b[-1]**2 + az_b[-1]**2)**0.5))
+				
+				# rotation_about_y = 
+				# rotation_about_z = 
+				
+				angle_x_t.append(a*(angle_x_t[-1] + gx_t[-1]*dt)+(1-a)*rot_x_t)
+				angle_x_b.append(a*(angle_x_b[-1] + gx_b[-1]*dt)+(1-a)*rot_x_b)
+				
+				angle_y_t.append(a*(angle_y_t[-1] + gy_t[-1]*dt)+(1-a)*rot_y_t)
+				angle_y_b.append(a*(angle_y_b[-1] + gy_b[-1]*dt)+(1-a)*rot_y_b)
+
+				angle_z_t.append(a*(angle_z_t[-1] + gz_t[-1]*dt)+(1-a)*az_t[-1])
+				angle_z_b.append(a*(angle_z_b[-1] + gz_b[-1]*dt)+(1-a)*az_b[-1])
 
 				# angle.append(angle_x_t[-1]-angle_x_b[-1])
-				ab_dot = angle_x_t[-1]*angle_x_b[-1] + angle_y_t[-1]*angle_y_b[-1]
-				a_mag = (angle_x_t[-1]**2 + angle_y_t[-1]**2)**0.5
-				b_mag = (angle_x_b[-1]**2 + angle_y_b[-1]**2)**0.5
+				# ab_dot_xy = angle_x_t[-1]*angle_x_b[-1] + angle_y_t[-1]*angle_y_b[-1]
+				# a_mag_xy = (angle_x_t[-1]**2 + angle_y_t[-1]**2)**0.5
+				# b_mag_xy = (angle_x_b[-1]**2 + angle_y_b[-1]**2)**0.5
 				
 
-				angle.append(math.degrees (math.acos(ab_dot/(a_mag*b_mag))))
+				# ab_dot_xz = angle_x_t[-1]*angle_x_b[-1] + angle_z_t[-1]*angle_z_b[-1]
+				# a_mag_xz = (angle_x_t[-1]**2 + angle_z_t[-1]**2)**0.5
+				# b_mag_xz = (angle_x_b[-1]**2 + angle_z_b[-1]**2)**0.5
+
+				# ab_dot_yz = angle_y_t[-1]*angle_z_b[-1] + angle_z_t[-1]*angle_z_b[-1]
+				# a_mag_yz = (angle_y_t[-1]**2 + angle_z_t[-1]**2)**0.5
+				# b_mag_yz = (angle_y_b[-1]**2 + angle_z_b[-1]**2)**0.5
+
+				# print(ab_dot_yz,a_mag_yz,b_mag_yz)
+				# angle_xy.append(math.degrees(math.acos(ab_dot_xy/(a_mag_xy*b_mag_xy))))
+				# angle_xz.append(math.degrees(math.acos(ab_dot_xz/(a_mag_xz*b_mag_xz))))
+				# angle_yz.append(math.degrees(math.acos(ab_dot_yz/(a_mag_yz*b_mag_yz))))
 
 				# ab_dot = angle_x_t[-1]*angle_x_b[-1] + angle_y_t[-1]*angle_y_b[-1]
 				# a_mag = (angle_x_t[-1]**2 + angle_y_t[-1]**2)**0.5
@@ -182,31 +215,31 @@ if __name__ == '__main__':
 				# angle.append(math.degrees (math.acos(ab_dot/(a_mag*b_mag))))
 	
 
-	# gyro_x_bot = dataPreProcessor(gy_b,200)
-	# gyro_x_bot.plot()
-	# gyro_x_bot.integrate()
+	# gyro_x_bot = dataPreProcessor(gz_b,200)
 	# gyro_x_bot.applyFilter('lowpass',20,10)
-	# gyro_x_bot.fftPlot()
+	# gyro_x_bot.plot()
 
-	# gyro_x_top = dataPreProcessor(gy_t,200)
-	# gyro_x_top.plot()
-	# gyro_x_top.integrate()
+	gyro_x_top = dataPreProcessor(gx_t,200)
+	gyro_x_top.applyFilter('lowpass',20,10)
+	gyro_x_top.plot()
 
-	# angle_x_t = dataPreProcessor(angle_y_t, 200)
-	# angle_x_t.plot()
+	angle_x_t_obj = dataPreProcessor(angle_x_t, 200)
+	angle_x_t_obj.plot()
 
-	angle_x_b = dataPreProcessor(angle, 200)
-	angle_x_b.applyFilter('lowpass',2,10)
-	angle_x_b.plot()
-	# angle_x_t.integrate()
+	angle_x_b_obj = dataPreProcessor(angle_x_b, 200)
+	angle_x_b_obj.plot()
 
-	# diff = angle_x_t.subtract(angle_x_b)
-	# diff.removeDCOffset()
-	# diff.applyFilter('bandpass',[1,10],10)
-	# diff.plot()
+	angle_y_t_obj = dataPreProcessor(angle_y_t, 200)
+	angle_y_t_obj.plot()
+
+	angle_y_b_obj = dataPreProcessor(angle_y_b, 200)
+	angle_y_b_obj.plot()
+
+
+	knee_angle = angle_x_t_obj.subtract(angle_x_b_obj)
+	knee_angle.plot()
+	# angle_xy_obj = dataPreProcessor(angle_xy,200)
 	# gyro_x_top.applyFilter('lowpass',20,10)
-	# gyro_x_top.fftPlot()
-
-
+	# angle_xy_obj.plot()
 	plt.show()
 
