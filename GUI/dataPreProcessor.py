@@ -18,7 +18,8 @@ class dataPreProcessor():
 
         def plot(self):
                 self.fig, self.ax = plt.subplots()
-                self.ax.plot(self.time_series)
+                time = np.arange(0,self.N/self.fs, 1/self.fs)
+                self.ax.plot(time,self.time_series)
 
         def fftPlot(self):
                 fig, ax = plt.subplots()
