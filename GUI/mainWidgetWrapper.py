@@ -251,7 +251,7 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
                 #Set Axis Range
-                self.graph_widget.graphicsView.setYRange(0,120)
+                self.graph_widget.graphicsView.setYRange(0,180)
 
         def Plotting(self):
                 self.size = len(self.plotting_array)-1
