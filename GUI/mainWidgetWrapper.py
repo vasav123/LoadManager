@@ -27,8 +27,8 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         gz_b = []
         knee_angle = [0]
 
-        ang_x_t = [0]
-        ang_x_b = [0]
+        angle_x_t = [0]
+        angle_x_b = [0]
 
         plotting_array = None
         size = 0
