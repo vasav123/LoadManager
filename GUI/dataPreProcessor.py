@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from matplotlib import style
 import csv 
 import time
+import math
 import pprint
 
 class dataPreProcessor():
@@ -21,7 +22,7 @@ class dataPreProcessor():
 
         def fftPlot(self):
                 fig, ax = plt.subplots()
-                yf = fftpack.fft(self.time_series)
+                yf = abs(fftpack.fft(self.time_series))
                 xf = np.linspace(0.0,self.fs/2.0,self.N//2)
                 ax.plot(xf,2.0/self.N * np.abs(yf[:self.N//2]))
 
@@ -34,7 +35,9 @@ class dataPreProcessor():
         def applyFilter(self, filtype, cutoff, order):
                 sos = signal.butter(order, cutoff,btype = filtype,analog = False, output="sos", fs=self.fs)
                 self.time_series = signal.sosfilt(sos,self.time_series)
-
+        
+        def integrate(self):
+        	self.time_series = np.cumsum(self.time_series)
         def segmentDataTrain(self):
                 # self.time_series = abs(np.gradient(self.time_series))
                 # self.time_series = abs(self.time_series)
@@ -104,100 +107,105 @@ class dataPreProcessor():
 
 
 if __name__ == '__main__':
-        for x in range(1,2):
-                with open(r"C:\Users\mklei\OneDrive\Documents\GitHub\LoadManager\GUI\logs\long_walking_102"+".csv","r") as dataFile:
-                        dataset = csv.reader(dataFile)
-                        at = []
-                        ab = []
-                        fq = []
-                        fh = []
-                        yt = []
-                        pt = []
-                        rt = []
-                        yb = []
-                        pb = []
-                        rb = []
-                        for row in dataset:
-                                at.append(float(row[1]))
-                                ab.append(float(row[0]))
-                                fq.append(float(row[3]))
-                                fh.append(float(row[2]))
-                                yt.append(float(row[7]))
-                                pt.append(float(row[8]))
-                                rt.append(float(row[9]))
-                                yb.append(float(row[4]))
-                                pb.append(float(row[5]))
-                                rb.append(float(row[6]))
+	for x in range(1,2):
+		with open("/home/vasav/Documents/Capstone/LoadManager/GUI/logs/increasing_speed_2.csv","r") as dataFile:
+			dataset = csv.reader(dataFile)
+			ax_t = []
+			ay_t = []
+			az_t = []
+			gx_t = []
+			gy_t = []
+			gz_t = []
+			mx_t = []
+			my_t = []
+			mz_t = []
 
-                accelDataTop = dataPreProcessor(at,200)
-                accelDataTop.removeDCOffset()
-                accelDataTop.fftPlot()
-                accelDataTop.applyFilter("bandpass",[1,40],5)
-                accelDataTop.plot()
-                peaks = accelDataTop.showPeaks()
-                segmentTrain = accelDataTop.segmentDataTrain()
-                accelDataTop.segmented_and_peak(segmentTrain,peaks)
-                
-##              accelDataBot = dataPreProcessor(ab, 200)
-##              accelDataBot.removeDCOffset()
-##              accelDataBot.applyFilter("bandpass",[2,10],5)
-##              accelDataBot.plot()
-##
-##              yawTop = dataPreProcessor(yt, 200)
-##              yawTop.removeDCOffset()
-##              yawTop.applyFilter("bandpass",[2,10],5)
-##              # yawTop.plot()
-##
-##              pitchTop = dataPreProcessor(pt, 200)
-##              pitchTop.removeDCOffset()
-##              pitchTop.applyFilter("bandpass",[2,10],5)
-##              # pitchTop.plot()
-##
-##              rollTop = dataPreProcessor(rt, 200)
-##              rollTop.removeDCOffset()
-##              rollTop.applyFilter("bandpass",[2,10],5)
-##              # rollTop.plot()
-##
-##              yawBot = dataPreProcessor(yb, 200)
-##              yawBot.removeDCOffset()
-##              yawBot.applyFilter("bandpass",[2,10],5)
-##              # yawBot.plot()
-##
-##              pitchBot = dataPreProcessor(pb, 200)
-##              pitchBot.removeDCOffset()
-##              pitchBot.applyFilter("bandpass",[2,10],5)
-##              # pitchBot.plot()
-##
-##              rollBot = dataPreProcessor(rb, 200)
-##              rollBot.removeDCOffset()
-##              rollBot.applyFilter("bandpass",[2,10],5)
-##              # rollBot.plot()
-##
-##              fsrQuad = dataPreProcessor(fq, 200)
-##              fsrQuad.removeDCOffset()
-##              fsrQuad.applyFilter("bandpass",[2,10],5)
-##              # fsrQuad.plot()        
-##
-##              fsrHam = dataPreProcessor(fh, 200)
-##              fsrHam.removeDCOffset()
-##              fsrHam.applyFilter("bandpass",[2,10],5)
-##              # fsrHam.plot() 
-##
-##              segment_at = accelDataTop.segmentArray(segmentTrain)
-##              segment_ab = accelDataBot.segmentArray(segmentTrain)
-##              segment_yt = yawTop.segmentArray(segmentTrain)
-##              segment_pt = pitchTop.segmentArray(segmentTrain)
-##              segment_rt = rollTop.segmentArray(segmentTrain)
-##              segment_yb = yawBot.segmentArray(segmentTrain)
-##              segment_pb = pitchBot.segmentArray(segmentTrain)
-##              segment_rb = rollBot.segmentArray(segmentTrain)
-##              segment_fq = fsrQuad.segmentArray(segmentTrain)
-##              segment_fh = fsrHam.segmentArray(segmentTrain)
-                
-                plt.show()
-##              for i in range(len(segment_at)):
-##                      with open('segmented_2/LongWalk_'+str(x)+'_'+str(i)+'.csv', 'w', newline='') as sensorData:
-##                              for j in range(len(segment_at[i])):
-##                                      data = [segment_at[i][j], segment_ab[i][j], segment_yt[i][j], segment_pt[i][j], segment_rt[i][j], segment_yb[i][j], segment_pb[i][j], segment_rb[i][j], segment_fq[i][j], segment_fh[i][j]]
-##                                      writer = csv.writer(sensorData)
-##                                      writer.writerow(data)
+			ax_b = []
+			ay_b = []
+			az_b = []
+			gx_b = []
+			gy_b = []
+			gz_b = []
+			mx_b = []
+			my_b = []
+			mz_b = []
+
+			fq = []
+			fh = []
+			angle_x_t = [0]
+			angle_x_b = [0]
+			angle_y_t = [0]
+			angle_y_b = [0]
+			angle_z_t = [0]
+			angle_z_b = [0]
+			angle= []
+			dt = 0.005
+			for row in dataset:
+				ax_t.append(float(row[0]))
+				ay_t.append(float(row[1]))
+				az_t.append(float(row[2]))
+				ax_b.append(float(row[3]))
+				ay_b.append(float(row[4]))
+				az_b.append(float(row[5]))
+
+				fq.append(row[6])
+				fh.append(row[7])
+
+				gx_t.append(float(row[8]))
+				gy_t.append(float(row[9]))
+				gz_t.append(float(row[10]))
+				gx_b.append(float(row[11]))
+				gy_b.append(float(row[12]))
+				gz_b.append(float(row[13]))
+
+				angle_x_t.append(0.98*(angle_x_t[-1] + gx_t[-1]*dt)+(0.02)*ax_t[-1])
+				angle_x_b.append(0.98*(angle_x_b[-1] + gx_b[-1]*dt)+(0.02)*ax_b[-1])
+				
+				angle_y_t.append(0.98*(angle_y_t[-1] + gy_t[-1]*dt)+(0.02)*ay_t[-1])
+				angle_y_b.append(0.98*(angle_y_b[-1] + gy_b[-1]*dt)+(0.02)*ay_b[-1])
+
+				angle_z_t.append(0.98*(angle_z_t[-1] + gz_t[-1]*dt)+(0.02)*az_t[-1])
+				angle_z_b.append(0.98*(angle_z_b[-1] + gz_b[-1]*dt)+(0.02)*az_b[-1])
+
+				# angle.append(angle_x_t[-1]-angle_x_b[-1])
+				ab_dot = angle_x_t[-1]*angle_x_b[-1] + angle_y_t[-1]*angle_y_b[-1]
+				a_mag = (angle_x_t[-1]**2 + angle_y_t[-1]**2)**0.5
+				b_mag = (angle_x_b[-1]**2 + angle_y_b[-1]**2)**0.5
+				
+
+				angle.append(math.degrees (math.acos(ab_dot/(a_mag*b_mag))))
+
+				# ab_dot = angle_x_t[-1]*angle_x_b[-1] + angle_y_t[-1]*angle_y_b[-1]
+				# a_mag = (angle_x_t[-1]**2 + angle_y_t[-1]**2)**0.5
+				# b_mag = (angle_x_b[-1]**2 + angle_y_b[-1]**2)**0.5
+				# angle.append(math.degrees (math.acos(ab_dot/(a_mag*b_mag))))
+	
+
+	# gyro_x_bot = dataPreProcessor(gy_b,200)
+	# gyro_x_bot.plot()
+	# gyro_x_bot.integrate()
+	# gyro_x_bot.applyFilter('lowpass',20,10)
+	# gyro_x_bot.fftPlot()
+
+	# gyro_x_top = dataPreProcessor(gy_t,200)
+	# gyro_x_top.plot()
+	# gyro_x_top.integrate()
+
+	# angle_x_t = dataPreProcessor(angle_y_t, 200)
+	# angle_x_t.plot()
+
+	angle_x_b = dataPreProcessor(angle, 200)
+	angle_x_b.applyFilter('lowpass',2,10)
+	angle_x_b.plot()
+	# angle_x_t.integrate()
+
+	# diff = angle_x_t.subtract(angle_x_b)
+	# diff.removeDCOffset()
+	# diff.applyFilter('bandpass',[1,10],10)
+	# diff.plot()
+	# gyro_x_top.applyFilter('lowpass',20,10)
+	# gyro_x_top.fftPlot()
+
+
+	plt.show()
+
