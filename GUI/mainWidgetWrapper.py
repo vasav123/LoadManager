@@ -251,13 +251,13 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
                 #Set Axis Range
-                self.graph_widget.graphicsView.setYRange(0,180)
+                self.graph_widget.graphicsView.setYRange(-100,100)
 
         def Plotting(self):
                 self.size = len(self.plotting_array)-1
                 self.plot = self.size - 100
                 if self.size>100:
-                        self.graph_widget.graphicsView.plot(range(len(self.plotting_array[self.plot:self.size])),self.plotting_array[self.plot:self.size],clear=True)
+                        self.graph_widget.graphicsView.plot(range(len(self.plotting_array[self.plot+1::])),self.plotting_array[self.plot:self.size],clear=True)
                 else:
                         self.graph_widget.graphicsView.plot(range(len(self.plotting_array)),self.plotting_array,clear=True)
                 # print(self.lastbutton)
