@@ -1,10 +1,12 @@
 import sys
 from PyQt5 import   QtGui, QtCore, QtWidgets
 import mainWindow
+from dataPreProcessor import *
 from recordControl import *
 from mainWidgetWrapper import *
 from  mainWidgetWrapper import *
 import numpy as np
+import scipy as sp
 import threading
 from collectData import *
 from queue import Queue
@@ -38,6 +40,15 @@ class TestWindow():
         #Recording Buttons
         self.statsWidget_obj.record_widget.startRecord.clicked.connect(self.start_Record)
         self.statsWidget_obj.record_widget.stopRecord.clicked.connect(self.stop_Record)
+        self.NumSteps = 0
+        self.NumWalk = 0
+        self.NumRun = 0
+        self.NumSprint = 0
+        self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
+        self.statsWidget_obj.pStats_widget.NumRun.display(self.NumRun)
+        self.statsWidget_obj.pStats_widget.NumWalk.display(self.NumWalk)
+        self.statsWidget_obj.pStats_widget.NumSprint.display(self.NumSprint)
+        
         # self.dataSyncTimer = QtCore.QTimer(self.MainWindow)
         # self.dataSyncTimer.setInterval(1000)
         # self.dataSyncTimer.start()
@@ -89,22 +100,47 @@ class TestWindow():
                 except Exception as e:
                     print (e, len(self.statsWidget_obj.angle_x_t),len(self.statsWidget_obj.gx_t))
 
-            if len(self.statsWidget_obj.ax_t)>1000:
+            if len(self.statsWidget_obj.ax_t)>1200:
                 # print( len(self.statsWidget_obj.angle_x_t),len(self.statsWidget_obj.gx_t))
-                del self.statsWidget_obj.ax_t[:800]
-                del self.statsWidget_obj.ay_t[:800]
-                del self.statsWidget_obj.az_t[:800]
-                del self.statsWidget_obj.ax_b[:800]
-                del self.statsWidget_obj.ay_b[:800]
-                del self.statsWidget_obj.az_b[:800]
-                del self.statsWidget_obj.fq_a[:800]
-                del self.statsWidget_obj.fh_a[:800]
-                del self.statsWidget_obj.gx_t[:800]
-                del self.statsWidget_obj.gy_t[:800]
-                del self.statsWidget_obj.gz_t[:800]
-                del self.statsWidget_obj.gx_b[:800]
-                del self.statsWidget_obj.gy_b[:800]
-                del self.statsWidget_obj.gz_b[:800]
+                ave = np.sqrt(np.average(self.statsWidget_obj.ax_b[0:600])^2 + np.average(self.statsWidget_obj.ay_b[0:600])^2 + np.average(self.statsWidget_obj.az_b[0:600])^2)
+                gxb = applyFilter(self.statsWidget_obj.gx_b[0:600],'bandpass',[0.1,20],10)
+                gxb = -gxb
+                count = 0
+                if ave<1.4:
+                    count = len(signal.find_peaks(gxb, height= 30 , distance=100))
+                    self.NumSteps = self.NumSteps + count
+                    self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
+                    self.NumWalk = self.NumWalk + count
+                    self.statsWidget_obj.pStats_widget.NumWalk.display(self.NumWalk)
+                    
+                if 1.4<ave<2.5:
+                    count = len(signal.find_peaks(gxb, height= 185, distance=20))
+                    self.NumSteps = self.NumSteps + count
+                    self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
+                    self.NumRun = self.NumRun + count
+                    self.statsWidget_obj.pStats_widget.NumRun.display(self.NumRun)
+
+                if ave>2.5:
+                    count = len(signal.find_peaks(gxb, height= 220 , distance=10))
+                    self.NumSteps = self.NumSteps + count
+                    self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
+                    self.NumSprint = self.NumSprint + count
+                    self.statsWidget_obj.pStats_widget.NumSprint.display(self.NumSprint)
+                    
+                del self.statsWidget_obj.ax_t[:600]
+                del self.statsWidget_obj.ay_t[:600]
+                del self.statsWidget_obj.az_t[:600]
+                del self.statsWidget_obj.ax_b[:600]
+                del self.statsWidget_obj.ay_b[:600]
+                del self.statsWidget_obj.az_b[:600]
+                del self.statsWidget_obj.fq_a[:600]
+                del self.statsWidget_obj.fh_a[:600]
+                del self.statsWidget_obj.gx_t[:600]
+                del self.statsWidget_obj.gy_t[:600]
+                del self.statsWidget_obj.gz_t[:600]
+                del self.statsWidget_obj.gx_b[:600]
+                del self.statsWidget_obj.gy_b[:600]
+                del self.statsWidget_obj.gz_b[:600]
 
             if len(self.statsWidget_obj.knee_angle)>1000:
                 del self.statsWidget_obj.knee_angle[:800]

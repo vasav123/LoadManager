@@ -40,7 +40,7 @@ class dataPreProcessor():
         def removeDCOffset(self):
                 self.time_series = signal.detrend(self.time_series)
 
-        def applyFilter(self, filtype, cutoff, order):
+        def applyFilter(self, filtype, cutoff, order):#using this in main
                 sos = signal.butter(order, cutoff,btype = filtype,analog = False, output="sos", fs=self.fs)
                 self.time_series = signal.sosfilt(sos,self.time_series)
         
