@@ -102,9 +102,10 @@ class TestWindow():
 
             if len(self.statsWidget_obj.ax_t)>1200:
                 # print( len(self.statsWidget_obj.angle_x_t),len(self.statsWidget_obj.gx_t))
-                ave = np.sqrt(np.average(self.statsWidget_obj.ax_b[0:600])^2 + np.average(self.statsWidget_obj.ay_b[0:600])^2 + np.average(self.statsWidget_obj.az_b[0:600])^2)
-                gxb = applyFilter(self.statsWidget_obj.gx_b[0:600],'bandpass',[0.1,20],10)
-                gxb = -gxb
+                ave = np.sqrt(np.average(self.statsWidget_obj.ax_b[0:600])**2 + np.average(self.statsWidget_obj.ay_b[0:600])**2 + np.average(self.statsWidget_obj.az_b[0:600])**2)
+                gxb_obj = dataPreProcessor(self.statsWidget_obj.gx_b[0:600],200)
+                gxb_obj.applyFilter('bandpass',[0.1,20],10)
+                gxb = -1*list(gxb_obj.time_series)
                 count = 0
                 if ave<1.4:
                     count = len(signal.find_peaks(gxb, height= 30 , distance=100))
