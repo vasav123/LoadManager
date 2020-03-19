@@ -104,25 +104,25 @@ class TestWindow():
                 # print( len(self.statsWidget_obj.angle_x_t),len(self.statsWidget_obj.gx_t))
                 ave = np.sqrt(np.average(self.statsWidget_obj.ax_b[0:600])**2 + np.average(self.statsWidget_obj.ay_b[0:600])**2 + np.average(self.statsWidget_obj.az_b[0:600])**2)
                 gxb_obj = dataPreProcessor(self.statsWidget_obj.gx_b[0:600],200)
-                gxb_obj.applyFilter('bandpass',[0.1,20],10)
+                gxb_obj.applyFilter('bandpass',[0.1,20],8)
                 gxb = -1*list(gxb_obj.time_series)
                 count = 0
                 if ave<1.4:
-                    count = len(signal.find_peaks(gxb, height= 30 , distance=100))
+                    count = len(signal.find_peaks(gxb, height= 30))
                     self.NumSteps = self.NumSteps + count
                     self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
                     self.NumWalk = self.NumWalk + count
                     self.statsWidget_obj.pStats_widget.NumWalk.display(self.NumWalk)
                     
                 if 1.4<ave<2.5:
-                    count = len(signal.find_peaks(gxb, height= 185, distance=20))
+                    count = len(signal.find_peaks(gxb, height= 185)
                     self.NumSteps = self.NumSteps + count
                     self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
                     self.NumRun = self.NumRun + count
                     self.statsWidget_obj.pStats_widget.NumRun.display(self.NumRun)
 
                 if ave>2.5:
-                    count = len(signal.find_peaks(gxb, height= 220 , distance=10))
+                    count = len(signal.find_peaks(gxb, height= 220))
                     self.NumSteps = self.NumSteps + count
                     self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
                     self.NumSprint = self.NumSprint + count
