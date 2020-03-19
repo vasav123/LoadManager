@@ -6,9 +6,17 @@
 
 #include <SparkFunLSM9DS1.h>
 
-const char* ssid     = "Michael-Computer";//"Michael-Computer" -- "Vasav-Computer"
+#define COMPUTER 1 // 0 for Michael and 1 for Vasav
+#if COMPUTER == 0
+  #define S_SID  "Michael-Computer"
+  #define SERVER "192.168.137.1"
+#else
+  #define S_SID "Vasav-Computer"
+  #define SERVER "10.42.0.1"
+#endif
+const char* ssid     = S_SID;//"Michael-Computer" -- "Vasav-Computer"
 const char* password = "6fQBxWeq";//Same password for both
-const char* mqtt_server = "192.168.137.1";//Vasav- "10.42.0.1", Michael, 192.168.137.1
+const char* mqtt_server = SERVER;//Vasav- "10.42.0.1", Michael, 192.168.137.1
 const char* nodeId = "123123123";
 int port = 1883;
 int packet_num = 0;
@@ -27,8 +35,8 @@ int count = 0;
 static unsigned long lastPrint = 0; // Keep track of print time
 const char* publishNode = "loadmanager";
 
-StaticJsonDocument<1000> packet;
-char msg[2000];
+StaticJsonDocument<3000> packet;
+char msg[3000];
 
 float temp_array[4];
 
@@ -75,7 +83,7 @@ void reconnect() {
       Serial.print("failed, rc=");
       Serial.print(client.state());
       Serial.println(" try again in 5 seconds");
-      delay(5000);
+      delay(5);
     }
   }
 }
@@ -83,26 +91,53 @@ void reconnect() {
 void setup()
 {
   Serial.begin(115200);
-  packet.createNestedArray("accel_top");
-  copyArray(temp_array, 4, packet["accel_top"]);
-  packet.createNestedArray("accel_bot");
-  copyArray(temp_array, 4, packet["accel_bot"]);
-  packet.createNestedArray("fsr_quad");
-  copyArray(temp_array, 4, packet["fsr_quad"]);
-  packet.createNestedArray("fsr_ham");
-  copyArray(temp_array, 4, packet["fsr_ham"]);
-  packet.createNestedArray("yaw_top");
-  copyArray(temp_array, 4, packet["yaw_top"]);
-  packet.createNestedArray("pitch_top");
-  copyArray(temp_array, 4, packet["pitch_top"]);
-  packet.createNestedArray("roll_top");
-  copyArray(temp_array, 4, packet["roll_top"]);
-  packet.createNestedArray("yaw_bot");
-  copyArray(temp_array, 4, packet["yaw_bot"]);
-  packet.createNestedArray("pitch_bot");
-  copyArray(temp_array, 4, packet["pitch_bot"]);
-  packet.createNestedArray("roll_bot");
-  copyArray(temp_array, 4, packet["roll_bot"]);
+  
+  packet.createNestedArray("ax_t");
+  copyArray(temp_array, 4, packet["ax_t"]);
+  packet.createNestedArray("ay_t");
+  copyArray(temp_array, 4, packet["ay_t"]);
+  packet.createNestedArray("az_t");
+  copyArray(temp_array, 4, packet["az_t"]);
+  
+  packet.createNestedArray("ax_b");
+  copyArray(temp_array, 4, packet["ax_b"]);
+  packet.createNestedArray("ay_b");
+  copyArray(temp_array, 4, packet["ay_b"]);
+  packet.createNestedArray("az_b");
+  copyArray(temp_array, 4, packet["az_b"]);
+   
+  packet.createNestedArray("gx_t");
+  copyArray(temp_array, 4, packet["gx_t"]);
+  packet.createNestedArray("gy_t");
+  copyArray(temp_array, 4, packet["gy_t"]);
+  packet.createNestedArray("gz_t");
+  copyArray(temp_array, 4, packet["gz_t"]);
+
+  packet.createNestedArray("gx_b");
+  copyArray(temp_array, 4, packet["gx_b"]);
+  packet.createNestedArray("gy_b");
+  copyArray(temp_array, 4, packet["gy_b"]);
+  packet.createNestedArray("gz_b");
+  copyArray(temp_array, 4, packet["gz_b"]);
+
+  packet.createNestedArray("my_t");
+  copyArray(temp_array, 4, packet["mx_t"]);
+  packet.createNestedArray("my_t");
+  copyArray(temp_array, 4, packet["my_t"]);
+  packet.createNestedArray("mz_t");
+  copyArray(temp_array, 4, packet["mz_t"]);
+
+  packet.createNestedArray("my_b");
+  copyArray(temp_array, 4, packet["mx_b"]);
+  packet.createNestedArray("my_b");
+  copyArray(temp_array, 4, packet["my_b"]);
+  packet.createNestedArray("mz_b");
+  copyArray(temp_array, 4, packet["mz_b"]);
+
+  packet.createNestedArray("fq");
+  copyArray(temp_array, 4, packet["fq"]);
+  packet.createNestedArray("fh");
+  copyArray(temp_array, 4, packet["fh"]);
 
   setup_wifi();
   client.setServer(mqtt_server, port);
@@ -136,6 +171,8 @@ void setup()
  }else{
    Serial.println("IMU2 connected!");
  }
+  imu.setAccelScale(16);
+  imu2.setAccelScale(16);
 }
 
 void loop()
@@ -166,24 +203,27 @@ void loop()
  }
   if ((lastPrint + PRINT_SPEED) < millis())
   {
-    float heading =0 , pitch = 0 , roll = 0, heading2 = 0, pitch2 = 0, roll2 = 0;
-    calcAttitude(imu.ax, imu.ay, imu.az,
-                  -imu.my, -imu.mx, imu.mz,
-                   &heading, &pitch, &roll);
-   calcAttitude(imu2.ax, imu2.ay, imu2.az,
-                 -imu2.my, -imu2.mx, imu2.mz,
-                  &heading2, &pitch2, &roll2);
-   
-    packet["pitch_top"][count] = pitch;
-    packet["pitch_bot"][count] = pitch2;
-    packet["yaw_top"][count] = heading;
-    packet["yaw_bot"][count] = heading2;
-    packet["roll_top"][count] = roll;
-    packet["roll_bot"][count] = roll2;
-    packet["accel_top"][count] = getMagnitude(imu.calcAccel(imu.ax), imu.calcAccel(imu.ay), imu.calcAccel(imu.az));
-    packet["accel_bot"][count] = getMagnitude(imu.calcAccel(imu2.ax), imu.calcAccel(imu2.ay), imu.calcAccel(imu2.az));
-    packet["fsr_quad"][count] = readFSR(0);
-    packet["fsr_ham"][count] = readFSR(1);
+  
+    packet["ax_t"][count] = imu.calcAccel(imu.ax);
+    packet["ay_t"][count] = imu.calcAccel(imu.ay);
+    packet["az_t"][count] = imu.calcAccel(imu.az);
+    packet["ax_b"][count] = imu.calcAccel(imu2.ax);
+    packet["ay_b"][count] = imu.calcAccel(imu2.ay);
+    packet["az_b"][count] = imu.calcAccel(imu2.az);
+    packet["gx_t"][count] = imu.calcGyro(imu.gx);
+    packet["gy_t"][count] = imu.calcGyro(imu.gy);
+    packet["gz_t"][count] = imu.calcGyro(imu.gz);
+    packet["gx_b"][count] = imu.calcGyro(imu2.gx);
+    packet["gy_b"][count] = imu.calcGyro(imu2.gy);
+    packet["gz_b"][count] = imu.calcGyro(imu2.gz);
+    packet["mx_t"][count] = imu.calcMag(imu.mx);
+    packet["my_t"][count] = imu.calcMag(imu.my);
+    packet["mz_t"][count] = imu.calcMag(imu.mz);
+    packet["mx_b"][count] = imu.calcMag(imu2.mx);
+    packet["my_b"][count] = imu.calcMag(imu2.my);
+    packet["mz_b"][count] = imu.calcMag(imu2.mz);
+    packet["fq"][count] = readFSR(0);
+    packet["fh"][count] = readFSR(1);
     count++;
     serializeJson(packet, msg);
     lastPrint = millis(); // Update lastPrint time
@@ -195,9 +235,9 @@ void loop()
         packet["packet_num"] = packet_num;
         count = 0;
         if (WiFi.status() == WL_CONNECTED){
-          if (!client.connected()) {
-            reconnect();
-          }
+         if (!client.connected()) {
+           reconnect();
+         }
           client.loop();
           long now = millis();
           client.publish(publishNode, msg);
