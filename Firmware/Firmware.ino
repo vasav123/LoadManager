@@ -6,16 +6,22 @@
 
 #include <SparkFunLSM9DS1.h>
 
-#define COMPUTER 1 // 0 for Michael and 1 for Vasav
+#define COMPUTER 1 // 0 for Michael and 1 for Vasav- home network 2 -Vasav Hotspot
 #if COMPUTER == 0
   #define S_SID  "Michael-Computer"
   #define SERVER "192.168.137.1"
+  #define PASSWORD "6fQBxWeq"
+#elif COMPUTER == 1
+  #define S_SID "VIRGIN247"
+  #define SERVER "192.168.2.32"
+  #define PASSWORD "D47E4A67"
 #else
   #define S_SID "Vasav-Computer"
   #define SERVER "10.42.0.1"
+  #define PASSWORD "6fQBxWeq"
 #endif
 const char* ssid     = S_SID;//"Michael-Computer" -- "Vasav-Computer"
-const char* password = "6fQBxWeq";//Same password for both
+const char* password = PASSWORD;//Same password for both
 const char* mqtt_server = SERVER;//Vasav- "10.42.0.1", Michael, 192.168.137.1
 const char* nodeId = "123123123";
 int port = 1883;
@@ -173,6 +179,8 @@ void setup()
  }
   imu.setAccelScale(16);
   imu2.setAccelScale(16);
+  imu.setGyroScale(500);
+  imu2.setGyroScale(500);
 }
 
 void loop()
