@@ -42,6 +42,9 @@ class Point:
         self.gx_b = gx_b 
         self.gy_b = gy_b 
         self.gz_b = gz_b 
+        self.knee_angle = 0
+        self.angle_x_t = 0
+        self.angle_x_b = 0
 
     def __repr__(self):
         return "%f, %f, %f, %f, %f, %f, %d, %d, %f, %f, %f, %f, %f, %f"%(self.ax_t,self.ay_t,self.az_t, self.ax_b,self.ay_b, self.az_b, self.fq, self.fh, self.gx_t, self.gy_t, self.gz_t, self.gx_b, self.gy_b, self.gz_b)

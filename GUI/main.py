@@ -73,80 +73,20 @@ class TestWindow():
             self.statsWidget_obj.playerStats.setCurrentIndex(0)
             self.statsWidget_obj.Record.setText('Record')
 
-    def syncData(self, ax_t,ay_t,az_t,ax_b,ay_b,az_b,fq_q,fh_q,gx_t,gy_t,gz_t,gx_b,gy_b,gz_b):
+    def syncData(self, ax_t,ay_t,az_t,ax_b,ay_b,az_b,fq_q,fh_q,gx_t,gy_t,gz_t,gx_b,gy_b,gz_b, dataQ):
         while True:
-            if (ax_t.qsize() > 0):self.statsWidget_obj.ax_t += ax_t.get_nowait()
-            if (ay_t.qsize() > 0):self.statsWidget_obj.ay_t += ay_t.get_nowait()
-            if (az_t.qsize() > 0):self.statsWidget_obj.az_t += az_t.get_nowait()
-            if (ax_b.qsize() > 0):self.statsWidget_obj.ax_b += ax_b.get_nowait()
-            if (ay_b.qsize() > 0):self.statsWidget_obj.ay_b += ay_b.get_nowait()
-            if (az_b.qsize() > 0):self.statsWidget_obj.az_b += az_b.get_nowait()
-            if (fq_q.qsize() > 0):self.statsWidget_obj.fq_a += fq_q.get_nowait() 
-            if (fh_q.qsize() > 0):self.statsWidget_obj.fh_a += fh_q.get_nowait() 
-            if (gx_t.qsize() > 0):self.statsWidget_obj.gx_t += gx_t.get_nowait() 
-            if (gy_t.qsize() > 0):self.statsWidget_obj.gy_t += gy_t.get_nowait() 
-            if (gz_t.qsize() > 0):self.statsWidget_obj.gz_t += gz_t.get_nowait() 
-            if (gx_b.qsize() > 0):self.statsWidget_obj.gx_b += gx_b.get_nowait() 
-            if (gy_b.qsize() > 0):self.statsWidget_obj.gy_b += gy_b.get_nowait() 
-            if (gz_b.qsize() > 0):self.statsWidget_obj.gz_b += gz_b.get_nowait()
-
-            if (len(self.statsWidget_obj.ax_t)>0):
-                rot_x_t = math.degrees(math.atan(self.statsWidget_obj.ay_t[-1]/(self.statsWidget_obj.ax_t[-1]**2 + self.statsWidget_obj.az_t[-1]**2)**0.5))
-                rot_x_b = math.degrees(math.atan(self.statsWidget_obj.ay_b[-1]/(self.statsWidget_obj.ax_b[-1]**2 + self.statsWidget_obj.az_b[-1]**2)**0.5))
+            if (dataQ.qsize() > 0): self.statsWidget_obj.data_l.append(dataQ.get_nowait())
+            if (len(self.statsWidget_obj.data_l)>1):
+                rot_x_t = math.degrees(math.atan(self.statsWidget_obj.data_l[-1].ay_t/(self.statsWidget_obj.data_l[-1].ax_t**2 + self.statsWidget_obj.data_l[-1].az_t**2)**0.5))
+                rot_x_b = math.degrees(math.atan(self.statsWidget_obj.data_l[-1].ay_b/(self.statsWidget_obj.data_l[-1].ax_b**2 + self.statsWidget_obj.data_l[-1].az_b**2)**0.5))
                 try:
-                    self.statsWidget_obj.angle_x_t.append(self.a*(self.statsWidget_obj.angle_x_t[-1] + self.statsWidget_obj.gx_t[-1]*self.dt)+(1-self.a)*rot_x_t)
-                    self.statsWidget_obj.angle_x_b.append(self.a*(self.statsWidget_obj.angle_x_b[-1] + self.statsWidget_obj.gx_b[-1]*self.dt)+(1-self.a)*rot_x_b)
-                    self.statsWidget_obj.knee_angle.append(self.statsWidget_obj.angle_x_t[-1]-self.statsWidget_obj.angle_x_b[-1])
+                    self.statsWidget_obj.data_l[-1].angle_x_t = self.a*(self.statsWidget_obj.data_l[-2].angle_x_t + self.statsWidget_obj.data_l[-1].gx_t*self.dt)+(1-self.a)*rot_x_t
+                    self.statsWidget_obj.data_l[-1].angle_x_b = self.a*(self.statsWidget_obj.data_l[-2].angle_x_b + self.statsWidget_obj.data_l[-1].gx_b*self.dt)+(1-self.a)*rot_x_b
+                    self.statsWidget_obj.data_l[-1].knee_angle = self.statsWidget_obj.data_l[-1].angle_x_t-self.statsWidget_obj.data_l[-1].angle_x_b
                 except Exception as e:
-                    print (e, len(self.statsWidget_obj.angle_x_t),len(self.statsWidget_obj.gx_t))
-
-            if len(self.statsWidget_obj.ax_t)>1200:
-                # print( len(self.statsWidget_obj.angle_x_t),len(self.statsWidget_obj.gx_t))
-                ave = np.sqrt(np.average(self.statsWidget_obj.ax_b[0:600])**2 + np.average(self.statsWidget_obj.ay_b[0:600])**2 + np.average(self.statsWidget_obj.az_b[0:600])**2)
-                gxb_obj = dataPreProcessor(self.statsWidget_obj.gx_b[0:600],200)
-                gxb_obj.applyFilter('bandpass',[0.1,20],8)
-                gxb = -1*list(gxb_obj.time_series)
-                count = 0
-                if ave<1.4:
-                    count = len(signal.find_peaks(gxb, height= 30))
-                    self.NumSteps = self.NumSteps + count
-                    self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
-                    self.NumWalk = self.NumWalk + count
-                    self.statsWidget_obj.pStats_widget.NumWalk.display(self.NumWalk)
-                    
-                if 1.4<ave<2.5:
-                    count = len(signal.find_peaks(gxb, height= 185)
-                    self.NumSteps = self.NumSteps + count
-                    self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
-                    self.NumRun = self.NumRun + count
-                    self.statsWidget_obj.pStats_widget.NumRun.display(self.NumRun)
-
-                if ave>2.5:
-                    count = len(signal.find_peaks(gxb, height= 220))
-                    self.NumSteps = self.NumSteps + count
-                    self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
-                    self.NumSprint = self.NumSprint + count
-                    self.statsWidget_obj.pStats_widget.NumSprint.display(self.NumSprint)
-                    
-                del self.statsWidget_obj.ax_t[:600]
-                del self.statsWidget_obj.ay_t[:600]
-                del self.statsWidget_obj.az_t[:600]
-                del self.statsWidget_obj.ax_b[:600]
-                del self.statsWidget_obj.ay_b[:600]
-                del self.statsWidget_obj.az_b[:600]
-                del self.statsWidget_obj.fq_a[:600]
-                del self.statsWidget_obj.fh_a[:600]
-                del self.statsWidget_obj.gx_t[:600]
-                del self.statsWidget_obj.gy_t[:600]
-                del self.statsWidget_obj.gz_t[:600]
-                del self.statsWidget_obj.gx_b[:600]
-                del self.statsWidget_obj.gy_b[:600]
-                del self.statsWidget_obj.gz_b[:600]
-
-            if len(self.statsWidget_obj.knee_angle)>1000:
-                del self.statsWidget_obj.knee_angle[:800]
-                del self.statsWidget_obj.angle_x_t[:800]
-                del self.statsWidget_obj.angle_x_b[:800]
+                    print (e)
+            if len(self.statsWidget_obj.data_l)>self.statsWidget_obj.plot_window:
+                del self.statsWidget_obj.data_l[:len(self.statsWidget_obj.data_l)-self.statsWidget_obj.plot_window]
             sleep(0.01)
 
     def exitStats(self):
@@ -165,7 +105,7 @@ if __name__ == '__main__':
     pushThread=threading.Thread(target=pushOnQ)
     pushThread.start()
 
-    pullThread=threading.Thread(target=window.syncData,args=(mqtt_client.ax_t, mqtt_client.ay_t, mqtt_client.az_t,mqtt_client.ax_b, mqtt_client.ay_b, mqtt_client.az_b,mqtt_client.fq_q,mqtt_client.fh_q,mqtt_client.gx_t,mqtt_client.gy_t,mqtt_client.gz_t,mqtt_client.gx_b,mqtt_client.gy_b,mqtt_client.gz_b))
+    pullThread=threading.Thread(target=window.syncData,args=(mqtt_client.ax_t, mqtt_client.ay_t, mqtt_client.az_t,mqtt_client.ax_b, mqtt_client.ay_b, mqtt_client.az_b,mqtt_client.fq_q,mqtt_client.fh_q,mqtt_client.gx_t,mqtt_client.gy_t,mqtt_client.gz_t,mqtt_client.gx_b,mqtt_client.gy_b,mqtt_client.gz_b, mqtt_client.dataQ))
     pullThread.start()
     # window.statsWidget_obj.back.clicked.connect(window.exitStats)
     # window.ui.kawhiButton.clicked.connect(lambda:window.ui.appWidgets.setCurrentIndex(1))

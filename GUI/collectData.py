@@ -18,6 +18,8 @@ class collectData(mqtt.Client):
     gx_b = Queue(500)
     gy_b = Queue(500)
     gz_b = Queue(500)
+
+    dataQ = Queue(500)
     
     writeToFile = False
     fileName = ""
@@ -38,23 +40,6 @@ class collectData(mqtt.Client):
         #print(str(msg.payload))
         dataObj = Packet(msg.payload)
         max_size_of_array = dataObj.size
-        try:
-            self.ax_t.put_nowait(dataObj.ax_t)
-            self.ay_t.put_nowait(dataObj.ay_t)
-            self.az_t.put_nowait(dataObj.az_t)
-            self.ax_b.put_nowait(dataObj.ax_b)
-            self.ay_b.put_nowait(dataObj.ay_b)
-            self.az_b.put_nowait(dataObj.az_b)
-            self.fq_q.put_nowait(dataObj.fsr_quad)
-            self.fh_q.put_nowait(dataObj.fsr_ham)
-            self.gx_t.put_nowait(dataObj.gx_t)
-            self.gy_t.put_nowait(dataObj.gy_t)
-            self.gz_t.put_nowait(dataObj.gz_t)
-            self.gx_b.put_nowait(dataObj.gx_b)
-            self.gy_b.put_nowait(dataObj.gy_b)
-            self.gz_b.put_nowait(dataObj.gz_b)
-        except Exception as e:
-            print("queue full not going to add to queue")
         # incase we have have missing values we just zeropadd them just so the timing stays correct
         # we really should never have missing values though
         if len(dataObj.ax_t)<max_size_of_array:
@@ -113,6 +98,13 @@ class collectData(mqtt.Client):
             N= max_size_of_array - len(dataObj.gz_b)
             dataObj.gz_b += [0]*N         
 
+        for i in range(max_size_of_array):
+            data_point = Point(dataObj.ax_t[i],dataObj.ay_t[i],dataObj.az_t[i],dataObj.ax_b[i],dataObj.ay_b[i],dataObj.az_b[i],dataObj.fsr_quad[i],dataObj.fsr_ham[i],dataObj.gx_t[i],dataObj.gy_t[i],dataObj.gz_t[i],dataObj.gx_b[i],dataObj.gy_b[i],dataObj.gz_b[i])
+            try:
+                self.dataQ.put_nowait(data_point)
+            except Exception as e:
+                print("queue full not going to add to queue", e)
+        
         if self.writeToFile and self.fileName != "":
             with open('logs/' + self.fileName, 'a+', newline='') as file:
                 for i in range(max_size_of_array):    

@@ -11,28 +11,9 @@ import numpy as np
 
 class mainWidgetWrapper(mainWidget.Ui_Form):
         lastbutton = ""
-        ax_t = []
-        ay_t = []
-        az_t = []
-        ax_b = []
-        ay_b = []
-        az_b = []
-        fq_a = []
-        fh_a = []
-        gx_t = []
-        gy_t = []
-        gz_t = []
-        gx_b = []
-        gy_b = []
-        gz_b = []
-        knee_angle = [0]
-
-        angle_x_t = [0]
-        angle_x_b = [0]
-
-        plotting_array = None
-        size = 0
-        plot = 0
+        data_l = []
+        plot_window = 1000  #1000*0.005 = 5 secs
+        start_time = 0
         def setupUi(self,Form):
                 super(mainWidget.Ui_Form, self).__init__()
                 mainWidget.Ui_Form.setupUi(self,Form)
@@ -87,7 +68,6 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_AT_X(self):
                 self.lastbutton = "Acceleration Top X"
                 self.graph_widget.ButtonPressed.setText(self.lastbutton)
-                self.plotting_array = self.ax_t
                 self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
@@ -97,7 +77,6 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_AT_Y(self):
                 self.lastbutton = "Acceleration Top Y"
                 self.graph_widget.ButtonPressed.setText(self.lastbutton)
-                self.plotting_array = self.ay_t
                 self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
@@ -107,7 +86,6 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_AT_Z(self):
                 self.lastbutton = "Acceleration Top Z"
                 self.graph_widget.ButtonPressed.setText(self.lastbutton)
-                self.plotting_array = self.az_t
                 self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
@@ -117,7 +95,6 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_T_XY(self):
                 self.lastbutton = "NOT COMPUTED"
                 self.graph_widget.ButtonPressed.setText(self.lastbutton)
-                self.plotting_array = self.az_t
                 self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
@@ -127,7 +104,6 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_AB_X(self):
                 self.lastbutton = "Acceleration Bottom X"
                 self.graph_widget.ButtonPressed.setText(self.lastbutton)
-                self.plotting_array = self.ax_b
                 self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
@@ -137,7 +113,6 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_AB_Y(self):
                 self.lastbutton = "Acceleration Bottom Y"
                 self.graph_widget.ButtonPressed.setText(self.lastbutton)
-                self.plotting_array = self.ay_b
                 self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
@@ -147,7 +122,6 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_AB_Z(self):
                 self.lastbutton = "Acceleration Bottom Z"
                 self.graph_widget.ButtonPressed.setText(self.lastbutton)
-                self.plotting_array = self.az_b
                 self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
@@ -155,9 +129,8 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.graph_widget.graphicsView.setYRange(-16,16)
 
         def Display_B_XY(self):
-                self.lastbutton = "NOT COMPUTED"
+                self.lastbutton = "BOTTOM XY MAG"
                 self.graph_widget.ButtonPressed.setText(self.lastbutton)
-                self.plotting_array = self.gx_t
                 self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
@@ -168,7 +141,6 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_gx_t(self):
                 self.lastbutton = "Gyro X Top"
                 self.graph_widget.ButtonPressed.setText(self.lastbutton)
-                self.plotting_array = self.gx_t
                 self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
@@ -178,7 +150,6 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_gy_t(self):
                 self.lastbutton = "Gyro Y Top"
                 self.graph_widget.ButtonPressed.setText(self.lastbutton)
-                self.plotting_array = self.gy_t
                 self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
@@ -188,7 +159,6 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_gz_t(self):
                 self.lastbutton = "Gyro Z Top"
                 self.graph_widget.ButtonPressed.setText(self.lastbutton)
-                self.plotting_array = self.gz_t
                 self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
@@ -197,7 +167,6 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_gx_b(self):
                 self.lastbutton = "Gyro X Bottom"
                 self.graph_widget.ButtonPressed.setText(self.lastbutton)
-                self.plotting_array = self.gx_b
                 self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
@@ -207,7 +176,6 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_gy_b(self):
                 self.lastbutton = "Gyro Y Bottom"
                 self.graph_widget.ButtonPressed.setText(self.lastbutton)
-                self.plotting_array = self.gy_b
                 self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
@@ -217,7 +185,6 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_gz_b(self):
                 self.lastbutton = "Gyro Z Bottom"
                 self.graph_widget.ButtonPressed.setText(self.lastbutton)
-                self.plotting_array = self.gz_b
                 self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
@@ -227,7 +194,6 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_pressure_t(self):
                 self.lastbutton = "Pressure Top"
                 self.graph_widget.ButtonPressed.setText(self.lastbutton)
-                self.plotting_array = self.fq_a
                 self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
@@ -236,7 +202,6 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_pressure_b(self):
                 self.lastbutton = "Pressure Bottom"
                 self.graph_widget.ButtonPressed.setText(self.lastbutton)
-                self.plotting_array = self.fh_a
                 self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
@@ -246,7 +211,6 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         def Display_knee_angle(self):
                 self.lastbutton = "Knee Angle"
                 self.graph_widget.ButtonPressed.setText(self.lastbutton)
-                self.plotting_array = self.knee_angle
                 self.timer.setInterval(5)
                 self.timer.start()
                 self.timer.timeout.connect(self.Plotting)
@@ -254,16 +218,41 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.graph_widget.graphicsView.setYRange(0,200)
 
         def Plotting(self):
-                self.size = len(self.plotting_array)-1
-                self.plot = self.size - 100
-                if self.size>100:
-                        self.graph_widget.graphicsView.plot(range(len(self.plotting_array[self.plot+1::])),self.plotting_array[self.plot:self.size],clear=True)
-                else:
-                        self.graph_widget.graphicsView.plot(range(len(self.plotting_array)),self.plotting_array,clear=True)
-                # print(self.lastbutton)
-                # for x in range(50):
-                #         self.array[:-1] = self.array[1:]
-                #         self.array[-1]=np.random.normal()
+                plotting_array = []
+                if self.lastbutton == "Acceleration Top X":
+                        plotting_array = [obj.ax_t for obj in self.data_l]
+                elif self.lastbutton == "Acceleration Top Y":
+                        plotting_array = [obj.ay_t for obj in self.data_l]
+                elif self.lastbutton == "Acceleration Top Z":
+                        plotting_array = [obj.az_t for obj in self.data_l]
+                elif self.lastbutton == "Acceleration Bottom X":
+                        plotting_array = [obj.ax_b for obj in self.data_l]
+                elif self.lastbutton == "Acceleration Bottom Y":
+                        plotting_array = [obj.ay_b for obj in self.data_l]
+                elif self.lastbutton == "Acceleration Bottom Z":
+                        plotting_array = [obj.az_b for obj in self.data_l]
+                elif self.lastbutton == "Gyro X Top":
+                        plotting_array = [obj.gx_t for obj in self.data_l]
+                elif self.lastbutton == "Gyro Y Top":
+                        plotting_array = [obj.gy_t for obj in self.data_l]
+                elif self.lastbutton == "Gyro Z Top":
+                        plotting_array = [obj.gz_t for obj in self.data_l]
+                elif self.lastbutton == "Gyro X Bottom":
+                        plotting_array = [obj.gx_b for obj in self.data_l]
+                elif self.lastbutton == "Gyro Y Bottom":
+                        plotting_array = [obj.gy_b for obj in self.data_l]
+                elif self.lastbutton == "Gyro Z Bottom":
+                        plotting_array = [obj.gz_b for obj in self.data_l]
+                elif self.lastbutton == "Pressure Top":
+                        plotting_array = [obj.fq for obj in self.data_l]
+                elif self.lastbutton == "Pressure Bottom":
+                        plotting_array = [obj.fh for obj in self.data_l]
+                elif self.lastbutton == "Knee Angle":
+                        plotting_array = [obj.knee_angle for obj in self.data_l]
+                if plotting_array != []:
+                        time = range(min(len(plotting_array),self.plot_window))
+                        print(min(len(plotting_array),self.plot_window), len(time), len(plotting_array))
+                        self.graph_widget.graphicsView.plot(time,plotting_array[0:min(len(plotting_array),self.plot_window)],clear=True)
 
 
 if __name__ == "__main__":
