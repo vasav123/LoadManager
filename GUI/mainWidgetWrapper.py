@@ -13,7 +13,8 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
         lastbutton = ""
         data_l = []
         plot_window = 1000  #1000*0.005 = 5 secs
-        start_time = 0
+        start_num_sample = 0 
+        end_num_sample = 0
         def setupUi(self,Form):
                 super(mainWidget.Ui_Form, self).__init__()
                 mainWidget.Ui_Form.setupUi(self,Form)
@@ -249,9 +250,12 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                         plotting_array = [obj.fh for obj in self.data_l]
                 elif self.lastbutton == "Knee Angle":
                         plotting_array = [obj.knee_angle for obj in self.data_l]
-                if plotting_array != []:
-                        time = range(min(len(plotting_array),self.plot_window))
-                        print(min(len(plotting_array),self.plot_window), len(time), len(plotting_array))
+                if plotting_array != [] and self.end_num_sample>self.start_num_sample:
+                        time = [x * 0.005 for x in range(self.start_num_sample, self.end_num_sample)]
+                        if (len(time)>len(plotting_array)):
+                                del time[-1]
+                        elif (len(time)<len(plotting_array)):
+                                time.append(self.end_num_sample*0.005 + 0.005)
                         self.graph_widget.graphicsView.plot(time,plotting_array[0:min(len(plotting_array),self.plot_window)],clear=True)
 
 
