@@ -1,7 +1,6 @@
 from queue import Queue
 from JSON_Class import *
 import paho.mqtt.client as mqtt
-import csv
 import numpy as np
 
 class collectData(mqtt.Client):
@@ -56,7 +55,8 @@ class collectData(mqtt.Client):
             self.gz_b.put_nowait(dataObj.gz_b)
         except Exception as e:
             print("queue full not going to add to queue")
-
+        # incase we have have missing values we just zeropadd them just so the timing stays correct
+        # we really should never have missing values though
         if len(dataObj.ax_t)<max_size_of_array:
             N= max_size_of_array - len(dataObj.ax_t)
             dataObj.ax_t += [0]*N
@@ -114,13 +114,10 @@ class collectData(mqtt.Client):
             dataObj.gz_b += [0]*N         
 
         if self.writeToFile and self.fileName != "":
-            with open('logs/' + self.fileName, 'a+', newline='') as sensorData:
+            with open('logs/' + self.fileName, 'a+', newline='') as file:
                 for i in range(max_size_of_array):    
-                    data = [dataObj.ax_t[i],dataObj.ay_t[i],dataObj.az_t[i],dataObj.ax_b[i],dataObj.ay_b[i],dataObj.az_b[i],dataObj.fsr_quad[i],dataObj.fsr_ham[i],dataObj.gx_t[i],dataObj.gy_t[i],dataObj.gz_t[i],dataObj.gx_b[i],dataObj.gy_b[i],dataObj.gz_b[i]]
-                    writer = csv.writer(sensorData)
-                    writer.writerow(data)
-                    
-            
+                    p = Point(dataObj.ax_t[i],dataObj.ay_t[i],dataObj.az_t[i],dataObj.ax_b[i],dataObj.ay_b[i],dataObj.az_b[i],dataObj.fsr_quad[i],dataObj.fsr_ham[i],dataObj.gx_t[i],dataObj.gy_t[i],dataObj.gz_t[i],dataObj.gx_b[i],dataObj.gy_b[i],dataObj.gz_b[i])
+                    file.write(repr(p)+"\n")
 
     def setWriteToFile(self, writeToFile, fileName):
         '''
@@ -137,6 +134,7 @@ class collectData(mqtt.Client):
 
 if __name__ == "__main__":
     test = collectData()
+    test.setWriteToFile(True, "Test_vasav")
     rc = 0
     while rc == 0:
         rc = test.loop()    
