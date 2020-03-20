@@ -163,7 +163,7 @@
             </font>
            </property>
            <property name="text">
-            <string>Impacts</string>
+            <string>High Acceleration Impacts</string>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -186,10 +186,10 @@
          </font>
         </property>
         <property name="text">
-         <string>Time Spent:</string>
+         <string>Type of Step:</string>
         </property>
         <property name="alignment">
-         <set>Qt::AlignCenter</set>
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
@@ -302,7 +302,7 @@
        <widget class="QLabel" name="ProgressbarLabel">
         <property name="font">
          <font>
-          <pointsize>20</pointsize>
+          <pointsize>18</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -311,12 +311,36 @@
          <string>Percentage Of Limit Played</string>
         </property>
         <property name="alignment">
-         <set>Qt::AlignCenter</set>
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QProgressBar" name="LoadPercent">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>10</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>450</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="baseSize">
+         <size>
+          <width>1200</width>
+          <height>10</height>
+         </size>
+        </property>
         <property name="value">
          <number>24</number>
         </property>
