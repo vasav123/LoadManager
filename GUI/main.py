@@ -60,6 +60,10 @@ class TestWindow():
             mqtt_client.writeToFile = True
             print('Outputing Recording to: ' + mqtt_client.fileName)
             
+    def applyFilter(self,seris, filtype, cutoff, order):#using this in main
+                sos = signal.butter(order, cutoff,btype = filtype,analog = False, output="sos", fs=200)
+                self.time_series = signal.sosfilt(sos,seris)
+                return self.time_series
 
     def stop_Record(self):
             mqtt_client.writeToFile = False
@@ -93,14 +97,16 @@ class TestWindow():
                 #signal.detrend or applyFilter(A_mag,'highpass', 1, 10)
                 #A_mag_filter = sp.signal.detrend(A_mag)
                 velocity_MperS = np.cumsum(XZB_mag_adjust)
-                velo_filtered = sp.signal.detrend(velocity_MperS)
+                #velo_filtered = sp.signal.detrend(velocity_MperS)
+                velo_filtered = self.applyFilter(velocity_MperS,'highpass', 1, 10)
                 velo_kmH = velo_filtered*3.6
-                print(type(velo_kmH))
+                #print(type(velo_kmH)) tpye nd
                 #Find all peaks above 1.5 mag
-                peaks = signal.find_peaks(AB_mag, height= 1.5, distance = 40)
+                peaks = signal.find_peaks(AB_mag, height= 1.5, distance = 80)
                 print(peaks[0])
                 for i in peaks[0]:#5km/h walking, 20 km/h jog, higher than 15 is sprinting
                     speed = velo_kmH[i]
+                    print(speed)
                     if speed<5:#walking
                         self.NumSteps = self.NumSteps +1
                         self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
