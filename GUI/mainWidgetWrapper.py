@@ -264,11 +264,12 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                        # plotting_array = [obj.velocity for obj in self.data_l]
                 if plotting_array != [] and self.end_num_sample>self.start_num_sample:
                         time = [x * 0.005 for x in range(self.start_num_sample, self.end_num_sample)]
-                        if (len(time)>len(plotting_array)):
-                                del time[-1]
-                        elif (len(time)<len(plotting_array)):
-                                time.append(self.end_num_sample*0.005 + 0.005)
-                        self.graph_widget.graphicsView.plot(time,plotting_array[0:min(len(plotting_array),self.plot_window)],clear=True)
+                        while(len(time)!=len(plotting_array)):
+                            if (len(time)>len(plotting_array)):
+                                    del time[-1]
+                            elif (len(time)<len(plotting_array)):
+                                    time.append(time[-1]+ 0.005)
+                        self.graph_widget.graphicsView.plot(time,plotting_array,clear=True)
 
 
 if __name__ == "__main__":
