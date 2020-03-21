@@ -18,6 +18,12 @@ mqtt_client = collectData()
 class TestWindow():
     dt = 0.005
     a = 0.98
+    NumSteps = 0
+    NumWalk = 0
+    NumRun = 0
+    NumSprint = 0
+    NumJumps = 0
+    MaxJumpHeight = 0 
     def __init__(self):
         super(TestWindow, self).__init__()
         self.MainWindow = QtWidgets.QMainWindow()
@@ -33,22 +39,22 @@ class TestWindow():
         #
         self.ui.appWidgets.setCurrentIndex(0)
 
-        self.statsWidget_obj.back.clicked.connect(self.exitStats)#lambda:self.ui.appWidgets.setCurrentIndex(0))
+        self.statsWidget_obj.back.clicked.connect(self.exitStats)
         self.ui.kawhiButton.clicked.connect(lambda:self.ui.appWidgets.setCurrentIndex(1))
         self.statsWidget_obj.Record.clicked.connect(self.Switch_control)
 
         #Recording Buttons
         self.statsWidget_obj.record_widget.startRecord.clicked.connect(self.start_Record)
         self.statsWidget_obj.record_widget.stopRecord.clicked.connect(self.stop_Record)
-        self.NumSteps = 0
-        self.NumWalk = 0
-        self.NumRun = 0
-        self.NumSprint = 0
+
+        #Stats LCD screens
         self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
         self.statsWidget_obj.pStats_widget.NumRun.display(self.NumRun)
         self.statsWidget_obj.pStats_widget.NumWalk.display(self.NumWalk)
         self.statsWidget_obj.pStats_widget.NumSprint.display(self.NumSprint)
-        self.count=0
+        self.statsWidget_obj.pStats_widget.jumpHeight.display(self.MaxJumpHeight)
+        self.statsWidget_obj.pStats_widget.NumJumps.display(self.NumJumps)
+
         # self.dataSyncTimer = QtCore.QTimer(self.MainWindow)
         # self.dataSyncTimer.setInterval(1000)
         # self.dataSyncTimer.start()
@@ -76,7 +82,41 @@ class TestWindow():
         else:
             self.statsWidget_obj.playerStats.setCurrentIndex(0)
             self.statsWidget_obj.Record.setText('Record')
+    
+    def calculateJumpHeight(self):
+        ay_t = [obj.ay_t for obj in self.statsWidget_obj.data_l]
+        peak_height,_ = scipy.signal.find_peaks(ay_t,height=4,distance=45)
+        takeoff=[]
+        landing=[]
 
+        for x in range(len(peak_height)):
+                if x%2==0:
+                        takeoff.append(peak_height[x])
+                else:
+                        landing.append(peak_height[x])
+
+        offset_h = 0.12 * 39.3701 #displacement between neutral standing position and takeoff position, converted to inches
+        g= 9.81 #gravity
+        kh = 1 #constant from research paper
+
+        jump_height=[]
+        for y in range(len(landing)): # you should never have more landings than takeoffs
+                airtime = (landing[y]-takeoff[y])*0.005 #convert to seconds
+                height = offset_h + (kh * 1/8 * (airtime**2) * g)*39.3701 #convert to inches
+                jump_height.append(height)
+        self.MaxJumpHeight = max(len(jump_height)>0 and max(jump_height) or 0, self.MaxJumpHeight)
+        self.NumJumps += len(jump_height)
+
+    def updateStats(self):
+        self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
+        self.statsWidget_obj.pStats_widget.NumWalk.display(self.NumWalk)
+        self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
+        self.statsWidget_obj.pStats_widget.NumRun.display(self.NumRun)
+        self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
+        self.statsWidget_obj.pStats_widget.NumSprint.display(self.NumSprint)
+        self.statsWidget_obj.pStats_widget.jumpHeight.display(self.MaxJumpHeight)
+        self.statsWidget_obj.pStats_widget.NumJumps.display(self.NumJumps)
+    
     def syncData(self,dataQ):
         while True:
             if (dataQ.qsize() > 0):
@@ -115,23 +155,19 @@ class TestWindow():
                     speed = velocity[i]
                     print(speed)
                     if speed<5:#walking
-                        self.NumSteps = self.NumSteps +1
-                        self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
-                        self.NumWalk = self.NumWalk + 1
-                        self.statsWidget_obj.pStats_widget.NumWalk.display(self.NumWalk)
+                        self.NumSteps += 1
+                        self.NumWalk += 1
                     elif 5<speed<20:
                         if AT_mag[i]>3.5:#check if it actually is a true peak in jog
-                            self.NumSteps = self.NumSteps +1
-                            self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
-                            self.NumRun = self.NumRun + 1
-                            self.statsWidget_obj.pStats_widget.NumRun.display(self.NumRun)
+                            self.NumSteps += 1
+                            self.NumRun += 1
                     else:
                         if AT_mag[i]>5.5:#check if it actually is a true peak in sprint
-                            self.NumSteps = self.NumSteps +1
-                            self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
-                            self.NumRun = self.NumSprint + 1
-                            self.statsWidget_obj.pStats_widget.NumSprint.display(self.NumSprint)
-
+                            self.NumSteps += 1
+                            self.NumRun += 1
+                self.calculateJumpHeight()
+                self.updateStats()
+                
             if (len(self.statsWidget_obj.data_l)>1):
                 rot_x_t = math.degrees(math.atan(self.statsWidget_obj.data_l[-1].ay_t/(self.statsWidget_obj.data_l[-1].ax_t**2 + self.statsWidget_obj.data_l[-1].az_t**2)**0.5))
                 rot_x_b = math.degrees(math.atan(self.statsWidget_obj.data_l[-1].ay_b/(self.statsWidget_obj.data_l[-1].ax_b**2 + self.statsWidget_obj.data_l[-1].az_b**2)**0.5))
