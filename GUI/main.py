@@ -97,7 +97,7 @@ class TestWindow():
                     self.statsWidget_obj.data_l[-1].angle_x_b = self.a*(self.statsWidget_obj.data_l[-2].angle_x_b + self.statsWidget_obj.data_l[-1].gx_b*self.dt)+(1-self.a)*rot_x_b
                     self.statsWidget_obj.data_l[-1].knee_angle = self.statsWidget_obj.data_l[-1].angle_x_t-self.statsWidget_obj.data_l[-1].angle_x_b
                     if (len(self.statsWidget_obj.data_l)>2):
-                        self.statsWidget_obj.data_1[-1].velocity = self.statsWidget_obj.data_1[-2].velocity + mag_xz*0.005
+                        self.statsWidget_obj.data_1[-1].velocity = self.statsWidget_obj.data_1[-2].velocity + mag_xz*0.005*3.6
                     else:
                         self.statsWidget_obj.data_1[-1].velocity = 0
                 except Exception as e:
