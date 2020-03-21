@@ -90,16 +90,15 @@ class TestWindow():
                     self.statsWidget_obj.data_l[-1].knee_angle = self.statsWidget_obj.data_l[-1].angle_x_t-self.statsWidget_obj.data_l[-1].angle_x_b
 
                     if (len(self.statsWidget_obj.data_l)>2):
-                        if mag_xz<1:
+                        self.statsWidget_obj.data_l[-1].velocity = self.statsWidget_obj.data_l[-2].velocity + mag_xz*0.005*3.6
+                        if mag_xz<0.34:
                             self.count = self.count +1
                             if self.count>100:
                                 self.count = 0
                                 self.statsWidget_obj.data_l[-1].velocity = 0
                                 self.statsWidget_obj.data_l[-2].velocity = 0
-                            else:
-                                self.count=0
-
-                        self.statsWidget_obj.data_l[-1].velocity = self.statsWidget_obj.data_l[-2].velocity + mag_xz*0.005*3.6
+                        else:
+                            self.count=0
                 except Exception as e:
                     print (e)
             if len(self.statsWidget_obj.data_l)>self.statsWidget_obj.plot_window:
