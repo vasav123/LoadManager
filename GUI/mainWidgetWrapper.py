@@ -219,7 +219,7 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.graph_widget.graphicsView.setYRange(0,200)
 
         def Display_velocity(self):
-                self.lastbutton = "Velocity"
+                self.lastbutton = "Knee Angle"
                 self.graph_widget.ButtonPressed.setText(self.lastbutton)
                 self.timer.setInterval(5)
                 self.timer.start()
@@ -260,8 +260,8 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                         plotting_array = [obj.fh for obj in self.data_l]
                 elif self.lastbutton == "Knee Angle":
                         plotting_array = [obj.knee_angle for obj in self.data_l]
-                elif self.lastbutton == "Velocity":
-                        plotting_array = [obj.velocity for obj in self.data_l]
+                #elif self.lastbutton == "Velocity":
+                       # plotting_array = [obj.velocity for obj in self.data_l]
                 if plotting_array != [] and self.end_num_sample>self.start_num_sample:
                         time = [x * 0.005 for x in range(self.start_num_sample, self.end_num_sample)]
                         if (len(time)>len(plotting_array)):

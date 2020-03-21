@@ -79,26 +79,51 @@ class TestWindow():
                 self.statsWidget_obj.data_l.append(dataQ.get_nowait())
                 self.statsWidget_obj.end_num_sample += 1
 
+            if self.statsWidget_obj.end_num_sample>0 and self.statsWidget_obj.end_num_sample%1000 == 0:
+                XB = np.array([obj.ax_b for obj in self.statsWidget_obj.data_l])
+                ZB = np.array([obj.az_b for obj in self.statsWidget_obj.data_l])
+                YB = np.array([obj.ay_b for obj in self.statsWidget_obj.data_l])
+                XB_2 = np.square(XB)
+                ZB_2 = np.square(ZB)
+                YB_2 = np.square(YB)
+                XZB_mag = np.sq(np.add(XB_2,ZB_2))
+                #Multiply the time in
+                XZB_mag_adjust = XZB_mag*0.005
+                AB_mag = np.sqrt(np.add(XB_2,ZB_2,YB_2))
+                #signal.detrend or applyFilter(A_mag,'highpass', 1, 10)
+                #A_mag_filter = sp.signal.detrend(A_mag)
+                velocity_MperS = np.cumsum(XZB_mag_adjust)
+                velo_filtered = sp.signal.detrend(velocity_MperS)
+                velo_kmH = velo_filtered*3.6
+                #Find all peaks above 1.5 mag
+                peaks = signal.find_peaks(AB_mag, height= 1.5, distance = 40)
+                for i in peaks:#5km/h walking, 20 km/h jog, higher than 15 is sprinting
+                    speed = velo_kmH(peaks(i))
+                    if speed<5:#walking
+                        self.NumSteps = self.NumSteps +1
+                        self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
+                        self.NumWalk = self.NumWalk + 1
+                        self.statsWidget_obj.pStats_widget.NumWalk.display(self.NumWalk)
+                    elif 5<speed<20:
+                        if AB_mag(peaks(i))>4:#check if it actually is a true peak in jog
+                            self.NumSteps = self.NumSteps +1
+                            self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
+                            self.NumRun = self.NumRun + 1
+                            self.statsWidget_obj.pStats_widget.NumRun.display(self.NumRun)
+                    else:
+                        if AB_mag(peaks(i))>6:#check if it actually is a true peak in sprint
+                            self.NumSteps = self.NumSteps +1
+                            self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
+                            self.NumRun = self.NumSprint + 1
+                            self.statsWidget_obj.pStats_widget.NumSprint.display(self.NumSprint)
+
             if (len(self.statsWidget_obj.data_l)>1):
-                mag_xz = np.sqrt(self.statsWidget_obj.data_l[-1].ax_t**2 + self.statsWidget_obj.data_l[-1].az_t**2)
                 rot_x_t = math.degrees(math.atan(self.statsWidget_obj.data_l[-1].ay_t/(self.statsWidget_obj.data_l[-1].ax_t**2 + self.statsWidget_obj.data_l[-1].az_t**2)**0.5))
                 rot_x_b = math.degrees(math.atan(self.statsWidget_obj.data_l[-1].ay_b/(self.statsWidget_obj.data_l[-1].ax_b**2 + self.statsWidget_obj.data_l[-1].az_b**2)**0.5))
                 try:
-                    self.statsWidget_obj.data_l[-1].velocity = self.statsWidget_obj.data_l[-2].velocity
                     self.statsWidget_obj.data_l[-1].angle_x_t = self.a*(self.statsWidget_obj.data_l[-2].angle_x_t + self.statsWidget_obj.data_l[-1].gx_t*self.dt)+(1-self.a)*rot_x_t
                     self.statsWidget_obj.data_l[-1].angle_x_b = self.a*(self.statsWidget_obj.data_l[-2].angle_x_b + self.statsWidget_obj.data_l[-1].gx_b*self.dt)+(1-self.a)*rot_x_b
                     self.statsWidget_obj.data_l[-1].knee_angle = self.statsWidget_obj.data_l[-1].angle_x_t-self.statsWidget_obj.data_l[-1].angle_x_b
-
-                    if (len(self.statsWidget_obj.data_l)>2):
-                        self.statsWidget_obj.data_l[-1].velocity = self.statsWidget_obj.data_l[-2].velocity + mag_xz*0.005*3.6
-                        if mag_xz<0.34:
-                            self.count = self.count +1
-                            if self.count>100:
-                                self.count = 0
-                                self.statsWidget_obj.data_l[-1].velocity = 0
-                                self.statsWidget_obj.data_l[-2].velocity = 0
-                        else:
-                            self.count=0
                 except Exception as e:
                     print (e)
             if len(self.statsWidget_obj.data_l)>self.statsWidget_obj.plot_window:
