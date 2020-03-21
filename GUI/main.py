@@ -81,14 +81,6 @@ class TestWindow():
 
             if (len(self.statsWidget_obj.data_l)>1):
                 mag_xz = np.sqrt(self.statsWidget_obj.data_l[-1].ax_t**2 + self.statsWidget_obj.data_l[-1].az_t**2)
-                if mag_xz<0.34:
-                    self.count = self.count +1
-                    if self.count>100:
-                        self.count = 0
-                        self.statsWidget_obj.data_l[-1].velocity = 0
-                else:
-                    self.count = 0
-    
                 rot_x_t = math.degrees(math.atan(self.statsWidget_obj.data_l[-1].ay_t/(self.statsWidget_obj.data_l[-1].ax_t**2 + self.statsWidget_obj.data_l[-1].az_t**2)**0.5))
                 rot_x_b = math.degrees(math.atan(self.statsWidget_obj.data_l[-1].ay_b/(self.statsWidget_obj.data_l[-1].ax_b**2 + self.statsWidget_obj.data_l[-1].az_b**2)**0.5))
                 try:
@@ -96,16 +88,24 @@ class TestWindow():
                     self.statsWidget_obj.data_l[-1].angle_x_t = self.a*(self.statsWidget_obj.data_l[-2].angle_x_t + self.statsWidget_obj.data_l[-1].gx_t*self.dt)+(1-self.a)*rot_x_t
                     self.statsWidget_obj.data_l[-1].angle_x_b = self.a*(self.statsWidget_obj.data_l[-2].angle_x_b + self.statsWidget_obj.data_l[-1].gx_b*self.dt)+(1-self.a)*rot_x_b
                     self.statsWidget_obj.data_l[-1].knee_angle = self.statsWidget_obj.data_l[-1].angle_x_t-self.statsWidget_obj.data_l[-1].angle_x_b
+
                     if (len(self.statsWidget_obj.data_l)>2):
+                        if mag_xz<1:
+                            self.count = self.count +1
+                            if self.count>100:
+                                self.count = 0
+                                self.statsWidget_obj.data_l[-1].velocity = 0
+                                self.statsWidget_obj.data_l[-2].velocity = 0
+                            else:
+                                self.count=0
+
                         self.statsWidget_obj.data_l[-1].velocity = self.statsWidget_obj.data_l[-2].velocity + mag_xz*0.005*3.6
-                    else:
-                        self.statsWidget_obj.data_l[-1].velocity = 0
                 except Exception as e:
                     print (e)
             if len(self.statsWidget_obj.data_l)>self.statsWidget_obj.plot_window:
                 self.statsWidget_obj.start_num_sample += 1
                 del self.statsWidget_obj.data_l[:len(self.statsWidget_obj.data_l)-self.statsWidget_obj.plot_window]
-            sleep(0.01)
+            sleep(0.001)
 
     def exitStats(self):
         self.ui.appWidgets.setCurrentIndex(0)
