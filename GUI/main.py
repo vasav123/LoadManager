@@ -94,16 +94,16 @@ class TestWindow():
                 #Multiply the time in
                 XZB_mag_adjust = XZB_mag*0.005
                 AB_mag = np.sqrt(np.add(XB_2,ZB_2,YB_2))
-                AB_mag_filtered = self.applyFilter(AB_mag,'lowpass', 20, 10)
+                AB_mag_filtered = self.applyFilter(AB_mag,'lowpass', 15, 8)
                 #signal.detrend or applyFilter(A_mag,'highpass', 1, 10)
                 #A_mag_filter = sp.signal.detrend(A_mag)
                 velocity_MperS = np.cumsum(XZB_mag_adjust)
                 #velo_filtered = sp.signal.detrend(velocity_MperS)
-                velo_filtered = self.applyFilter(velocity_MperS,'highpass', 1, 10)
+                velo_filtered = self.applyFilter(velocity_MperS,'highpass', 0.11, 10)
                 velo_kmH = velo_filtered*3.6
                 #print(type(velo_kmH)) tpye nd
                 #Find all peaks above 1.5 mag
-                peaks = signal.find_peaks(AB_mag_filtered, height= 1.5, distance = 80)
+                peaks = signal.find_peaks(AB_mag_filtered, height= 1.4, distance = 80)
                 print(peaks[0])
                 for i in peaks[0]:#5km/h walking, 20 km/h jog, higher than 15 is sprinting
                     speed = velo_kmH[i]
