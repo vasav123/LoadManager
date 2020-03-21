@@ -22,9 +22,6 @@
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout_2">
-     <property name="sizeConstraint">
-      <enum>QLayout::SetMinimumSize</enum>
-     </property>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_8">
        <item>
@@ -200,7 +197,7 @@
          <widget class="QGroupBox" name="groupBox_6">
           <layout class="QHBoxLayout" name="horizontalLayout_4">
            <item>
-            <widget class="QLCDNumber" name="NumImpacts">
+            <widget class="QLCDNumber" name="aveVelocity">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
                <horstretch>0</horstretch>
@@ -225,13 +222,13 @@
              </property>
              <property name="font">
               <font>
-               <pointsize>12</pointsize>
+               <pointsize>11</pointsize>
                <weight>50</weight>
                <bold>false</bold>
               </font>
              </property>
              <property name="text">
-              <string>High Acceleration Impacts</string>
+              <string>Average Velocity in Last 5s</string>
              </property>
              <property name="scaledContents">
               <bool>true</bool>

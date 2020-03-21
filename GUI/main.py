@@ -84,29 +84,35 @@ class TestWindow():
                 self.statsWidget_obj.end_num_sample += 1
 
             if self.statsWidget_obj.end_num_sample>0 and self.statsWidget_obj.end_num_sample%1000 == 0:
-                XB = np.array([obj.ax_b for obj in self.statsWidget_obj.data_l])
-                ZB = np.array([obj.az_b for obj in self.statsWidget_obj.data_l])
-                YB = np.array([obj.ay_b for obj in self.statsWidget_obj.data_l])
-                XB_2 = np.square(XB)
-                ZB_2 = np.square(ZB)
-                YB_2 = np.square(YB)
-                XZB_mag = np.sqrt(np.add(XB_2,ZB_2))
-                #Multiply the time in
-                XZB_mag_adjust = XZB_mag*0.005
-                AB_mag = np.sqrt(np.add(XB_2,ZB_2,YB_2))
-                AB_mag_filtered = self.applyFilter(AB_mag,'lowpass', 15, 8)
-                #signal.detrend or applyFilter(A_mag,'highpass', 1, 10)
-                #A_mag_filter = sp.signal.detrend(A_mag)
-                velocity_MperS = np.cumsum(XZB_mag_adjust)
-                #velo_filtered = sp.signal.detrend(velocity_MperS)
-                velo_filtered = self.applyFilter(velocity_MperS,'highpass', 0.1, 10)
-                velo_kmH = velo_filtered*3.6
-                #print(type(velo_kmH)) tpye nd
-                #Find all peaks above 1.5 mag
-                peaks = signal.find_peaks(AB_mag_filtered, height= 1.35, distance = 80)
+                XT = np.array([obj.ax_t for obj in self.statsWidget_obj.data_l])
+                ZT = np.array([obj.ay_t for obj in self.statsWidget_obj.data_l])
+                YT = np.array([obj.az_t for obj in self.statsWidget_obj.data_l])
+                #Filter All 3
+                XT_filt =self.applyFilter(XT,'bandpass',[0.1,30],10)
+                YT_filt =self.applyFilter(YT,'bandpass',[0.1,30],10)
+                ZT_filt =self.applyFilter(ZT,'bandpass',[0.1,30],10)
+                #Square all 3
+                XT_2 = np.square(XT_filt)
+                ZT_2 = np.square(ZT_filt)
+                YT_2 = np.square(YT_filt)
+                #Find magnitude
+                AT_mag = np.sqrt(np.add(XT_2,ZT_2,YT_2))
+                #Adjust for Time current Sample is 200hz
+                XT_time_adjust = XT_filt*0.005
+                ZT_time_adjust = ZT_filt*0.005
+                XT_velocity = np.cumsum(XT_time_adjust)
+                ZT_velocity = np.cumsum(ZT_time_adjust)
+                #Find the magnitude of the velocity
+                XT_V2 = np.square(XT_velocity)
+                ZT_V2 = np.square(ZT_velocity)
+                velocity_MperS = np.sqrt(np.add(XT_V2,ZT_V2))
+                #Convert to km/h
+                velocity = velocity_MperS*3.6
+                self.statsWidget_obj.pStats_widget.NumSteps.display(int(np.mean(velocity)))
+                peaks = signal.find_peaks(AT_mag, height= 1.5, distance = 50)
                 print(peaks[0])
                 for i in peaks[0]:#5km/h walking, 20 km/h jog, higher than 15 is sprinting
-                    speed = velo_kmH[i]
+                    speed = velocity[i]
                     print(speed)
                     if speed<5:#walking
                         self.NumSteps = self.NumSteps +1
@@ -114,13 +120,13 @@ class TestWindow():
                         self.NumWalk = self.NumWalk + 1
                         self.statsWidget_obj.pStats_widget.NumWalk.display(self.NumWalk)
                     elif 5<speed<20:
-                        if AB_mag_filtered[i]>4:#check if it actually is a true peak in jog
+                        if AT_mag[i]>3.5:#check if it actually is a true peak in jog
                             self.NumSteps = self.NumSteps +1
                             self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
                             self.NumRun = self.NumRun + 1
                             self.statsWidget_obj.pStats_widget.NumRun.display(self.NumRun)
                     else:
-                        if AB_mag_filtered[i]>6:#check if it actually is a true peak in sprint
+                        if AT_mag[i]>5.5:#check if it actually is a true peak in sprint
                             self.NumSteps = self.NumSteps +1
                             self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
                             self.NumRun = self.NumSprint + 1
