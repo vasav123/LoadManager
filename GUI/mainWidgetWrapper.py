@@ -60,7 +60,7 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 self.graph_widget.pressure_t.clicked.connect(self.Display_pressure_t)
                 self.graph_widget.pressure_b.clicked.connect(self.Display_pressure_b)
                 self.graph_widget.knee_angle.clicked.connect(self.Display_knee_angle)
-                
+                self.graph_widget.velocity.clicked.connect(self.Display_velocity)
                 # self.count = np.arange(5000)
                 self.timer = QtCore.QTimer(self.gStats)
                 #self.plotting_array = self.at_a
@@ -218,6 +218,16 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                 #Set Axis Range
                 self.graph_widget.graphicsView.setYRange(0,200)
 
+        def Display_velocity(self):
+                self.lastbutton = "Velocity"
+                self.graph_widget.ButtonPressed.setText(self.lastbutton)
+                self.timer.setInterval(5)
+                self.timer.start()
+                self.timer.timeout.connect(self.Plotting)
+                #Set Axis Range
+                self.graph_widget.graphicsView.setYRange(0,45)
+
+
         def Plotting(self):
                 plotting_array = []
                 if self.lastbutton == "Acceleration Top X":
@@ -250,6 +260,8 @@ class mainWidgetWrapper(mainWidget.Ui_Form):
                         plotting_array = [obj.fh for obj in self.data_l]
                 elif self.lastbutton == "Knee Angle":
                         plotting_array = [obj.knee_angle for obj in self.data_l]
+                elif self.lastbutton == "Velocity":
+                        plotting_array = [obj.velocity for obj in self.data_l]
                 if plotting_array != [] and self.end_num_sample>self.start_num_sample:
                         time = [x * 0.005 for x in range(self.start_num_sample, self.end_num_sample)]
                         if (len(time)>len(plotting_array)):
