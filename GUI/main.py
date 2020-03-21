@@ -108,7 +108,7 @@ class TestWindow():
                 velocity_MperS = np.sqrt(np.add(XT_V2,ZT_V2))
                 #Convert to km/h
                 velocity = velocity_MperS*3.6
-                self.statsWidget_obj.pStats_widget.NumSteps.display(int(np.mean(velocity)))
+                self.statsWidget_obj.pStats_widget.aveVelocity.display(int(np.mean(velocity)))
                 peaks = signal.find_peaks(AT_mag, height= 1.5, distance = 50)
                 print(peaks[0])
                 for i in peaks[0]:#5km/h walking, 20 km/h jog, higher than 15 is sprinting
