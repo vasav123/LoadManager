@@ -94,6 +94,7 @@ class TestWindow():
                 #Multiply the time in
                 XZB_mag_adjust = XZB_mag*0.005
                 AB_mag = np.sqrt(np.add(XB_2,ZB_2,YB_2))
+                AB_mag_filtered = self.applyFilter(AB_mag,'lowpass', 20, 10)
                 #signal.detrend or applyFilter(A_mag,'highpass', 1, 10)
                 #A_mag_filter = sp.signal.detrend(A_mag)
                 velocity_MperS = np.cumsum(XZB_mag_adjust)
@@ -102,7 +103,7 @@ class TestWindow():
                 velo_kmH = velo_filtered*3.6
                 #print(type(velo_kmH)) tpye nd
                 #Find all peaks above 1.5 mag
-                peaks = signal.find_peaks(AB_mag, height= 1.5, distance = 80)
+                peaks = signal.find_peaks(AB_mag_filtered, height= 1.5, distance = 80)
                 print(peaks[0])
                 for i in peaks[0]:#5km/h walking, 20 km/h jog, higher than 15 is sprinting
                     speed = velo_kmH[i]
@@ -113,13 +114,13 @@ class TestWindow():
                         self.NumWalk = self.NumWalk + 1
                         self.statsWidget_obj.pStats_widget.NumWalk.display(self.NumWalk)
                     elif 5<speed<20:
-                        if AB_mag[i]>4:#check if it actually is a true peak in jog
+                        if AB_mag_filtered[i]>4:#check if it actually is a true peak in jog
                             self.NumSteps = self.NumSteps +1
                             self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
                             self.NumRun = self.NumRun + 1
                             self.statsWidget_obj.pStats_widget.NumRun.display(self.NumRun)
                     else:
-                        if AB_mag[i]>6:#check if it actually is a true peak in sprint
+                        if AB_mag_filtered[i]>6:#check if it actually is a true peak in sprint
                             self.NumSteps = self.NumSteps +1
                             self.statsWidget_obj.pStats_widget.NumSteps.display(self.NumSteps)
                             self.NumRun = self.NumSprint + 1
