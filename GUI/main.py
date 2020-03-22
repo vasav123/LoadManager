@@ -137,7 +137,7 @@ class TestWindow():
                 YT_2 = np.square(YT_filt)
                 #Find magnitude
                 AT_mag = np.sqrt(np.add(XT_2,ZT_2,YT_2))
-                peaks = signal.find_peaks(AT_mag, height= 1.55, distance = 80)
+                peaks = signal.find_peaks(AT_mag, height= 1.75, distance = 80)
                 #I have peaks above 1.5
                 #For each peak I need to check the surrond average
                 for i in peaks[0]:#1.5 peak is walking, 4 is jog, 6 is Running
@@ -146,27 +146,24 @@ class TestWindow():
                     if i<41 or i>959:#what to do if the peaks are at the end of the sequence
                         if i<41:
                             ave = np.mean(AT_mag[i:i+80])
-                            true_height = np.amax(AT_mag[i:i+80])
                         elif i>969:
                             ave = np.mean(AT_mag[i-80:i])
-                            true_height = np.amax(AT_mag[i-80:i])
-                        else:
-                            ave = np.mean(AT_mag[i-40:i+40])
-                            true_height = np.amax(AT_mag[i-40:i+40])
-                    # print("Average around the peak" + str(ave))    
-                    if true_height<2.1:#walking
+                    else:
+                        ave = np.mean(AT_mag[i-40:i+40])
+                    # print("Average around the peak" + str(ave))
+                    if mag<4.5 and ave<1.5:#walking
                         if mag>ave:
-                            print("walk step: Height: " + str(mag) + "peak average" + str(ave))
+                            print("walk step: Height: " + str(mag) + "peak average" + str(ave)+ "Index: " + str(i))
                             self.NumSteps += 1
                             self.NumWalk += 1
-                    elif 2.1<true_height<4.5:#Jogging
-                        if mag>ave:#check if it actually is a true peak in jog
-                            print("Jog step: Height: " + str(mag) + "peak average" + str(ave))
+                    elif 4.5<mag<12:#Jogging
+                        if mag>3*ave:#check if it actually is a true peak in jog
+                            print("Jog step: Height: " + str(mag) + "peak average" + str(ave) + "Index: " + str(i))
                             self.NumSteps += 1
                             self.NumRun += 1
                     else:#Sprinting
                         if mag>ave:
-                            print("Run step: Height: " + str(mag) + "peak average" + str(ave))
+                            print("Sprint step: Height: " + str(mag) + "peak average: " + str(ave)+ "Index: " + str(i))
                             self.NumSteps += 1
                             self.NumSprint += 1
                 self.calculateJumpHeight()
