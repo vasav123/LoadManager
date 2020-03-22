@@ -137,32 +137,30 @@ class TestWindow():
                 YT_2 = np.square(YT_filt)
                 #Find magnitude
                 AT_mag = np.sqrt(np.add(XT_2,ZT_2,YT_2))
-                #Adjust for Time current Sample is 200hz
-                XT_time_adjust = XT_filt*0.005
-                ZT_time_adjust = ZT_filt*0.005
-                XT_velocity = np.cumsum(XT_time_adjust)
-                ZT_velocity = np.cumsum(ZT_time_adjust)
-                #Find the magnitude of the velocity
-                XT_V2 = np.square(XT_velocity)
-                ZT_V2 = np.square(ZT_velocity)
-                velocity_MperS = np.sqrt(np.add(XT_V2,ZT_V2))
-                #Convert to km/h
-                velocity = velocity_MperS*3.6
-                self.statsWidget_obj.pStats_widget.aveVelocity.display(int(np.mean(velocity)))
                 peaks = signal.find_peaks(AT_mag, height= 1.5, distance = 50)
+                #I have peaks above 1.5
+                #For each peak I need to check the surrond average
                 print(peaks[0])
-                for i in peaks[0]:#5km/h walking, 20 km/h jog, higher than 15 is sprinting
-                    speed = velocity[i]
-                    print(speed)
-                    if speed<5:#walking
-                        self.NumSteps += 1
-                        self.NumWalk += 1
-                    elif 5<speed<20:
-                        if AT_mag[i]>3.5:#check if it actually is a true peak in jog
+                for i in peaks[0]:#1.5 peak is walking, 4 is jog, 6 is Running
+                    mag = AT_mag[i]
+                    if i<21 or i>979:#what to do if the peaks are at the end of the sequence
+                        if i<20:
+                            ave = numpy.mean(AT_mag[i:i+40])
+                        elif i>980:
+                            ave = numpy.mean(AT_mag[i-40:i])                       
+                    else:
+                        ave = numpy.mean(AT_mag[i-20:i+20])
+                        
+                    if mag<2:#walking
+                        if mag>1.34*ave:
+                            self.NumSteps += 1
+                            self.NumWalk += 1
+                    elif 2<mag<4.5:#Jogging
+                        if mag>2.3*ave:#check if it actually is a true peak in jog
                             self.NumSteps += 1
                             self.NumRun += 1
                     else:
-                        if AT_mag[i]>5.5:#check if it actually is a true peak in sprint
+                        if mag>2.1*ave:
                             self.NumSteps += 1
                             self.NumRun += 1
                 self.calculateJumpHeight()
