@@ -42,10 +42,21 @@ class Point:
         self.gx_b = gx_b 
         self.gy_b = gy_b 
         self.gz_b = gz_b 
-        self.knee_angle = 0
+        self.flexion = 0
+        self.abduction = 0 
+        self.supination = 0
         self.angle_x_t = 0
         self.angle_x_b = 0
-        #self.velocity = 0
+        self.angle_y_t = 0
+        self.angle_y_b = 0
+        self.angle_z_t = 0
+        self.angle_z_b = 0
+        
+        self.accelx_t = 0 # this is reference to the person not the imu
+        self.accely_t = 0 # this is reference to the person not the imu
+        self.accelz_t = az_t
+        self.accel_yz = 0
+        self.velocity = 0
 
     def __repr__(self):
         return "%f, %f, %f, %f, %f, %f, %d, %d, %f, %f, %f, %f, %f, %f"%(self.ax_t,self.ay_t,self.az_t, self.ax_b,self.ay_b, self.az_b, self.fq, self.fh, self.gx_t, self.gy_t, self.gz_t, self.gx_b, self.gy_b, self.gz_b)
