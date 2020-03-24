@@ -54,6 +54,8 @@ class TestWindow():
         self.statsWidget_obj.pStats_widget.NumSprint.display(self.numSprint)
         self.statsWidget_obj.pStats_widget.jumpHeight.display(self.maxJumpHeight)
         self.statsWidget_obj.pStats_widget.NumJumps.display(self.numJumps)
+        #Jump Check
+        self.isJump = False
 
 
         #define Recording functions
@@ -70,17 +72,17 @@ class TestWindow():
             self.statsWidget_obj.playerStats.setCurrentIndex(0)
             self.statsWidget_obj.Record.setText('Record')
     
-    def calculateJumpHeight(self):
-        ay_t = [obj.ay_t for obj in self.statsWidget_obj.data_l]
-        peak_height,_ = scipy.signal.find_peaks(ay_t,height=4,distance=45)
-        takeoff=[]
-        landing=[]
-
-        for x in range(len(peak_height)):
-                if x%2==0:
-                        takeoff.append(peak_height[x])
-                else:
-                        landing.append(peak_height[x])
+    def calculateJumpHeight(self, index1, index2):
+##        ay_t = [obj.ay_t for obj in self.statsWidget_obj.data_l]
+##        peak_height,_ = scipy.signal.find_peaks(ay_t,height=4,distance=45)
+##        takeoff=[]
+##        landing=[]
+##
+##        for x in range(len(peak_height)):
+##                if x%2==0:
+##                        takeoff.append(peak_height[x])
+##                else:
+##                        landing.append(peak_height[x])
 
         offset_h = 0.12 * 39.3701 #displacement between neutral standing position and takeoff position, converted to inches
         g= 9.81 #gravity
@@ -88,7 +90,7 @@ class TestWindow():
 
         jump_height=[]
         for y in range(len(landing)): # you should never have more landings than takeoffs
-                airtime = (landing[y]-takeoff[y])*0.005 #convert to seconds
+                airtime = abs((index1-index2))*0.005 #convert to seconds
                 height = offset_h + (kh * 1/8 * (airtime**2) * g)*39.3701 #convert to inches
                 jump_height.append(height)
         self.maxJumpHeight = max(len(jump_height)>0 and max(jump_height) or 0, self.maxJumpHeight)
@@ -111,6 +113,14 @@ class TestWindow():
         peaks = signal.find_peaks(AT_mag, height= 1.75, distance = 80)
         #I have peaks above 1.5
         #For each peak I need to check the surrond average
+        #Check if we are in the middle of a jump
+        if isJump == True:
+            index2 = peaks[0][0]
+            index2 =index2 + 1000
+            self.calculateJumpHeight(index1,index2)
+            remove(peaks[0][0])
+            isJump = False
+        
         for i in peaks[0]:#1.5 peak is walking, 4 is jog, 6 is Running
             mag = AT_mag[i]
             #print("Height " + str(mag))
@@ -134,8 +144,16 @@ class TestWindow():
             else:#Sprinting
                 if mag>ave:
                     # print("Sprint step: Height: " + str(mag) + "peak average: " + str(ave)+ "Index: " + str(i))
-                    self.numSteps += 1
-                    self.numSprint += 1
+                    if ave<2.3:#Jump
+                        if(i == peaks[0][-1]):#Jump is split by time intervals
+                            index1 = i
+                            self.isJump = True
+                        else:
+                            self.calculateJumpHeight(i,peaks[0][i+1])
+                            remove(peaks[0][i+1])
+                    else:
+                        self.numSteps += 1
+                        self.numSprint += 1
     
     def calculateKneeAngle(self):
         if (len(self.statsWidget_obj.data_l)>1):
