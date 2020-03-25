@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 600)
+        MainWindow.resize(1830, 1002)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -24,29 +24,118 @@ class Ui_MainWindow(object):
         self.appWidgets.setObjectName("appWidgets")
         self.page = QtWidgets.QWidget()
         self.page.setObjectName("page")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.page)
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.textBrowser = QtWidgets.QTextBrowser(self.page)
-        self.textBrowser.setObjectName("textBrowser")
-        self.verticalLayout_2.addWidget(self.textBrowser)
-        self.kawhiButton = QtWidgets.QPushButton(self.page)
-        self.kawhiButton.setObjectName("kawhiButton")
-        self.verticalLayout_2.addWidget(self.kawhiButton)
-        self.pushButton_2 = QtWidgets.QPushButton(self.page)
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.verticalLayout_2.addWidget(self.pushButton_2)
-        self.pushButton_4 = QtWidgets.QPushButton(self.page)
-        self.pushButton_4.setObjectName("pushButton_4")
-        self.verticalLayout_2.addWidget(self.pushButton_4)
+        self.gridLayout = QtWidgets.QGridLayout(self.page)
+        self.gridLayout.setObjectName("gridLayout")
         self.pushButton_6 = QtWidgets.QPushButton(self.page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_6.sizePolicy().hasHeightForWidth())
+        self.pushButton_6.setSizePolicy(sizePolicy)
+        self.pushButton_6.setMinimumSize(QtCore.QSize(600, 436))
+        self.pushButton_6.setMaximumSize(QtCore.QSize(600, 436))
+        self.pushButton_6.setStyleSheet("qproperty-icon:url(); /* empty image */\n"
+"qproperty-iconSize: 16px 16px; /* space for the background image*/\n"
+"background-image: url(\"Images/Pascal.png\") 0 0 0 0 stretch stretch;\n"
+"background-repeat: no-repeat;\n"
+"\n"
+"")
+        self.pushButton_6.setText("")
         self.pushButton_6.setObjectName("pushButton_6")
-        self.verticalLayout_2.addWidget(self.pushButton_6)
+        self.gridLayout.addWidget(self.pushButton_6, 5, 2, 1, 1)
         self.pushButton_5 = QtWidgets.QPushButton(self.page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_5.sizePolicy().hasHeightForWidth())
+        self.pushButton_5.setSizePolicy(sizePolicy)
+        self.pushButton_5.setMinimumSize(QtCore.QSize(600, 436))
+        self.pushButton_5.setMaximumSize(QtCore.QSize(600, 436))
+        self.pushButton_5.setStyleSheet("qproperty-icon:url(); /* empty image */\n"
+"qproperty-iconSize: 16px 16px; /* space for the background image*/\n"
+"background-image: url(\"Images/Kyle.png\") 0 0 0 0 stretch stretch;\n"
+"background-repeat: no-repeat;\n"
+"\n"
+"")
+        self.pushButton_5.setText("")
         self.pushButton_5.setObjectName("pushButton_5")
-        self.verticalLayout_2.addWidget(self.pushButton_5)
+        self.gridLayout.addWidget(self.pushButton_5, 5, 1, 1, 1)
+        self.pushButton_4 = QtWidgets.QPushButton(self.page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_4.sizePolicy().hasHeightForWidth())
+        self.pushButton_4.setSizePolicy(sizePolicy)
+        self.pushButton_4.setMinimumSize(QtCore.QSize(600, 436))
+        self.pushButton_4.setMaximumSize(QtCore.QSize(600, 436))
+        self.pushButton_4.setStyleSheet("qproperty-icon:url(); /* empty image */\n"
+"qproperty-iconSize: 16px 16px; /* space for the background image*/\n"
+"background-image: url(\"Images/Freddy.png\") 0 0 0 0 stretch stretch;\n"
+"background-repeat: no-repeat;\n"
+"\n"
+"")
+        self.pushButton_4.setText("")
+        self.pushButton_4.setObjectName("pushButton_4")
+        self.gridLayout.addWidget(self.pushButton_4, 2, 3, 1, 1)
+        self.pushButton_2 = QtWidgets.QPushButton(self.page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_2.sizePolicy().hasHeightForWidth())
+        self.pushButton_2.setSizePolicy(sizePolicy)
+        self.pushButton_2.setMinimumSize(QtCore.QSize(600, 436))
+        self.pushButton_2.setMaximumSize(QtCore.QSize(600, 436))
+        self.pushButton_2.setStyleSheet("qproperty-icon:url(); /* empty image */\n"
+"qproperty-iconSize: 16px 16px; /* space for the background image*/\n"
+"background-image: url(\"Images/Norm.png\") 0 0 0 0 stretch stretch;\n"
+"background-repeat: no-repeat;\n"
+"\n"
+"")
+        self.pushButton_2.setText("")
+        self.pushButton_2.setObjectName("pushButton_2")
+        self.gridLayout.addWidget(self.pushButton_2, 2, 2, 1, 1)
+        self.label = QtWidgets.QLabel(self.page)
+        self.label.setMinimumSize(QtCore.QSize(0, 100))
+        self.label.setMaximumSize(QtCore.QSize(16777215, 100))
+        self.label.setStyleSheet("font: 75 60pt \"Bitstream Vera Sans\";\n"
+"font-weight: bold;\n"
+"qproperty-alignment: AlignCenter;")
+        self.label.setObjectName("label")
+        self.gridLayout.addWidget(self.label, 1, 1, 1, 3)
+        self.kawhiButton = QtWidgets.QPushButton(self.page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.kawhiButton.sizePolicy().hasHeightForWidth())
+        self.kawhiButton.setSizePolicy(sizePolicy)
+        self.kawhiButton.setMinimumSize(QtCore.QSize(600, 436))
+        self.kawhiButton.setMaximumSize(QtCore.QSize(600, 436))
+        self.kawhiButton.setStyleSheet("qproperty-icon:url(); /* empty image */\n"
+"qproperty-iconSize: 16px 16px; /* space for the background image*/\n"
+"background-image: url(\"Images/Kawhi.png\") ;\n"
+"background-repeat: no-repeat;\n"
+"\n"
+"")
+        self.kawhiButton.setText("")
+        self.kawhiButton.setObjectName("kawhiButton")
+        self.gridLayout.addWidget(self.kawhiButton, 2, 1, 1, 1)
         self.pushButton_3 = QtWidgets.QPushButton(self.page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_3.sizePolicy().hasHeightForWidth())
+        self.pushButton_3.setSizePolicy(sizePolicy)
+        self.pushButton_3.setMinimumSize(QtCore.QSize(600, 436))
+        self.pushButton_3.setMaximumSize(QtCore.QSize(600, 436))
+        self.pushButton_3.setStyleSheet("qproperty-icon:url(); /* empty image */\n"
+"qproperty-iconSize: 16px 16px; /* space for the background image*/\n"
+"background-image: url(\"Images/Marc.png\") 0 0 0 0 stretch stretch;\n"
+"background-repeat: no-repeat;\n"
+"\n"
+"")
+        self.pushButton_3.setText("")
         self.pushButton_3.setObjectName("pushButton_3")
-        self.verticalLayout_2.addWidget(self.pushButton_3)
+        self.gridLayout.addWidget(self.pushButton_3, 5, 3, 1, 1)
         self.appWidgets.addWidget(self.page)
         self.verticalLayout.addWidget(self.appWidgets)
         MainWindow.setCentralWidget(self.centralwidget)
@@ -58,17 +147,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.textBrowser.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'MS Shell Dlg 2\'; font-size:12pt; font-weight:600; text-decoration: underline;\">Load Manager</span></p></body></html>"))
-        self.kawhiButton.setText(_translate("MainWindow", "Kwahi Leonard"))
-        self.pushButton_2.setText(_translate("MainWindow", "Norm Powell"))
-        self.pushButton_4.setText(_translate("MainWindow", "Fred VanVleet"))
-        self.pushButton_6.setText(_translate("MainWindow", "Pascal Siakam"))
-        self.pushButton_5.setText(_translate("MainWindow", "Kyle Lowry"))
-        self.pushButton_3.setText(_translate("MainWindow", "Marc Gasol"))
+        self.label.setText(_translate("MainWindow", "Load Manager"))
 
 
 if __name__ == "__main__":
