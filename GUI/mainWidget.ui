@@ -88,14 +88,14 @@
         <property name="font">
          <font>
           <family>Bitstream Vera Sans</family>
-          <pointsize>60</pointsize>
+          <pointsize>55</pointsize>
           <weight>75</weight>
           <italic>false</italic>
           <bold>true</bold>
          </font>
         </property>
         <property name="styleSheet">
-         <string notr="true">font: 75 60pt &quot;Bitstream Vera Sans&quot;;
+         <string notr="true">font: 75 55pt &quot;Bitstream Vera Sans&quot;;
 font-weight: bold;
 qproperty-alignment: AlignCenter;</string>
         </property>

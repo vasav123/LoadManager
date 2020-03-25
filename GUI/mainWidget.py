@@ -58,12 +58,12 @@ class Ui_Form(object):
         self.player.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("Bitstream Vera Sans")
-        font.setPointSize(60)
+        font.setPointSize(55)
         font.setBold(True)
         font.setItalic(False)
         font.setWeight(75)
         self.player.setFont(font)
-        self.player.setStyleSheet("font: 75 60pt \"Bitstream Vera Sans\";\n"
+        self.player.setStyleSheet("font: 75 55pt \"Bitstream Vera Sans\";\n"
 "font-weight: bold;\n"
 "qproperty-alignment: AlignCenter;")
         self.player.setAlignment(QtCore.Qt.AlignCenter)

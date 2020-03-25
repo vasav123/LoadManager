@@ -171,6 +171,12 @@ background-repeat: no-repeat;
         </item>
         <item row="1" column="1" colspan="3">
          <widget class="QLabel" name="label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -183,8 +189,17 @@ background-repeat: no-repeat;
             <height>100</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <family>Bitstream Vera Sans</family>
+            <pointsize>55</pointsize>
+            <weight>75</weight>
+            <italic>false</italic>
+            <bold>true</bold>
+           </font>
+          </property>
           <property name="styleSheet">
-           <string notr="true">font: 75 60pt &quot;Bitstream Vera Sans&quot;;
+           <string notr="true">font: 75 55pt  &quot;Bitstream Vera Sans&quot;;
 font-weight: bold;
 qproperty-alignment: AlignCenter;</string>
           </property>

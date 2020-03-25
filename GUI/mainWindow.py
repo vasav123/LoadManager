@@ -95,9 +95,21 @@ class Ui_MainWindow(object):
         self.pushButton_2.setObjectName("pushButton_2")
         self.gridLayout.addWidget(self.pushButton_2, 2, 2, 1, 1)
         self.label = QtWidgets.QLabel(self.page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.MinimumExpanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
+        self.label.setSizePolicy(sizePolicy)
         self.label.setMinimumSize(QtCore.QSize(0, 100))
         self.label.setMaximumSize(QtCore.QSize(16777215, 100))
-        self.label.setStyleSheet("font: 75 60pt \"Bitstream Vera Sans\";\n"
+        font = QtGui.QFont()
+        font.setFamily("Bitstream Vera Sans")
+        font.setPointSize(55)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
+        self.label.setFont(font)
+        self.label.setStyleSheet("font: 75 55pt  \"Bitstream Vera Sans\";\n"
 "font-weight: bold;\n"
 "qproperty-alignment: AlignCenter;")
         self.label.setObjectName("label")
