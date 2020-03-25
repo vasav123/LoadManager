@@ -48,13 +48,13 @@
           <property name="minimumSize">
            <size>
             <width>600</width>
-            <height>436</height>
+            <height>400</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>600</width>
-            <height>436</height>
+            <height>400</height>
            </size>
           </property>
           <property name="styleSheet">
@@ -81,13 +81,13 @@ background-repeat: no-repeat;
           <property name="minimumSize">
            <size>
             <width>600</width>
-            <height>436</height>
+            <height>400</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>600</width>
-            <height>436</height>
+            <height>400</height>
            </size>
           </property>
           <property name="styleSheet">
@@ -114,13 +114,13 @@ background-repeat: no-repeat;
           <property name="minimumSize">
            <size>
             <width>600</width>
-            <height>436</height>
+            <height>400</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>600</width>
-            <height>436</height>
+            <height>400</height>
            </size>
           </property>
           <property name="styleSheet">
@@ -147,13 +147,13 @@ background-repeat: no-repeat;
           <property name="minimumSize">
            <size>
             <width>600</width>
-            <height>436</height>
+            <height>400</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>600</width>
-            <height>436</height>
+            <height>400</height>
            </size>
           </property>
           <property name="styleSheet">
@@ -204,13 +204,13 @@ qproperty-alignment: AlignCenter;</string>
           <property name="minimumSize">
            <size>
             <width>600</width>
-            <height>436</height>
+            <height>400</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>600</width>
-            <height>436</height>
+            <height>400</height>
            </size>
           </property>
           <property name="styleSheet">
@@ -237,13 +237,13 @@ background-repeat: no-repeat;
           <property name="minimumSize">
            <size>
             <width>600</width>
-            <height>436</height>
+            <height>400</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>600</width>
-            <height>436</height>
+            <height>400</height>
            </size>
           </property>
           <property name="styleSheet">

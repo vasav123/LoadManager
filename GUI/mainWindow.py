@@ -32,8 +32,8 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.pushButton_6.sizePolicy().hasHeightForWidth())
         self.pushButton_6.setSizePolicy(sizePolicy)
-        self.pushButton_6.setMinimumSize(QtCore.QSize(600, 436))
-        self.pushButton_6.setMaximumSize(QtCore.QSize(600, 436))
+        self.pushButton_6.setMinimumSize(QtCore.QSize(600, 400))
+        self.pushButton_6.setMaximumSize(QtCore.QSize(600, 400))
         self.pushButton_6.setStyleSheet("qproperty-icon:url(); /* empty image */\n"
 "qproperty-iconSize: 16px 16px; /* space for the background image*/\n"
 "background-image: url(\"Images/Pascal.png\") 0 0 0 0 stretch stretch;\n"
@@ -49,8 +49,8 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.pushButton_5.sizePolicy().hasHeightForWidth())
         self.pushButton_5.setSizePolicy(sizePolicy)
-        self.pushButton_5.setMinimumSize(QtCore.QSize(600, 436))
-        self.pushButton_5.setMaximumSize(QtCore.QSize(600, 436))
+        self.pushButton_5.setMinimumSize(QtCore.QSize(600, 400))
+        self.pushButton_5.setMaximumSize(QtCore.QSize(600, 400))
         self.pushButton_5.setStyleSheet("qproperty-icon:url(); /* empty image */\n"
 "qproperty-iconSize: 16px 16px; /* space for the background image*/\n"
 "background-image: url(\"Images/Kyle.png\") 0 0 0 0 stretch stretch;\n"
@@ -66,8 +66,8 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.pushButton_4.sizePolicy().hasHeightForWidth())
         self.pushButton_4.setSizePolicy(sizePolicy)
-        self.pushButton_4.setMinimumSize(QtCore.QSize(600, 436))
-        self.pushButton_4.setMaximumSize(QtCore.QSize(600, 436))
+        self.pushButton_4.setMinimumSize(QtCore.QSize(600, 400))
+        self.pushButton_4.setMaximumSize(QtCore.QSize(600, 400))
         self.pushButton_4.setStyleSheet("qproperty-icon:url(); /* empty image */\n"
 "qproperty-iconSize: 16px 16px; /* space for the background image*/\n"
 "background-image: url(\"Images/Freddy.png\") 0 0 0 0 stretch stretch;\n"
@@ -83,8 +83,8 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.pushButton_2.sizePolicy().hasHeightForWidth())
         self.pushButton_2.setSizePolicy(sizePolicy)
-        self.pushButton_2.setMinimumSize(QtCore.QSize(600, 436))
-        self.pushButton_2.setMaximumSize(QtCore.QSize(600, 436))
+        self.pushButton_2.setMinimumSize(QtCore.QSize(600, 400))
+        self.pushButton_2.setMaximumSize(QtCore.QSize(600, 400))
         self.pushButton_2.setStyleSheet("qproperty-icon:url(); /* empty image */\n"
 "qproperty-iconSize: 16px 16px; /* space for the background image*/\n"
 "background-image: url(\"Images/Norm.png\") 0 0 0 0 stretch stretch;\n"
@@ -108,8 +108,8 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.kawhiButton.sizePolicy().hasHeightForWidth())
         self.kawhiButton.setSizePolicy(sizePolicy)
-        self.kawhiButton.setMinimumSize(QtCore.QSize(600, 436))
-        self.kawhiButton.setMaximumSize(QtCore.QSize(600, 436))
+        self.kawhiButton.setMinimumSize(QtCore.QSize(600, 400))
+        self.kawhiButton.setMaximumSize(QtCore.QSize(600, 400))
         self.kawhiButton.setStyleSheet("qproperty-icon:url(); /* empty image */\n"
 "qproperty-iconSize: 16px 16px; /* space for the background image*/\n"
 "background-image: url(\"Images/Kawhi.png\") ;\n"
@@ -125,8 +125,8 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.pushButton_3.sizePolicy().hasHeightForWidth())
         self.pushButton_3.setSizePolicy(sizePolicy)
-        self.pushButton_3.setMinimumSize(QtCore.QSize(600, 436))
-        self.pushButton_3.setMaximumSize(QtCore.QSize(600, 436))
+        self.pushButton_3.setMinimumSize(QtCore.QSize(600, 400))
+        self.pushButton_3.setMaximumSize(QtCore.QSize(600, 400))
         self.pushButton_3.setStyleSheet("qproperty-icon:url(); /* empty image */\n"
 "qproperty-iconSize: 16px 16px; /* space for the background image*/\n"
 "background-image: url(\"Images/Marc.png\") 0 0 0 0 stretch stretch;\n"

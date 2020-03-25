@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1211</width>
-    <height>798</height>
+    <height>797</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,40 +25,56 @@
      <property name="enabled">
       <bool>true</bool>
      </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="maximumSize">
       <size>
        <width>99999</width>
-       <height>70</height>
+       <height>100</height>
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
+      <item alignment="Qt::AlignLeft">
        <widget class="QPushButton" name="back">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>60</height>
+         </size>
+        </property>
         <property name="maximumSize">
          <size>
-          <width>100</width>
-          <height>200</height>
+          <width>90</width>
+          <height>60</height>
          </size>
         </property>
         <property name="font">
          <font>
-          <pointsize>18</pointsize>
-          <weight>50</weight>
-          <bold>false</bold>
+          <family>Bitstream Vera Sans</family>
+          <pointsize>60</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
          </font>
         </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <property name="text">
-         <string>←</string>
+         <string>⬅️</string>
         </property>
        </widget>
       </item>
-      <item>
+      <item alignment="Qt::AlignHCenter">
        <widget class="QLabel" name="player">
         <property name="enabled">
          <bool>true</bool>
@@ -71,10 +87,17 @@
         </property>
         <property name="font">
          <font>
-          <pointsize>20</pointsize>
-          <weight>50</weight>
-          <bold>false</bold>
+          <family>Bitstream Vera Sans</family>
+          <pointsize>60</pointsize>
+          <weight>75</weight>
+          <italic>false</italic>
+          <bold>true</bold>
          </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 75 60pt &quot;Bitstream Vera Sans&quot;;
+font-weight: bold;
+qproperty-alignment: AlignCenter;</string>
         </property>
         <property name="text">
          <string>Kawhi Leonard</string>
@@ -84,68 +107,45 @@
         </property>
        </widget>
       </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QLabel" name="label">
-          <property name="font">
-           <font>
-            <pointsize>8</pointsize>
-            <weight>50</weight>
-            <bold>false</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>Plot Length:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSlider" name="plotSlider">
-          <property name="minimum">
-           <number>100</number>
-          </property>
-          <property name="maximum">
-           <number>1000</number>
-          </property>
-          <property name="value">
-           <number>500</number>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
+      <item alignment="Qt::AlignRight">
        <widget class="QPushButton" name="Record">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>60</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>9999</width>
+          <height>60</height>
+         </size>
+        </property>
         <property name="font">
          <font>
-          <pointsize>14</pointsize>
+          <family>Bitstream Vera Sans</family>
+          <pointsize>25</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
          </font>
         </property>
         <property name="text">
          <string>Record</string>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
+        <property name="default">
+         <bool>false</bool>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
