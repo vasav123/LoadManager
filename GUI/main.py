@@ -25,6 +25,7 @@ class TestWindow():
     numJumps = 0
     maxJumpHeight = 0
     isJump = False
+    oldt = 0
     def __init__(self):
         super(TestWindow, self).__init__()
         self.MainWindow = QtWidgets.QMainWindow()
@@ -108,7 +109,7 @@ class TestWindow():
         YT_2 = np.square(YT_filt)
         #Find magnitude
         AT_mag = np.sqrt(np.add(XT_2,ZT_2,YT_2))
-        peaks = signal.find_peaks(AT_mag, height= 2.1, distance=90)
+        peaks = signal.find_peaks(AT_mag, height=1.75, distance=80)
         #I have peaks above 1.5
         #For each peak I need to check the surrond average
         #Check if we are in the middle of a jump
@@ -116,13 +117,11 @@ class TestWindow():
             index2 = peaks[0][0]
             index2 =index2 + 1000
             self.calculateJumpHeight(index1,index2)
-            remove(peaks[0][0])
+            remove(peaks[0])
             self.isJump = False
-        
+        index = 0
         for i in peaks[0]:#1.5 peak is walking, 4 is jog, 6 is Running
             mag = AT_mag[i]
-            print(i)
-            #print("Height " + str(mag))
             if i<41 or i>959:#what to do if the peaks are at the end of the sequence
                 if i<41:
                     ave = np.mean(AT_mag[i:i+80])
@@ -131,28 +130,30 @@ class TestWindow():
             else:
                 ave = np.mean(AT_mag[i-40:i+40])
             if mag<4.5 and ave<1.5:#walking
-                if mag>ave:
-                    # print("walk step: Height: " + str(mag) + "peak average" + str(ave)+ "Index: " + str(i))
+                if mag>2*ave:
+                    print("walk step: Height: " + str(mag) + "peak average" + str(ave)+ "Index: " + str(i))
                     self.numSteps += 1
                     self.numWalk += 1
             elif 4.5<mag<10:#Jogging
                 if mag>3*ave:#check if it actually is a true peak in jog
-                    # print("Jog step: Height: " + str(mag) + "peak average" + str(ave) + "Index: " + str(i))
+                    print("Jog step: Height: " + str(mag) + "peak average" + str(ave) + "Index: " + str(i))
                     self.numSteps += 1
                     self.numRun += 1
             else:#Sprinting
                 if mag>ave:
-                    # print("Sprint step: Height: " + str(mag) + "peak average: " + str(ave)+ "Index: " + str(i))
-                    if ave<2.3:#Jump
+                    print("Sprint step: Height: " + str(mag) + "peak average: " + str(ave)+ "Index: " + str(i))
+                    if ave<2.1:#Jump
                         if(i == peaks[0][-1]):#Jump is split by time intervals
                             index1 = i
                             self.isJump = True
                         else:
-                            self.calculateJumpHeight(i,peaks[0][i+1])
-                            remove(peaks[0][i+1])
+                            self.calculateJumpHeight(i,peaks[0][index+1])
+                            remove(peaks[0][index+1])
+                            print("Jump: Height: " + str(mag) + "peak average: " + str(ave)+ "Index: " + str(i))
                     else:
                         self.numSteps += 1
                         self.numSprint += 1
+            index +=1
     
     def calculateKneeAngle(self):
         if (len(self.statsWidget_obj.data_l)>1):
@@ -202,7 +203,9 @@ class TestWindow():
                 self.statsWidget_obj.data_l.append(dataQ.get_nowait())
                 self.statsWidget_obj.end_num_sample += 1
 
-            if self.statsWidget_obj.end_num_sample>0 and self.statsWidget_obj.end_num_sample%1000 == 0:
+            if self.statsWidget_obj.end_num_sample>0 and self.statsWidget_obj.end_num_sample%1000 == 0 and self.oldt !=self.statsWidget_obj.end_num_sample:
+                self.oldt = self.statsWidget_obj.end_num_sample
+                #print("End Num sample: "+ str(self.statsWidget_obj.end_num_sample))
                 self.calculateStats()
                 #self.calculateJumpHeight()
                 self.updateStats()
