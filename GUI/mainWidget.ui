@@ -108,7 +108,7 @@ qproperty-alignment: AlignCenter;</string>
        </widget>
       </item>
       <item alignment="Qt::AlignRight">
-       <widget class="QPushButton" name="Record">
+       <widget class="QPushButton" name="Settings">
         <property name="sizePolicy">
          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
           <horstretch>0</horstretch>
@@ -136,7 +136,7 @@ qproperty-alignment: AlignCenter;</string>
          </font>
         </property>
         <property name="text">
-         <string>Record</string>
+         <string>Settings</string>
         </property>
         <property name="autoDefault">
          <bool>false</bool>
