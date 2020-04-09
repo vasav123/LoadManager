@@ -25,15 +25,16 @@ class collectData(mqtt.Client):
     dataQ = Queue(500)
     writeToFile = False
     fileName = ""
-    StartTime = time.time()
+    startTime = time.time()
     Timer = False
+    record_widget = None
 
     def __init__(self):
         mqtt.Client.__init__(self)
         self.connect("localhost",1883, 60)
         self.subscribe([("loadmanager",2)])
         self.message_callback_add("loadmanager", self.on_message)
-        self.record_widget = recordControl.Ui_recordControl()
+        
 
     def on_connect(self, mqttc, obj, flags, rc):
         print("rc:"+str(rc))
@@ -118,9 +119,9 @@ class collectData(mqtt.Client):
         if self.writeToFile == True:
             if self.Timer == False:
                 self.Timer = True
-                StartTime = time.time()
-            ElapsedTime = int(time.time()-StartTime)
-            self.record_widget.TotalSeconds.display(ElapsedTime)
+                self.startTime = time.time()
+            elapsedTime = int(time.time()-self.startTime)
+            self.record_widget.TotalSeconds.display(elapsedTime)
 
         if self.Timer == True and self.writeToFile == False:
             self.Timer = False

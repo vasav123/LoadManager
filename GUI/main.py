@@ -48,7 +48,7 @@ class TestWindow():
         self.ui.kawhiButton.clicked.connect(lambda:self.ui.appWidgets.setCurrentIndex(1))
         self.statsWidget_obj.Settings.clicked.connect(self.switchControl)
 
-
+        mqtt_client.record_widget = self.statsWidget_obj.record_widget
         #Recording Buttons
         self.statsWidget_obj.record_widget.startRecord.clicked.connect(lambda: (mqtt_client.setWriteToFile(True, self.statsWidget_obj.record_widget.CSV_output.toPlainText())))
         self.statsWidget_obj.record_widget.stopRecord.clicked.connect(lambda:  (mqtt_client.setWriteToFile(False, "")))
