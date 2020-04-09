@@ -24,6 +24,9 @@ class TestWindow():
     numSprint = 0
     numJumps = 0
     maxJumpHeight = 0
+    percent = 0
+    score = 0
+    maxScore = 1000
     isJump = False
     oldt = 0
     #StartTime = time.time()
@@ -60,6 +63,7 @@ class TestWindow():
         self.statsWidget_obj.pStats_widget.NumSprint.display(self.numSprint)
         self.statsWidget_obj.pStats_widget.jumpHeight.display(self.maxJumpHeight)
         self.statsWidget_obj.pStats_widget.NumJumps.display(self.numJumps)
+        
 
         #define Recording functions
     def applyFilter(self,seris, filtype, cutoff, order):#using this in main
@@ -200,6 +204,11 @@ class TestWindow():
         self.statsWidget_obj.pStats_widget.NumSprint.display(self.numSprint)
         self.statsWidget_obj.pStats_widget.jumpHeight.display(self.maxJumpHeight)
         self.statsWidget_obj.pStats_widget.NumJumps.display(self.numJumps)
+        self.score = self.numWalk + 2*self.numRun + 4*self.numSprint + 2*self.numJumps
+        self.statsWidget_obj.pStats_widget.Score.display(self.score)
+        self.maxScore = statsWidget_obj.record_widget.maxScore.intValue()
+        self.percent = (self.score/self.maxscore)*100
+        self.statsWidget_obj.pStats_widget.percentPlayed.setValue(self.percent)
     
     def syncData(self,dataQ):
         while True:
