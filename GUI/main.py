@@ -25,6 +25,10 @@ class TestWindow():
     numJumps = 0
     maxJumpHeight = 0
     isJump = False
+    oldt = 0
+    #StartTime = time.time()
+    isTimer = False
+    isWrite = False
     def __init__(self):
         super(TestWindow, self).__init__()
         self.MainWindow = QtWidgets.QMainWindow()
@@ -44,9 +48,10 @@ class TestWindow():
         self.ui.kawhiButton.clicked.connect(lambda:self.ui.appWidgets.setCurrentIndex(1))
         self.statsWidget_obj.Settings.clicked.connect(self.switchControl)
 
+
         #Recording Buttons
-        self.statsWidget_obj.record_widget.startRecord.clicked.connect(lambda: mqtt_client.setWriteToFile(True, self.statsWidget_obj.record_widget.CSV_output.toPlainText()))
-        self.statsWidget_obj.record_widget.stopRecord.clicked.connect(lambda:  mqtt_client.setWriteToFile(False, ""))
+        self.statsWidget_obj.record_widget.startRecord.clicked.connect(lambda: (mqtt_client.setWriteToFile(True, self.statsWidget_obj.record_widget.CSV_output.toPlainText())))
+        self.statsWidget_obj.record_widget.stopRecord.clicked.connect(lambda:  (mqtt_client.setWriteToFile(False, "")))
 
         #Stats LCD screens
         self.statsWidget_obj.pStats_widget.NumSteps.display(self.numSteps)
@@ -202,7 +207,8 @@ class TestWindow():
                 self.statsWidget_obj.data_l.append(dataQ.get_nowait())
                 self.statsWidget_obj.end_num_sample += 1
 
-            if self.statsWidget_obj.end_num_sample>0 and self.statsWidget_obj.end_num_sample%1000 == 0:
+            if self.statsWidget_obj.end_num_sample>0 and self.statsWidget_obj.end_num_sample%1000 == 0 and self.oldt !=self.statsWidget_obj.end_num_sample:
+                self.oldt = self.statsWidget_obj.end_num_sample
                 print(self.statsWidget_obj.end_num_sample)
                 self.calculateStats()
                 #self.calculateJumpHeight()
@@ -214,6 +220,7 @@ class TestWindow():
                 self.statsWidget_obj.start_num_sample += 1
                 del self.statsWidget_obj.data_l[:len(self.statsWidget_obj.data_l)-self.statsWidget_obj.plot_window]
             sleep(0.001)
+  
 
     def exitStats(self):
         self.ui.appWidgets.setCurrentIndex(0)

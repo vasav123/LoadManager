@@ -2,6 +2,9 @@ from queue import Queue
 from JSON_Class import *
 import paho.mqtt.client as mqtt
 import numpy as np
+import time
+from recordControl import *
+from mainWidgetWrapper import *
 
 class collectData(mqtt.Client):
     ax_t = Queue(500)
@@ -20,17 +23,17 @@ class collectData(mqtt.Client):
     gz_b = Queue(500)
 
     dataQ = Queue(500)
-    
     writeToFile = False
     fileName = ""
-
+    StartTime = time.time()
+    Timer = False
 
     def __init__(self):
         mqtt.Client.__init__(self)
         self.connect("localhost",1883, 60)
         self.subscribe([("loadmanager",2)])
         self.message_callback_add("loadmanager", self.on_message)
-
+        self.record_widget = recordControl.Ui_recordControl()
 
     def on_connect(self, mqttc, obj, flags, rc):
         print("rc:"+str(rc))
@@ -104,12 +107,23 @@ class collectData(mqtt.Client):
                 self.dataQ.put_nowait(data_point)
             except Exception as e:
                 print("queue full not going to add to queue", e)
+
         
         if self.writeToFile and self.fileName != "":
             with open('logs/' + self.fileName, 'a+', newline='') as file:
                 for i in range(max_size_of_array):    
                     p = Point(dataObj.ax_t[i],dataObj.ay_t[i],dataObj.az_t[i],dataObj.ax_b[i],dataObj.ay_b[i],dataObj.az_b[i],dataObj.fsr_quad[i],dataObj.fsr_ham[i],dataObj.gx_t[i],dataObj.gy_t[i],dataObj.gz_t[i],dataObj.gx_b[i],dataObj.gy_b[i],dataObj.gz_b[i])
                     file.write(repr(p)+"\n")
+
+        if self.writeToFile == True:
+            if self.Timer == False:
+                self.Timer = True
+                StartTime = time.time()
+            ElapsedTime = int(time.time()-StartTime)
+            self.record_widget.TotalSeconds.display(ElapsedTime)
+
+        if self.Timer == True and self.writeToFile == False:
+            self.Timer = False
 
     def setWriteToFile(self, writeToFile, fileName):
         '''

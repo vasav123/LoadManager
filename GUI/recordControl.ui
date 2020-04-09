@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>310</width>
+    <width>353</width>
     <height>873</height>
    </rect>
   </property>
@@ -54,54 +54,6 @@
            </property>
           </widget>
          </item>
-         <item row="6" column="1">
-          <widget class="QLabel" name="label_9">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <family>Bitstream Vera Sans</family>
-             <pointsize>15</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Seconds Elapsed Recording </string>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0" colspan="2">
-          <widget class="QPushButton" name="startRecord">
-           <property name="font">
-            <font>
-             <family>Bitstream Vera Sans</family>
-             <pointsize>15</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Start Recording</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0" colspan="2">
-          <widget class="QPushButton" name="stopRecord">
-           <property name="font">
-            <font>
-             <family>Bitstream Vera Sans</family>
-             <pointsize>15</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Stop Recording</string>
-           </property>
-          </widget>
-         </item>
          <item row="2" column="0" colspan="2">
           <widget class="QTextEdit" name="CSV_output">
            <property name="sizePolicy">
@@ -126,21 +78,51 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="0" colspan="2">
-          <widget class="QLabel" name="Record_Label">
+         <item row="6" column="1">
+          <widget class="QLabel" name="label_9">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="font">
             <font>
              <family>Bitstream Vera Sans</family>
-             <pointsize>25</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
+             <pointsize>15</pointsize>
             </font>
            </property>
            <property name="text">
-            <string>Record To CSV</string>
+            <string>Seconds Elapsed Recording </string>
            </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0" colspan="2">
+          <widget class="QPushButton" name="stopRecord">
+           <property name="font">
+            <font>
+             <family>Bitstream Vera Sans</family>
+             <pointsize>15</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Stop Recording</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0" colspan="2">
+          <widget class="QPushButton" name="startRecord">
+           <property name="font">
+            <font>
+             <family>Bitstream Vera Sans</family>
+             <pointsize>15</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Start Recording</string>
            </property>
           </widget>
          </item>
@@ -156,6 +138,24 @@
            </property>
            <property name="text">
             <string>File Name: </string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0" colspan="2">
+          <widget class="QLabel" name="Record_Label">
+           <property name="font">
+            <font>
+             <family>Bitstream Vera Sans</family>
+             <pointsize>25</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Record To CSV</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>
@@ -182,7 +182,39 @@
             </font>
            </property>
            <property name="text">
-            <string>Weigth</string>
+            <string>Weight (kg)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0" colspan="2">
+          <widget class="QSlider" name="horizontalSlider_2">
+           <property name="minimum">
+            <number>75</number>
+           </property>
+           <property name="maximum">
+            <number>150</number>
+           </property>
+           <property name="sliderPosition">
+            <number>98</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="invertedAppearance">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QLCDNumber" name="weight">
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="intValue" stdset="0">
+            <number>98</number>
            </property>
           </widget>
          </item>
@@ -197,7 +229,33 @@
             </font>
            </property>
            <property name="text">
-            <string>Heigth</string>
+            <string>Height (cm)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0" colspan="2">
+          <widget class="QSlider" name="horizontalSlider_3">
+           <property name="minimum">
+            <number>0</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="invertedAppearance">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QLCDNumber" name="score">
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="intValue" stdset="0">
+            <number>100</number>
            </property>
           </widget>
          </item>
@@ -213,72 +271,6 @@
            </property>
            <property name="text">
             <string>Max Score</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLCDNumber" name="lcdNumber">
-           <property name="layoutDirection">
-            <enum>Qt::LeftToRight</enum>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0" colspan="2">
-          <widget class="QSlider" name="horizontalSlider">
-           <property name="maximum">
-            <number>250</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="invertedAppearance">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QLCDNumber" name="lcdNumber_2">
-           <property name="layoutDirection">
-            <enum>Qt::LeftToRight</enum>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0" colspan="2">
-          <widget class="QSlider" name="horizontalSlider_2">
-           <property name="maximum">
-            <number>1500</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="invertedAppearance">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="1">
-          <widget class="QLCDNumber" name="lcdNumber_3">
-           <property name="layoutDirection">
-            <enum>Qt::LeftToRight</enum>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="0" colspan="2">
-          <widget class="QSlider" name="horizontalSlider_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="invertedAppearance">
-            <bool>false</bool>
            </property>
           </widget>
          </item>
@@ -300,6 +292,41 @@
            </property>
           </widget>
          </item>
+         <item row="2" column="0" colspan="2">
+          <widget class="QSlider" name="horizontalSlider">
+           <property name="minimum">
+            <number>150</number>
+           </property>
+           <property name="maximum">
+            <number>240</number>
+           </property>
+           <property name="sliderPosition">
+            <number>176</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="invertedAppearance">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLCDNumber" name="height">
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="value" stdset="0">
+            <double>176.000000000000000</double>
+           </property>
+           <property name="intValue" stdset="0">
+            <number>176</number>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>
@@ -309,5 +336,54 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>horizontalSlider</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>height</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>197</x>
+     <y>617</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>295</x>
+     <y>567</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider_2</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>weight</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>293</x>
+     <y>729</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>322</x>
+     <y>674</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider_3</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>score</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>44</x>
+     <y>835</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>294</x>
+     <y>784</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

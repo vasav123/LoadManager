@@ -85,7 +85,7 @@ class dataPreProcessor():
                 return self.segmetedData
 
         def showPeaks(self):
-                peaks,_ = signal.find_peaks(self.time_series,distance=40)
+                peaks,_ = signal.find_peaks(self.time_series,height= 1.5, distance = 50)
                 plt.plot(peaks, self.time_series[peaks], "x")
                 average_peak = np.mean(self.time_series[peaks])
 
@@ -115,10 +115,15 @@ class dataPreProcessor():
                         vmax=abs(cwtmatr).max(), vmin=-abs(cwtmatr).max())
                 plt.show()
 
+        def square(self):
+                return dataPreProcessor(list(np.square(self.time_series)),self.fs)
+        
+        def magnitude(self,array1,array2):
+                return dataPreProcessor(list(np.sqrt(np.add(self.time_series, array1.time_series,array2.time_series))),self.fs)
 
 if __name__ == '__main__':
         for x in range(1,2):
-                with open("/Users/Jag/Desktop/LoadManager/GUI/logs/10_Jumps.csv","r") as dataFile:
+                with open(r"C:\Users\mklei\OneDrive\Documents\GitHub\LoadManager\GUI\logs\March9\Jogging_5_0_80.csv","r") as dataFile:
                         dataset = csv.reader(dataFile)
                         ax_t = []
                         ay_t = []
@@ -242,26 +247,80 @@ if __name__ == '__main__':
         # gyro_x_bot = dataPreProcessor(gz_b,200)
         # gyro_x_bot.applyFilter('lowpass',20,10)
         # gyro_x_bot.plot()
+        XT = dataPreProcessor(ax_t,200)
+        YT = dataPreProcessor(ay_t,200)
+        ZT = dataPreProcessor(az_t,200)
+        #Filter All 3
+        XT.applyFilter('lowpass',45,10)
+        YT.applyFilter('lowpass',45,10)
+        ZT.applyFilter('lowpass',45,10)
+        #Square all 3
+        XT_2 = XT.square()
+        ZT_2 = ZT.square()
+        YT_2 = YT.square()
+        #Find magnitude
+        mag = XT_2.magnitude(YT_2,ZT_2)
+        AT_mag = mag.time_series
+        mag.plot()
+        walk = 0
+        jog =0
+        sprint = 0
+        steps = 0
+        peaks = signal.find_peaks(mag.time_series, height= 1.55, distance = 50)
+        #I have peaks above 1.5
+        #For each peak I need to check the surrond average
+        for i in peaks[0]:#1.5 peak is walking, 4 is jog, 6 is Running
+                magni = AT_mag[i]
+            #print("Height " + str(mag))
+##                if i<31 or i>969:#what to do if the peaks are at the end of the sequence
+##                        if i<31:
+##                            ave = np.mean(AT_mag[i:i+60])
+##                        elif i>969:
+##                            ave = np.mean(AT_mag[i-60:i])                       
+                ave = np.mean(AT_mag[i-40:i+40])
+                print(ave)
+            # print("Average around the peak" + str(ave))    
+                if magni<2.1:#walking
+                        if magni>ave:
+                    #print("walk step: Height: " + str(mag) + "peak average" + str(ave))
+                                steps += 1
+                                walk += 1
+                elif 2.1<magni<4.5:#Jogging
+                        if magni>ave:#check if it actually is a true peak in jog
+                    #print("Jog step: Height: " + str(mag) + "peak average" + str(ave))
+                                steps += 1
+                                jog += 1
+                else:#Sprinting
+                        if magni>ave:
+                    #print("Run step: Height: " + str(mag) + "peak average" + str(ave))
+                                steps += 1
+                                sprint += 1
 
-        gyro_x_top = dataPreProcessor(gx_t,200)
-        gyro_x_top.applyFilter('lowpass',20,10)
-        gyro_x_top.plot()
 
-        angle_x_t_obj = dataPreProcessor(angle_x_t, 200)
-        angle_x_t_obj.plot()
-
-        angle_x_b_obj = dataPreProcessor(angle_x_b, 200)
-        angle_x_b_obj.plot()
-
-        angle_y_t_obj = dataPreProcessor(angle_y_t, 200)
-        angle_y_t_obj.plot()
-
-        angle_y_b_obj = dataPreProcessor(angle_y_b, 200)
-        angle_y_b_obj.plot()
-
-
-        knee_angle = angle_x_t_obj.subtract(angle_x_b_obj)
-        knee_angle.plot()
+        print("Steps:" + str(steps))
+        print("Walk: " + str(walk))
+        print("Jog: " + str(jog))
+        print("Sprint: " + str(sprint))
+                
+##        gyro_x_top = dataPreProcessor(gx_t,200)
+##        gyro_x_top.applyFilter('lowpass',20,10)
+##        gyro_x_top.plot()
+##
+##        angle_x_t_obj = dataPreProcessor(angle_x_t, 200)
+##        angle_x_t_obj.plot()
+##
+##        angle_x_b_obj = dataPreProcessor(angle_x_b, 200)
+##        angle_x_b_obj.plot()
+##
+##        angle_y_t_obj = dataPreProcessor(angle_y_t, 200)
+##        angle_y_t_obj.plot()
+##
+##        angle_y_b_obj = dataPreProcessor(angle_y_b, 200)
+##        angle_y_b_obj.plot()
+##
+##
+##        knee_angle = angle_x_t_obj.subtract(angle_x_b_obj)
+##        knee_angle.plot()
         # angle_xy_obj = dataPreProcessor(angle_xy,200)
         # gyro_x_top.applyFilter('lowpass',20,10)
         # angle_xy_obj.plot()
