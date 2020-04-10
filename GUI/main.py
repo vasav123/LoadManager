@@ -29,6 +29,7 @@ class TestWindow():
     maxScore = 1000
     isJump = False
     oldt = 0
+    index1 = 0
     #StartTime = time.time()
     isTimer = False
     isWrite = False
@@ -96,10 +97,10 @@ class TestWindow():
         kh = 1 #constant from research paper
 
         jump_height=[]
-        for y in range(len(landing)): # you should never have more landings than takeoffs
-                airtime = abs((index1-index2))*0.005 #convert to seconds
-                height = offset_h + (kh * 1/8 * (airtime**2) * g)*39.3701 #convert to inches
-                jump_height.append(height)
+        #for y in range(len(landing)): # you should never have more landings than takeoffs
+        airtime = abs((index1-index2))*0.005 #convert to seconds
+        height = offset_h + (kh * 1/8 * (airtime**2) * g)*39.3701 #convert to inches
+        jump_height.append(height)
         self.maxJumpHeight = max(len(jump_height)>0 and max(jump_height) or 0, self.maxJumpHeight)
         self.numJumps += len(jump_height)
     
@@ -117,34 +118,38 @@ class TestWindow():
         YT_2 = np.square(YT_filt)
         #Find magnitude
         AT_mag = np.sqrt(np.add(XT_2,ZT_2,YT_2))
-        peaks = signal.find_peaks(AT_mag, height= 2.1, distance=90)
+        peaks = signal.find_peaks(AT_mag, height= 2.1, distance=80)
         #I have peaks above 1.5
         #For each peak I need to check the surrond average
         #Check if we are in the middle of a jump
+        indexes = peaks[0]
+        magnitudes = peaks[1]
+        print(indexes)
         if self.isJump == True:
-            index2 = peaks[0][0]
-            index2 =index2 + 1000
-            self.calculateJumpHeight(index1,index2)
-            remove(peaks[0][0])
+            if len(indexes >0):
+                index2 = indexes[0]
+                index2 =index2 + 1000
+                self.calculateJumpHeight(self.index1,index2)
+                np.delete(indexes,0)
             self.isJump = False
         
-        for i in peaks[0]:#1.5 peak is walking, 4 is jog, 6 is Running
-            mag = AT_mag[i]
-            print(i)
+        for i in range(len(indexes)):#1.5 peak is walking, 4 is jog, 6 is Running
+            mag = AT_mag[indexes[i]]
+            print(peaks)
             #print("Height " + str(mag))
-            if i<41 or i>959:#what to do if the peaks are at the end of the sequence
-                if i<41:
-                    ave = np.mean(AT_mag[i:i+80])
-                elif i>969:
-                    ave = np.mean(AT_mag[i-80:i])
+            if indexes[i]<41 or indexes[i]>959:#what to do if the peaks are at the end of the sequence
+                if indexes[i]<41:
+                    ave = np.mean(AT_mag[indexes[i]:indexes[i]+80])
+                elif indexes[i]>969:
+                    ave = np.mean(AT_mag[indexes[i]-80:indexes[i]])
             else:
-                ave = np.mean(AT_mag[i-40:i+40])
+                ave = np.mean(AT_mag[indexes[i]-40:indexes[i]+40])
             if mag<4.5 and ave<1.5:#walking
                 if mag>ave:
                     # print("walk step: Height: " + str(mag) + "peak average" + str(ave)+ "Index: " + str(i))
                     self.numSteps += 1
                     self.numWalk += 1
-            elif 4.5<mag<10:#Jogging
+            elif 4.5<mag<7:#Jogging
                 if mag>3*ave:#check if it actually is a true peak in jog
                     # print("Jog step: Height: " + str(mag) + "peak average" + str(ave) + "Index: " + str(i))
                     self.numSteps += 1
@@ -153,12 +158,12 @@ class TestWindow():
                 if mag>ave:
                     # print("Sprint step: Height: " + str(mag) + "peak average: " + str(ave)+ "Index: " + str(i))
                     if ave<2.3:#Jump
-                        if(i == peaks[0][-1]):#Jump is split by time intervals
-                            index1 = i
+                        if(indexes[i] == indexes[-1]):#Jump is split by time intervals
+                            self.index1 = indexes[i]
                             self.isJump = True
                         else:
-                            self.calculateJumpHeight(i,peaks[0][i+1])
-                            remove(peaks[0][i+1])
+                            self.calculateJumpHeight(indexes[i],indexes[i+1])
+                            np.delete(indexes,i+1)
                     else:
                         self.numSteps += 1
                         self.numSprint += 1
@@ -206,9 +211,9 @@ class TestWindow():
         self.statsWidget_obj.pStats_widget.NumJumps.display(self.numJumps)
         self.score = self.numWalk + 2*self.numRun + 4*self.numSprint + 2*self.numJumps
         self.statsWidget_obj.pStats_widget.Score.display(self.score)
-        self.maxScore = statsWidget_obj.record_widget.maxScore.intValue()
-        self.percent = (self.score/self.maxscore)*100
-        self.statsWidget_obj.pStats_widget.percentPlayed.setValue(self.percent)
+        self.maxScore = self.statsWidget_obj.record_widget.maxScore.intValue()
+        self.percent = (self.score/self.maxScore)*100
+        self.statsWidget_obj.pStats_widget.percentPlayed.setValue(int(self.percent))
     
     def syncData(self,dataQ):
         while True:
@@ -218,7 +223,7 @@ class TestWindow():
 
             if self.statsWidget_obj.end_num_sample>0 and self.statsWidget_obj.end_num_sample%1000 == 0 and self.oldt !=self.statsWidget_obj.end_num_sample:
                 self.oldt = self.statsWidget_obj.end_num_sample
-                print(self.statsWidget_obj.end_num_sample)
+                #print(self.statsWidget_obj.end_num_sample)
                 self.calculateStats()
                 #self.calculateJumpHeight()
                 self.updateStats()

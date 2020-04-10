@@ -242,7 +242,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Jump Heigth</string>
+         <string>Jump Height</string>
         </property>
        </widget>
       </item>

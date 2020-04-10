@@ -333,7 +333,7 @@ class Ui_playerStats(object):
         self.label_15.setText(_translate("playerStats", "Calories Burned"))
         self.label_14.setText(_translate("playerStats", "Percent Played"))
         self.label_11.setText(_translate("playerStats", "Supination"))
-        self.label_4.setText(_translate("playerStats", "Jump Heigth"))
+        self.label_4.setText(_translate("playerStats", "Jump Height"))
         self.label_10.setText(_translate("playerStats", "Abduction"))
         self.label_6.setText(_translate("playerStats", "Flexion"))
         self.label.setText(_translate("playerStats", "Steps            "))
