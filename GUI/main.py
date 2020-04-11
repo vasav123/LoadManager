@@ -100,9 +100,10 @@ class TestWindow():
         #for y in range(len(landing)): # you should never have more landings than takeoffs
         airtime = abs((index1-index2))*0.005 #convert to seconds
         height = offset_h + (kh * 1/8 * (airtime**2) * g)*39.3701 #convert to inches
-        jump_height.append(height)
-        self.maxJumpHeight = max(len(jump_height)>0 and max(jump_height) or 0, self.maxJumpHeight)
-        self.numJumps += len(jump_height)
+        if(height<50):
+            jump_height.append(height)
+            self.maxJumpHeight = max(len(jump_height)>0 and max(jump_height) or 0, self.maxJumpHeight)
+            self.numJumps += 1
     
     def calculateStats(self):
         XT = np.array([obj.ax_t for obj in self.statsWidget_obj.data_l])
@@ -118,13 +119,13 @@ class TestWindow():
         YT_2 = np.square(YT_filt)
         #Find magnitude
         AT_mag = np.sqrt(np.add(XT_2,ZT_2,YT_2))
-        peaks = signal.find_peaks(AT_mag, height= 2.1, distance=80)
+        peaks = signal.find_peaks(AT_mag, height= 2.1, distance=65)
         #I have peaks above 1.5
         #For each peak I need to check the surrond average
         #Check if we are in the middle of a jump
         indexes = peaks[0]
         magnitudes = peaks[1]
-        print(indexes)
+        #print(indexes)
         if self.isJump == True:
             if len(indexes >0):
                 index2 = indexes[0]
@@ -135,21 +136,21 @@ class TestWindow():
         
         for i in range(len(indexes)):#1.5 peak is walking, 4 is jog, 6 is Running
             mag = AT_mag[indexes[i]]
-            print(peaks)
+            #print(peaks)
             #print("Height " + str(mag))
             if indexes[i]<41 or indexes[i]>959:#what to do if the peaks are at the end of the sequence
                 if indexes[i]<41:
                     ave = np.mean(AT_mag[indexes[i]:indexes[i]+80])
-                elif indexes[i]>969:
+                elif indexes[i]>959:
                     ave = np.mean(AT_mag[indexes[i]-80:indexes[i]])
             else:
                 ave = np.mean(AT_mag[indexes[i]-40:indexes[i]+40])
-            if mag<4.5 and ave<1.5:#walking
+            if mag<4 and ave<1.6:#walking
                 if mag>ave:
                     # print("walk step: Height: " + str(mag) + "peak average" + str(ave)+ "Index: " + str(i))
                     self.numSteps += 1
                     self.numWalk += 1
-            elif 4.5<mag<7:#Jogging
+            elif 4<mag<7.5:#Jogging
                 if mag>3*ave:#check if it actually is a true peak in jog
                     # print("Jog step: Height: " + str(mag) + "peak average" + str(ave) + "Index: " + str(i))
                     self.numSteps += 1
@@ -157,7 +158,7 @@ class TestWindow():
             else:#Sprinting
                 if mag>ave:
                     # print("Sprint step: Height: " + str(mag) + "peak average: " + str(ave)+ "Index: " + str(i))
-                    if ave<2.3:#Jump
+                    if ave<2:#Jump
                         if(indexes[i] == indexes[-1]):#Jump is split by time intervals
                             self.index1 = indexes[i]
                             self.isJump = True

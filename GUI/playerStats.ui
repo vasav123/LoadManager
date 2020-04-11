@@ -33,7 +33,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
       <item row="0" column="0">
-       <widget class="QLCDNumber" name="NumRun">
+       <widget class="QLCDNumber" name="NumSprint">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -82,7 +82,7 @@
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLCDNumber" name="NumSprint">
+       <widget class="QLCDNumber" name="NumRun">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -242,7 +242,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Jump Height</string>
+         <string>Jump Height (In)</string>
         </property>
        </widget>
       </item>
